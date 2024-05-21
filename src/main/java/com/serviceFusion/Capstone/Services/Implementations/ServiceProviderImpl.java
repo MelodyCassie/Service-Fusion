@@ -1,11 +1,14 @@
 package com.serviceFusion.Capstone.Services.Implementations;
 
 import com.serviceFusion.Capstone.Services.Interfaces.ServiceProviderService;
-import com.serviceFusion.Capstone.data.models.Role;
 import com.serviceFusion.Capstone.data.models.ServiceProvider;
+import com.serviceFusion.Capstone.dtos.request.LoginRequest;
 import com.serviceFusion.Capstone.dtos.request.ServiceProviderRequest;
+import com.serviceFusion.Capstone.dtos.response.LoginResponse;
 import com.serviceFusion.Capstone.exceptions.EmailAlreadyExistsException;
+import com.serviceFusion.Capstone.exceptions.IncorrectPasswordException;
 import com.serviceFusion.Capstone.exceptions.InvalidEmailFormatException;
+import com.serviceFusion.Capstone.exceptions.UserNotFoundException;
 import com.serviceFusion.Capstone.repository.ServiceProviderRepository;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -18,9 +21,9 @@ import java.util.regex.Pattern;
 public class ServiceProviderImpl  implements ServiceProviderService {
     private final ServiceProviderRepository serviceProviderRepository;
 
+
     @Override
     public ServiceProvider registerServiceProvider(ServiceProviderRequest request) {
-
        validate(request);
         ServiceProvider serviceProvider = new ServiceProvider();
         serviceProvider.setFullName(request.getFullName());
@@ -29,10 +32,9 @@ public class ServiceProviderImpl  implements ServiceProviderService {
         serviceProvider.setEmail(request.getEmail());
         serviceProvider.setPhoneNumber(request.getPhonenumber());
         serviceProvider.setDescription(request.getDescription());
-        serviceProvider.setSystemRole(Role.SERVICE_PROVIDER);
+
 
         ServiceProvider savedProvider = serviceProviderRepository.save(serviceProvider);
-
         ServiceProvider response = new ServiceProvider();
 
         response.setFullName(savedProvider.getFullName());
@@ -41,6 +43,20 @@ public class ServiceProviderImpl  implements ServiceProviderService {
         response.setEmail(savedProvider.getEmail());
         response.setPhoneNumber(savedProvider.getPhoneNumber());
 
+        return response;
+    }
+
+    @Override
+    public LoginResponse loginServiceProvider(LoginRequest loginRequest) {
+     ServiceProvider foundUser = serviceProviderRepository.findByEmail(loginRequest.getEmail());
+      if(foundUser == null)throw new UserNotFoundException("User not found");
+      if (!foundUser .getPassword().equalsIgnoreCase(loginRequest.getPassword()))
+          throw new IncorrectPasswordException("invalid password");
+        foundUser.setLogin(true);
+        serviceProviderRepository.save(foundUser);
+
+        LoginResponse response = new LoginResponse();
+        response.setMessage("login sucessful");
         return response;
     }
 

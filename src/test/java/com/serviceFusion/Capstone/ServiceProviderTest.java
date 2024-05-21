@@ -1,6 +1,7 @@
 package com.serviceFusion.Capstone;
 
 import com.serviceFusion.Capstone.Services.Interfaces.ServiceProviderService;
+import com.serviceFusion.Capstone.dtos.request.LoginRequest;
 import com.serviceFusion.Capstone.dtos.request.ServiceProviderRequest;
 import com.serviceFusion.Capstone.exceptions.EmailAlreadyExistsException;
 import com.serviceFusion.Capstone.exceptions.InvalidEmailFormatException;
@@ -21,6 +22,7 @@ public class ServiceProviderTest {
     private ServiceProviderRequest request;
     private ServiceProviderRequest request1;
     private ServiceProviderRequest request2;
+    private LoginRequest loginRequest;
 
 
    @BeforeEach
@@ -48,6 +50,10 @@ public class ServiceProviderTest {
        request2.setPassword("password");
        request2.setExperience(2);
        request2.setDescription("Am joe a professional barber");
+
+       loginRequest = new LoginRequest();
+
+
    }
 
    @Test
@@ -73,5 +79,15 @@ public class ServiceProviderTest {
          serviceProviderService.registerServiceProvider(request2);
      });
  }
+    @Test
+    @DisplayName("Test that service provider can login")
 
+    void loginServiceProvider(){
+        loginRequest.setEmail("example@gmail.com");
+        loginRequest.setPassword("password");
+
+        assertDoesNotThrow( ()->{
+           serviceProviderService.loginServiceProvider(loginRequest);
+        });
+    }
 }

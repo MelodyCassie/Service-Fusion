@@ -22,6 +22,7 @@ public class ServiceProvider {
     @Enumerated(EnumType.STRING)
     private ServiceCategory serviceCategory;
     private int yearsOfExperience;
+    private boolean isLogin;
     LocalDateTime createdAt;
     LocalDateTime updated;
     @ManyToOne(fetch = FetchType.EAGER,cascade = CascadeType.ALL)

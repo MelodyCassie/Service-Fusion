@@ -9,4 +9,6 @@ public interface ServiceProviderRepository extends JpaRepository<ServiceProvider
 
     boolean existsByEmail(String email);
 
+    ServiceProvider findByEmail(String email);
+
 }
