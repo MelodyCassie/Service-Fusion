@@ -25,6 +25,7 @@ public class ServiceProvider {
     private int yearsOfExperience;
     private LocalDateTime createdAt;
     private LocalDateTime updatedAt;
+    private boolean isLogin;
 
     @ManyToOne(fetch = FetchType.EAGER,cascade = CascadeType.ALL)
     private Admin admin;
