@@ -5,6 +5,7 @@ import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.Setter;
 
+import java.time.LocalDateTime;
 import java.util.List;
 
 @Setter
@@ -20,6 +21,9 @@ public class Customer {
     private String name;
     private String phoneNumber;
     private String address;
+    private LocalDateTime createdAt;
+    private LocalDateTime updatedAt;
+
     @ManyToOne(fetch = FetchType.EAGER,cascade = CascadeType.ALL)
     private Admin admin;
     @ManyToMany(fetch = FetchType.EAGER,cascade = CascadeType.ALL)
