@@ -4,6 +4,7 @@ import com.serviceFusion.Capstone.data.models.Role;
 import com.serviceFusion.Capstone.dtos.requests.AdminRegistrationRequest;
 import com.serviceFusion.Capstone.dtos.requests.AdminUpdateProfileRequest;
 import com.serviceFusion.Capstone.dtos.responses.AdminRegistrationResponse;
+import com.serviceFusion.Capstone.dtos.responses.AdminUpdateProfileResponse;
 import com.serviceFusion.Capstone.exceptions.ServiceFusionException;
 import com.serviceFusion.Capstone.services.AdminService;
 import org.junit.jupiter.api.Test;
@@ -31,30 +32,22 @@ public class AdminTest {
         request.setRole(Role.ADMIN);
         request.setCreatedAt(LocalDateTime.now());
 
-        adminService.registerAdmin(request);
-
-        AdminRegistrationResponse response = new AdminRegistrationResponse();
-        response.setAdminId(1L);
-        response.setMessage("Admin successfully registered");
-        assertThat(response.getAdminId()).isEqualTo(1L);
+        AdminRegistrationResponse response = adminService.registerAdmin(request);
+        assertThat(response).isNotNull();
     }
 
     @Test
     public void testThatMoreThanOneAdminCanRegister() throws ServiceFusionException {
         AdminRegistrationRequest request = new AdminRegistrationRequest();
-        request.setEmail("mbataFavour@gmail.com");
+        request.setEmail("mbata1Favour@gmail.com");
         request.setUsername("Favvy");
         request.setPassword("favourMbata1234.");
         request.setName("Mbatata Favour");
         request.setRole(Role.ADMIN);
         request.setCreatedAt(LocalDateTime.now());
 
-        adminService.registerAdmin(request);
-
-        AdminRegistrationResponse response = new AdminRegistrationResponse();
-        response.setAdminId(2L);
-        response.setMessage("Admin successfully registered");
-        assertThat(response.getAdminId()).isEqualTo(2L);
+        AdminRegistrationResponse response = adminService.registerAdmin(request);
+        assertThat(response).isNotNull();
     }
 
     @Test
@@ -107,9 +100,6 @@ public class AdminTest {
         adminService.updateProfile(request);
 
         AdminRegistrationResponse response = new AdminRegistrationResponse();
-        response.setAdminId(1L);
-        response.setMessage("Profile updated successfully");
-        assertThat(response.getAdminId()).isEqualTo(1L);
         assertThat(response).isNotNull();
 
     }
@@ -125,12 +115,10 @@ public class AdminTest {
         request.setName("HisFavour");
         request.setRole(Role.SERVICE_PROVIDER);
         request.setUpdatedAt(LocalDateTime.now());
-        adminService.updateProfile(request);
 
-        AdminRegistrationResponse response = new AdminRegistrationResponse();
-        response.setAdminId(2L);
-        response.setMessage("Profile updated successfully");
-        assertThat(response.getAdminId()).isEqualTo(2L);
+
+        AdminUpdateProfileResponse response = adminService.updateProfile(request);
+
         assertThat(response).isNotNull();
 
     }

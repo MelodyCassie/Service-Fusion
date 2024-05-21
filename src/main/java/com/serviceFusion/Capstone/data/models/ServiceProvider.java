@@ -20,7 +20,7 @@ public class ServiceProvider {
     private String phoneNumber;
     private String description;
     private ServiceCategory serviceCategory;
-    private String experience;
+    private int yearsOfExperience;
     @ManyToOne(fetch = FetchType.EAGER,cascade = CascadeType.ALL)
     private Admin admin;
     @OneToMany(fetch = FetchType.EAGER,cascade = CascadeType.ALL)
