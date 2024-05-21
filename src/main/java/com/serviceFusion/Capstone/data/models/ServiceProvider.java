@@ -1,7 +1,6 @@
 package com.serviceFusion.Capstone.data.models;
 
 import jakarta.persistence.*;
-import lombok.Data;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -15,15 +14,17 @@ public class ServiceProvider {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
-    private String name;
+    private String fullName;
     private String email;
     private String password;
     private String phoneNumber;
     private String description;
+    @Enumerated(EnumType.STRING)
     private ServiceCategory serviceCategory;
     private int yearsOfExperience;
-    private LocalDateTime createdAt;
-    private LocalDateTime updatedAt;
+    private boolean isLogin;
+    LocalDateTime createdAt;
+    LocalDateTime updated;
     @ManyToOne(fetch = FetchType.EAGER,cascade = CascadeType.ALL)
     private Admin admin;
     @OneToMany(fetch = FetchType.EAGER,cascade = CascadeType.ALL)
