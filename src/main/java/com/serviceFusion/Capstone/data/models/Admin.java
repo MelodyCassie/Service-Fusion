@@ -4,6 +4,7 @@ import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.Setter;
 
+import java.time.LocalDateTime;
 import java.util.List;
 
 @Setter
@@ -17,7 +18,10 @@ public class Admin {
     private String email;
     private String password;
     private String name;
+    @Enumerated(EnumType.STRING)
     private Role role;
+    private LocalDateTime createAt;
+    private LocalDateTime updatedAt;
     @OneToMany(fetch = FetchType.EAGER,cascade = CascadeType.ALL)
     private List<Customer> customers;
     @OneToMany(fetch = FetchType.EAGER,cascade = CascadeType.ALL)

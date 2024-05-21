@@ -1,23 +1,19 @@
-package com.serviceFusion.Capstone.data.models;
+package com.serviceFusion.Capstone.dtos.requests;
 
-import jakarta.persistence.*;
+import com.serviceFusion.Capstone.data.models.ServiceCategory;
 import lombok.Getter;
 import lombok.Setter;
 
 import java.math.BigDecimal;
 
 @Setter
-@Entity
 @Getter
-public class Service {
-    @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
-    private Long id;
+public class ServiceCreationRequest {
+    private Long serviceProviderId;
     private String name;
     private String Description;
     private BigDecimal price;
     private String duration;
-    private Long serviceProviderId;
     private ServiceCategory serviceCategory;
 
 }
