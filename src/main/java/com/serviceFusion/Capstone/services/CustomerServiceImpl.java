@@ -22,7 +22,6 @@ public class CustomerServiceImpl implements CustomerService{
     public CustomerRegistrationResponse register(CustomerRegistrationRequest request) throws ServiceFusionException {
         boolean isRegistered  = customerRepository.findByEmail(request.getEmail())!=null;
         if (isRegistered) throw new ServiceFusionException("Registration details already taken");
-
         Customer customer = new Customer();
         customer.setName(request.getName());
         customer.setEmail(request.getEmail());

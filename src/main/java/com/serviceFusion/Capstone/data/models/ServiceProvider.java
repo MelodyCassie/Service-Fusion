@@ -5,6 +5,7 @@ import lombok.Data;
 import lombok.Getter;
 import lombok.Setter;
 
+import java.time.LocalDateTime;
 import java.util.List;
 
 @Setter
@@ -14,13 +15,17 @@ public class ServiceProvider {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
-    private String name;
+    private String fullName;
     private String email;
     private String password;
     private String phoneNumber;
     private String description;
+    @Enumerated(EnumType.STRING)
     private ServiceCategory serviceCategory;
-    private String experience;
+    private int yearsOfExperience;
+    private LocalDateTime createdAt;
+    private LocalDateTime updatedAt;
+
     @ManyToOne(fetch = FetchType.EAGER,cascade = CascadeType.ALL)
     private Admin admin;
     @OneToMany(fetch = FetchType.EAGER,cascade = CascadeType.ALL)

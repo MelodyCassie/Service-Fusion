@@ -6,6 +6,7 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
+import java.time.LocalDateTime;
 import java.util.List;
 
 @Setter
@@ -20,6 +21,8 @@ public class Admin {
     private String password;
     private String name;
     private Role role;
+    private LocalDateTime createdAt;
+    private LocalDateTime updatedAt;
     @OneToMany(fetch = FetchType.EAGER,cascade = CascadeType.ALL)
     private List<Customer> customers;
     @OneToMany(fetch = FetchType.EAGER,cascade = CascadeType.ALL)
