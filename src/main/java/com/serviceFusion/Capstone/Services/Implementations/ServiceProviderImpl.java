@@ -1,4 +1,4 @@
-package com.serviceFusion.Capstone.Services.Implementations;
+package com.serviceFusion.Capstone.services.Implementations;
 
 import com.serviceFusion.Capstone.Services.Interfaces.ServiceProviderService;
 import com.serviceFusion.Capstone.data.models.ServiceProvider;
@@ -23,7 +23,7 @@ public class ServiceProviderImpl  implements ServiceProviderService {
 
 
     @Override
-    public ServiceProvider registerServiceProvider(ServiceProviderRequest request) {
+    public ServiceProvider registerServiceProvider(ServiceProviderRequest request) throws EmailAlreadyExistsException, InvalidEmailFormatException {
        validate(request);
         ServiceProvider serviceProvider = new ServiceProvider();
         serviceProvider.setFullName(request.getFullName());
@@ -47,11 +47,12 @@ public class ServiceProviderImpl  implements ServiceProviderService {
     }
 
     @Override
-    public LoginResponse loginServiceProvider(LoginRequest loginRequest) {
+    public LoginResponse loginServiceProvider(LoginRequest loginRequest) throws UserNotFoundException, IncorrectPasswordException {
      ServiceProvider foundUser = serviceProviderRepository.findByEmail(loginRequest.getEmail());
       if(foundUser == null)throw new UserNotFoundException("User not found");
       if (!foundUser .getPassword().equalsIgnoreCase(loginRequest.getPassword()))
           throw new IncorrectPasswordException("invalid password");
+
         foundUser.setLogin(true);
         serviceProviderRepository.save(foundUser);
 
@@ -60,7 +61,7 @@ public class ServiceProviderImpl  implements ServiceProviderService {
         return response;
     }
 
-    private void validate(ServiceProviderRequest serviceProviderRequest) {
+    private void validate(ServiceProviderRequest serviceProviderRequest) throws InvalidEmailFormatException, EmailAlreadyExistsException {
 
        if (!isValidEmail(serviceProviderRequest.getEmail()))
            throw new InvalidEmailFormatException("invalid email format");

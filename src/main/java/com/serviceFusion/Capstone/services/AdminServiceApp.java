@@ -1,4 +1,4 @@
-package com.serviceFusion.Capstone.Services;
+package com.serviceFusion.Capstone.services;
 
 import com.serviceFusion.Capstone.data.models.Admin;
 import com.serviceFusion.Capstone.data.repositories.AdminRepository;
@@ -29,7 +29,7 @@ public class AdminServiceApp implements com.serviceFusion.Capstone.services.Admi
         verifyAdmin(request);
         Admin admin = modelMapper.map(request, Admin.class);
         admin.setRole(request.getRole());
-        admin.setCreateAt(LocalDateTime.now());
+        admin.setCreatedAt(request.getCreatedAt());
         adminRepository.save(admin);
 
         return getResponse(admin);

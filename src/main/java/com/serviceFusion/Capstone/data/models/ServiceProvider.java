@@ -1,6 +1,7 @@
 package com.serviceFusion.Capstone.data.models;
 
 import jakarta.persistence.*;
+import lombok.Data;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -22,9 +23,10 @@ public class ServiceProvider {
     @Enumerated(EnumType.STRING)
     private ServiceCategory serviceCategory;
     private int yearsOfExperience;
+    private LocalDateTime createdAt;
+    private LocalDateTime updatedAt;
     private boolean isLogin;
-    LocalDateTime createdAt;
-    LocalDateTime updated;
+
     @ManyToOne(fetch = FetchType.EAGER,cascade = CascadeType.ALL)
     private Admin admin;
     @OneToMany(fetch = FetchType.EAGER,cascade = CascadeType.ALL)

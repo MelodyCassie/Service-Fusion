@@ -1,4 +1,4 @@
-package com.serviceFusion.Capstone;
+package com.serviceFusion.Capstone.serviceProviderTests;
 
 import com.serviceFusion.Capstone.Services.Interfaces.ServiceProviderService;
 import com.serviceFusion.Capstone.dtos.request.LoginRequest;
