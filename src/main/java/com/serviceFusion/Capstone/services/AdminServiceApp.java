@@ -25,37 +25,56 @@ public class AdminServiceApp implements AdminService {
 
     @Override
     public AdminRegistrationResponse registerAdmin(AdminRegistrationRequest request) throws ServiceFusionException {
-        boolean isRegistered = adminRepository.findByEmail(request.getEmail())!=null;
-        if (isRegistered) throw new ServiceFusionException("Submitted email already taken");
-        if(!verifyEmail(request.getEmail())) throw new ServiceFusionException("Invalid email format");
-        if(!verifyPassword(request.getPassword())) throw new ServiceFusionException("Invalid password format");
+        existingAdmin(request);
+        verifyAdmin(request);
         Admin admin = modelMapper.map(request, Admin.class);
         admin.setRole(request.getRole());
         admin.setCreateAt(LocalDateTime.now());
         adminRepository.save(admin);
 
+        return getResponse(admin);
+
+    }
+
+    private static AdminRegistrationResponse getResponse(Admin admin) {
         AdminRegistrationResponse response = new AdminRegistrationResponse();
         response.setAdminId(admin.getId());
         response.setMessage("Successfully registered admin " + admin.getUsername());
-
         return response;
+    }
 
+    private static void verifyAdmin(AdminRegistrationRequest request) throws ServiceFusionException {
+        if(!verifyEmail(request.getEmail())) throw new ServiceFusionException("Invalid email format");
+        if(!verifyPassword(request.getPassword())) throw new ServiceFusionException("Invalid password format");
+    }
+
+    private void existingAdmin(AdminRegistrationRequest request) throws ServiceFusionException {
+        boolean isRegistered = adminRepository.findByEmail(request.getEmail())!=null;
+        if (isRegistered) throw new ServiceFusionException("Submitted email already taken");
     }
 
     @Override
     public AdminUpdateProfileResponse updateProfile(AdminUpdateProfileRequest request) throws ServiceFusionException {
-        Admin existingAdmin = adminRepository.findById(request.getAdminId()).orElse(null);
-        if (existingAdmin == null) throw new ServiceFusionException("Admin not found");
+        Admin existingAdmin = getAdmin(request);
         modelMapper.map(request, existingAdmin);
         existingAdmin.setRole(request.getRole());
         existingAdmin.setUpdatedAt(LocalDateTime.now());
         adminRepository.save(existingAdmin);
 
+        return getUpdateProfileResponse(existingAdmin);
+
+    }
+
+    private static AdminUpdateProfileResponse getUpdateProfileResponse(Admin existingAdmin) {
         AdminUpdateProfileResponse response = new AdminUpdateProfileResponse();
         response.setAdminId(existingAdmin.getId());
         response.setMessage("Successfully updated admin " + existingAdmin.getUsername());
-
         return response;
+    }
 
+    private Admin getAdmin(AdminUpdateProfileRequest request) throws ServiceFusionException {
+        Admin existingAdmin = adminRepository.findById(request.getAdminId()).orElse(null);
+        if (existingAdmin == null) throw new ServiceFusionException("Admin not found");
+        return existingAdmin;
     }
 }
