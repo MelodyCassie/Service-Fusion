@@ -18,11 +18,5 @@ public class Booking {
     private Long serviceId;
     private LocalDateTime bookingDate;
     private BookingStatus bookingStatus;
-//    @ManyToOne(fetch = FetchType.EAGER,cascade = CascadeType.ALL)
-//    private User user;
-//    @ManyToOne(fetch = FetchType.EAGER,cascade = CascadeType.ALL)
-//    private ServiceProvider serviceProvider;
-//    @ManyToOne(fetch = FetchType.EAGER,cascade = CascadeType.ALL)
-//    private Service service;
 
 }

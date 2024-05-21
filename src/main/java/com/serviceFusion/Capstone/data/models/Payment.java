@@ -19,9 +19,4 @@ public class Payment {
     private Long bookingId;
     private LocalDateTime paymentDate;
     private BigDecimal amount;
-//    @ManyToOne(fetch = FetchType.EAGER,cascade = CascadeType.ALL)
-//    private User user;
-//    @ManyToOne(fetch = FetchType.EAGER,cascade = CascadeType.ALL)
-//    private Booking booking;
-
 }
