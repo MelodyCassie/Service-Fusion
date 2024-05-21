@@ -108,7 +108,7 @@ public class AdminTest {
     @Test
     public void testThatMultipleAdminCanUpdateProfile() throws ServiceFusionException {
         AdminUpdateProfileRequest request = new AdminUpdateProfileRequest();
-        request.setAdminId(2L);
+        request.setAdminId(1L);
         request.setEmail("mbataFavour@gmail.com");
         request.setUsername("Favour");
         request.setPassword("Godsfavour001.");
