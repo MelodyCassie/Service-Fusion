@@ -19,6 +19,5 @@ public class Service {
     private String duration;
     private Long serviceProviderId;
     private ServiceCategory serviceCategory;
-//    @ManyToOne(fetch = FetchType.EAGER,cascade = CascadeType.ALL)
-//    private ServiceProvider serviceProvider;
+
 }

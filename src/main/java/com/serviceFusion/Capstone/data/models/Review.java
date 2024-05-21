@@ -20,10 +20,5 @@ public class Review {
     private int rating;
     private String comment;
     private LocalDateTime reviewDate;
-//    @ManyToOne(fetch = FetchType.EAGER,cascade = CascadeType.ALL)
-//    private User user;
-//    @ManyToOne(fetch = FetchType.EAGER,cascade = CascadeType.ALL)
-//    private ServiceProvider serviceProvider;
-//    @ManyToOne(fetch = FetchType.EAGER,cascade = CascadeType.ALL)
-//    private Service service;
+
 }
