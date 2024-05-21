@@ -1,7 +1,9 @@
 package com.serviceFusion.Capstone.CustomerTests;
 
 import com.serviceFusion.Capstone.data.repositories.CustomerRepository;
+import com.serviceFusion.Capstone.dtos.requests.LoginRequest;
 import com.serviceFusion.Capstone.dtos.requests.CustomerRegistrationRequest;
+import com.serviceFusion.Capstone.dtos.responses.LoginResponse;
 import com.serviceFusion.Capstone.dtos.responses.CustomerRegistrationResponse;
 import com.serviceFusion.Capstone.exceptions.ServiceFusionException;
 import com.serviceFusion.Capstone.services.CustomerService;
@@ -65,6 +67,22 @@ public class CustomerTest {
 
         assertThrows(ServiceFusionException.class,()->customerService.register(request));
     }
+
+    @Test
+    public void testThatCustomerCanLogin() throws ServiceFusionException {
+        LoginRequest request = new LoginRequest();
+        request.setEmail("JackSmith123@gmail.com");
+        request.setPassword("password");
+        LoginResponse response = customerService.login(request);
+        assertThat(response).isNotNull();
+    }
+
+    @Test
+    public void testThatCustomerCanUpdateInformation() {
+//        UpdateCustomerProfile updateCustomerProfile = new UpdateCustomerProfile();
+    }
+
+
 
 
 

@@ -23,6 +23,7 @@ public class Customer {
     private String address;
     private LocalDateTime createdAt;
     private LocalDateTime updatedAt;
+    private boolean loginStatus;
     @ManyToOne(fetch = FetchType.EAGER,cascade = CascadeType.ALL)
     private Admin admin;
     @ManyToMany(fetch = FetchType.EAGER,cascade = CascadeType.ALL)
