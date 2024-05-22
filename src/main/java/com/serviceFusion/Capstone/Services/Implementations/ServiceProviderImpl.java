@@ -1,6 +1,5 @@
 package com.serviceFusion.Capstone.services.Implementations;
 
-import com.serviceFusion.Capstone.Services.Interfaces.ServiceProviderService;
 import com.serviceFusion.Capstone.data.models.ServiceProvider;
 import com.serviceFusion.Capstone.dtos.request.LoginRequest;
 import com.serviceFusion.Capstone.dtos.request.ServiceProviderRequest;
@@ -10,6 +9,7 @@ import com.serviceFusion.Capstone.exceptions.IncorrectPasswordException;
 import com.serviceFusion.Capstone.exceptions.InvalidEmailFormatException;
 import com.serviceFusion.Capstone.exceptions.UserNotFoundException;
 import com.serviceFusion.Capstone.repository.ServiceProviderRepository;
+import com.serviceFusion.Capstone.services.Interfaces.ServiceProviderService;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
 
@@ -30,8 +30,10 @@ public class ServiceProviderImpl  implements ServiceProviderService {
         serviceProvider.setYearsOfExperience(request.getExperience());
         serviceProvider.setPassword(request.getPassword());
         serviceProvider.setEmail(request.getEmail());
-        serviceProvider.setPhoneNumber(request.getPhonenumber());
+        serviceProvider.setPhoneNumber(request.getPhoneNumber());
+        serviceProvider.setServiceCategory(request.getCategory());
         serviceProvider.setDescription(request.getDescription());
+        serviceProvider.setCreatedAt(request.getCreatedAt());
 
 
         ServiceProvider savedProvider = serviceProviderRepository.save(serviceProvider);

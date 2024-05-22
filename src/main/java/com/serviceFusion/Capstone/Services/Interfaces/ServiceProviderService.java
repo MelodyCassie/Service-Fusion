@@ -1,4 +1,4 @@
-package com.serviceFusion.Capstone.Services.Interfaces;
+package com.serviceFusion.Capstone.services.Interfaces;
 
 import com.serviceFusion.Capstone.data.models.ServiceProvider;
 import com.serviceFusion.Capstone.dtos.request.LoginRequest;

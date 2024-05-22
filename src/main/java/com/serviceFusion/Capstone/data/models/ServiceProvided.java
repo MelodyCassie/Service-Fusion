@@ -9,7 +9,7 @@ import java.math.BigDecimal;
 @Setter
 @Entity
 @Getter
-public class Service {
+public class ServiceProvided {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
@@ -18,6 +18,7 @@ public class Service {
     private BigDecimal price;
     private String duration;
     private Long serviceProviderId;
+    @Enumerated(EnumType.STRING)
     private ServiceCategory serviceCategory;
 
 }

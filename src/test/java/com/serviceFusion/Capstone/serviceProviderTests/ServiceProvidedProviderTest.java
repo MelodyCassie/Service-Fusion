@@ -1,23 +1,26 @@
 package com.serviceFusion.Capstone.serviceProviderTests;
 
-import com.serviceFusion.Capstone.Services.Interfaces.ServiceProviderService;
+import com.serviceFusion.Capstone.data.models.ServiceCategory;
 import com.serviceFusion.Capstone.dtos.request.LoginRequest;
 import com.serviceFusion.Capstone.dtos.request.ServiceProviderRequest;
 import com.serviceFusion.Capstone.exceptions.EmailAlreadyExistsException;
 import com.serviceFusion.Capstone.exceptions.InvalidEmailFormatException;
+import com.serviceFusion.Capstone.services.Interfaces.ServiceProviderService;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 
+import java.time.LocalDateTime;
+
 import static org.junit.jupiter.api.Assertions.assertDoesNotThrow;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 
 @SpringBootTest
-public class ServiceProviderTest {
+public class ServiceProvidedProviderTest {
    @Autowired
-    private  ServiceProviderService serviceProviderService;
+    private ServiceProviderService serviceProviderService;
 
     private ServiceProviderRequest request;
     private ServiceProviderRequest request1;
@@ -30,15 +33,17 @@ public class ServiceProviderTest {
       request = new ServiceProviderRequest();
       request.setFullName("edo peter");
       request.setEmail("example@gmail.com");
-      request.setPhonenumber("090122228993");
+      request.setPhoneNumber("090122228993");
       request.setPassword("password");
+      request.setCategory(ServiceCategory.BARBERS);
       request.setExperience(2);
       request.setDescription("Am joe a professional barber");
+      request.setCreatedAt(LocalDateTime.now());
 
        request1 = new ServiceProviderRequest();
        request1.setFullName("edo peter");
        request1.setEmail("example@gmail.com");
-       request1.setPhonenumber("090122228993");
+       request1.setPhoneNumber("090122228993");
        request1.setPassword("password");
        request1.setExperience(2);
        request1.setDescription("Am joe a professional barber");
@@ -46,7 +51,7 @@ public class ServiceProviderTest {
        request2 = new ServiceProviderRequest();
        request2.setFullName("edo peter");
        request2.setEmail("example@gmail.com");
-       request2.setPhonenumber("090122228993");
+       request2.setPhoneNumber("090122228993");
        request2.setPassword("password");
        request2.setExperience(2);
        request2.setDescription("Am joe a professional barber");
