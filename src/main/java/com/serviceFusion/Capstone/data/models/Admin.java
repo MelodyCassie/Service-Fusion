@@ -20,7 +20,9 @@ public class Admin {
     private String email;
     private String password;
     private String name;
+    @Enumerated(EnumType.STRING)
     private Role role;
+    private boolean isLogin;
     private LocalDateTime createdAt;
     private LocalDateTime updatedAt;
     @OneToMany(fetch = FetchType.EAGER,cascade = CascadeType.ALL)

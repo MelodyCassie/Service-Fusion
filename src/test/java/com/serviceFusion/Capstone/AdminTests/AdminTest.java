@@ -1,6 +1,7 @@
 package com.serviceFusion.Capstone.AdminTests;
 
 import com.serviceFusion.Capstone.data.models.Role;
+import com.serviceFusion.Capstone.dtos.requests.AdminLoginRequest;
 import com.serviceFusion.Capstone.dtos.requests.AdminRegistrationRequest;
 import com.serviceFusion.Capstone.dtos.requests.AdminUpdateProfileRequest;
 import com.serviceFusion.Capstone.dtos.responses.AdminRegistrationResponse;
@@ -29,8 +30,6 @@ public class AdminTest {
         request.setUsername("AgboolaToby");
         request.setPassword("1307Temmylove.");
         request.setName("Agboola Tobi Samuel");
-        request.setRole(Role.ADMIN);
-        request.setCreatedAt(LocalDateTime.now());
 
         AdminRegistrationResponse response = adminService.registerAdmin(request);
         assertThat(response).isNotNull();
@@ -43,7 +42,6 @@ public class AdminTest {
         request.setUsername("Favvy");
         request.setPassword("favourMbata1234.");
         request.setName("Mbatata Favour");
-        request.setRole(Role.ADMIN);
         request.setCreatedAt(LocalDateTime.now());
 
         AdminRegistrationResponse response = adminService.registerAdmin(request);
@@ -57,7 +55,6 @@ public class AdminTest {
         request.setUsername("Favvy");
         request.setPassword("favourMbata1234.");
         request.setName("Mbatata Favour");
-        request.setRole(Role.ADMIN);
         request.setCreatedAt(LocalDateTime.now());
         assertThrows(ServiceFusionException.class,()->adminService.registerAdmin(request));
     }
@@ -69,7 +66,6 @@ public class AdminTest {
         request.setUsername("Favvy");
         request.setPassword("favourMbata1234.");
         request.setName("Mbatata Favour");
-        request.setRole(Role.ADMIN);
         request.setCreatedAt(LocalDateTime.now());
         assertThrows(ServiceFusionException.class,()->adminService.registerAdmin(request));
     }
@@ -81,7 +77,6 @@ public class AdminTest {
         request.setUsername("Favvy");
         request.setPassword("111");
         request.setName("Mbatata Favour");
-        request.setRole(Role.ADMIN);
         request.setCreatedAt(LocalDateTime.now());
         assertThrows(ServiceFusionException.class,()->adminService.registerAdmin(request));
     }
@@ -95,7 +90,6 @@ public class AdminTest {
         request.setUsername("AgboolaTobi");
         request.setPassword("1307Agbool");
         request.setName("Agboola Tobi");
-        request.setRole(Role.ADMIN);
         request.setUpdatedAt(LocalDateTime.now());
         adminService.updateProfile(request);
 
@@ -108,18 +102,23 @@ public class AdminTest {
     @Test
     public void testThatMultipleAdminCanUpdateProfile() throws ServiceFusionException {
         AdminUpdateProfileRequest request = new AdminUpdateProfileRequest();
-        request.setAdminId(1L);
+        request.setAdminId(2L);
         request.setEmail("mbataFavour@gmail.com");
         request.setUsername("Favour");
         request.setPassword("Godsfavour001.");
         request.setName("HisFavour");
-        request.setRole(Role.SERVICE_PROVIDER);
-        request.setUpdatedAt(LocalDateTime.now());
-
-
         AdminUpdateProfileResponse response = adminService.updateProfile(request);
 
         assertThat(response).isNotNull();
+
+    }
+
+    @Test
+    public void testThatAdminCanLogin(){
+        AdminLoginRequest request = new AdminLoginRequest();
+        request.setEmail("tobi4tee@gmail.com");
+        request.setPassword("1307Agbool");
+        adminService.login(request);
 
     }
 

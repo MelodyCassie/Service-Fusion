@@ -35,7 +35,6 @@ public class ServiceProviderImpl  implements ServiceProviderService {
         serviceProvider.setDescription(request.getDescription());
         serviceProvider.setCreatedAt(request.getCreatedAt());
 
-
         ServiceProvider savedProvider = serviceProviderRepository.save(serviceProvider);
         ServiceProvider response = new ServiceProvider();
 
@@ -59,7 +58,7 @@ public class ServiceProviderImpl  implements ServiceProviderService {
         serviceProviderRepository.save(foundUser);
 
         LoginResponse response = new LoginResponse();
-        response.setMessage("login sucessful");
+        response.setMessage("login successful");
         return response;
     }
 

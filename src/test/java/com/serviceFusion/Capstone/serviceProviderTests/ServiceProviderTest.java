@@ -18,7 +18,7 @@ import static org.junit.jupiter.api.Assertions.assertDoesNotThrow;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 
 @SpringBootTest
-public class ServiceProvidedProviderTest {
+public class ServiceProviderTest {
    @Autowired
     private ServiceProviderService serviceProviderService;
 
@@ -31,14 +31,14 @@ public class ServiceProvidedProviderTest {
    @BeforeEach
    void setup(){
       request = new ServiceProviderRequest();
-      request.setFullName("edo peter");
-      request.setEmail("example@gmail.com");
-      request.setPhoneNumber("090122228993");
-      request.setPassword("password");
-      request.setCategory(ServiceCategory.BARBERS);
-      request.setExperience(2);
-      request.setDescription("Am joe a professional barber");
-      request.setCreatedAt(LocalDateTime.now());
+       request.setFullName("Favour Mbata");
+       request.setEmail("favour@gmail.com");
+       request.setPhoneNumber("09134547890");
+       request.setPassword("favour");
+       request.setCategory(ServiceCategory.HAIRSTYLISTS);
+       request.setExperience(2);
+       request.setDescription("I'm a professional fashion stylist who specialize in both male and female wear");
+       request.setCreatedAt(LocalDateTime.now());
 
        request1 = new ServiceProviderRequest();
        request1.setFullName("edo peter");
@@ -95,4 +95,5 @@ public class ServiceProvidedProviderTest {
            serviceProviderService.loginServiceProvider(loginRequest);
         });
     }
+
 }

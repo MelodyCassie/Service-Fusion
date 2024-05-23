@@ -31,4 +31,19 @@ public class ServiceProvidedTest {
         assertThat(response).isNotNull();
     }
 
+    @Test
+    public void testThatMultipleServicesCanBeCreated() {
+
+        ServiceCreationRequest request = new ServiceCreationRequest();
+        request.setName("Hair Fashion");
+        request.setDescription("Styles both male and female hair");
+        request.setServiceCategory(ServiceCategory.HAIRSTYLISTS);
+        request.setPrice(BigDecimal.valueOf(4500));
+        request.setServiceProviderId(1L);
+        request.setDuration("5 hours");
+
+        ServiceCreationResponse response = serviceService.createService(request);
+        assertThat(response).isNotNull();
+    }
+
 }

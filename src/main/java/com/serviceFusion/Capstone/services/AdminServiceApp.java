@@ -1,6 +1,7 @@
 package com.serviceFusion.Capstone.services;
 
 import com.serviceFusion.Capstone.data.models.Admin;
+import com.serviceFusion.Capstone.data.models.Role;
 import com.serviceFusion.Capstone.data.repositories.AdminRepository;
 import com.serviceFusion.Capstone.dtos.requests.AdminRegistrationRequest;
 import com.serviceFusion.Capstone.dtos.requests.AdminUpdateProfileRequest;
@@ -28,8 +29,8 @@ public class AdminServiceApp implements com.serviceFusion.Capstone.services.Admi
         existingAdmin(request);
         verifyAdmin(request);
         Admin admin = modelMapper.map(request, Admin.class);
-        admin.setRole(request.getRole());
-        admin.setCreatedAt(request.getCreatedAt());
+        admin.setRole(Role.ADMIN);
+        admin.setCreatedAt(LocalDateTime.now());
         adminRepository.save(admin);
 
         return getResponse(admin);
@@ -57,7 +58,7 @@ public class AdminServiceApp implements com.serviceFusion.Capstone.services.Admi
     public AdminUpdateProfileResponse updateProfile(AdminUpdateProfileRequest request) throws ServiceFusionException {
         Admin existingAdmin = getAdmin(request);
         modelMapper.map(request, existingAdmin);
-        existingAdmin.setRole(request.getRole());
+        existingAdmin.setRole(Role.ADMIN);
         existingAdmin.setUpdatedAt(LocalDateTime.now());
         adminRepository.save(existingAdmin);
 
