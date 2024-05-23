@@ -1,6 +1,7 @@
 package com.serviceFusion.Capstone.CustomerTests;
 
 import com.serviceFusion.Capstone.data.repositories.CustomerRepository;
+import com.serviceFusion.Capstone.dtos.requests.AdminDeleteCustomerRequest;
 import com.serviceFusion.Capstone.dtos.requests.LoginRequest;
 import com.serviceFusion.Capstone.dtos.requests.CustomerRegistrationRequest;
 import com.serviceFusion.Capstone.dtos.responses.LoginResponse;
@@ -76,15 +77,5 @@ public class CustomerTest {
         LoginResponse response = customerService.login(request);
         assertThat(response).isNotNull();
     }
-
-    @Test
-    public void testThatCustomerCanUpdateInformation() {
-//        UpdateCustomerProfile updateCustomerProfile = new UpdateCustomerProfile();
-    }
-
-
-
-
-
 
 }

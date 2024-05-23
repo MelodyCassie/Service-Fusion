@@ -1,6 +1,5 @@
 package com.serviceFusion.Capstone.controllers;
 
-import com.serviceFusion.Capstone.data.models.Customer;
 import com.serviceFusion.Capstone.dtos.requests.CustomerRegistrationRequest;
 import com.serviceFusion.Capstone.dtos.responses.CustomerRegistrationResponse;
 import com.serviceFusion.Capstone.exceptions.ServiceFusionException;

@@ -1,14 +1,14 @@
 package com.serviceFusion.Capstone.services;
 
 import com.serviceFusion.Capstone.data.models.Admin;
+import com.serviceFusion.Capstone.data.models.Customer;
 import com.serviceFusion.Capstone.data.models.Role;
 import com.serviceFusion.Capstone.data.repositories.AdminRepository;
+import com.serviceFusion.Capstone.data.repositories.CustomerRepository;
 import com.serviceFusion.Capstone.dtos.requests.*;
-import com.serviceFusion.Capstone.dtos.responses.AdminLoginResponse;
-import com.serviceFusion.Capstone.dtos.responses.AdminRegistrationResponse;
-import com.serviceFusion.Capstone.dtos.responses.AdminUpdateProfileResponse;
-import com.serviceFusion.Capstone.dtos.responses.DeleteAdminResponse;
+import com.serviceFusion.Capstone.dtos.responses.*;
 import com.serviceFusion.Capstone.exceptions.ServiceFusionException;
+import com.serviceFusion.Capstone.repository.ServiceProvidedRepository;
 import lombok.AllArgsConstructor;
 import org.modelmapper.ModelMapper;
 import org.springframework.stereotype.Service;
@@ -24,6 +24,8 @@ public class AdminServiceApp implements AdminService {
 
     private final AdminRepository adminRepository;
     private final ModelMapper modelMapper;
+    private final CustomerRepository customerRepository;
+    private final ServiceProvidedRepository serviceProvidedRepository;
 
     @Override
     public AdminRegistrationResponse registerAdmin(AdminRegistrationRequest request) throws ServiceFusionException {
@@ -104,6 +106,28 @@ public class AdminServiceApp implements AdminService {
     @Override
     public void deleteAll(DeleteAdminRequest request) {
         adminRepository.deleteAll();
+    }
+
+    @Override
+    public AdminDeleteCustomerResponse deleteCustomer(AdminDeleteCustomerRequest request) throws ServiceFusionException {
+        Admin admin = adminRepository.findById(request.getAdminId()).orElse(null);
+        if (admin==null) throw new ServiceFusionException("Admin not found");
+        customerRepository.deleteById(request.getCustomerId());
+        AdminDeleteCustomerResponse response = new AdminDeleteCustomerResponse();
+        response.setMessage(request.getCustomerId() + " has been successfully deleted");
+
+        return response;
+    }
+
+    @Override
+    public AdminDeleteServiceProviderResponse deleteServiceProvider(AdminDeleteServiceProviderRequest request) throws ServiceFusionException {
+        Admin admin = adminRepository.findById(request.getAdminId()).orElse(null);
+        if (admin==null) throw new ServiceFusionException("Admin not found");
+        serviceProvidedRepository.deleteById(request.getServiceProviderId());
+        AdminDeleteServiceProviderResponse response = new AdminDeleteServiceProviderResponse();
+        response.setMessage(request.getServiceProviderId() + " has been successfully deleted");
+
+        return response;
     }
 
     private static AdminUpdateProfileResponse getUpdateProfileResponse(Admin existingAdmin) {

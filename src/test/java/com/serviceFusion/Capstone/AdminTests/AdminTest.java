@@ -1,13 +1,9 @@
 package com.serviceFusion.Capstone.AdminTests;
 
 import com.serviceFusion.Capstone.data.models.Admin;
-import com.serviceFusion.Capstone.data.models.Role;
 import com.serviceFusion.Capstone.data.repositories.AdminRepository;
 import com.serviceFusion.Capstone.dtos.requests.*;
-import com.serviceFusion.Capstone.dtos.responses.AdminLoginResponse;
-import com.serviceFusion.Capstone.dtos.responses.AdminRegistrationResponse;
-import com.serviceFusion.Capstone.dtos.responses.AdminUpdateProfileResponse;
-import com.serviceFusion.Capstone.dtos.responses.DeleteAdminResponse;
+import com.serviceFusion.Capstone.dtos.responses.*;
 import com.serviceFusion.Capstone.exceptions.ServiceFusionException;
 import com.serviceFusion.Capstone.services.AdminService;
 import org.junit.jupiter.api.Test;
@@ -152,6 +148,24 @@ public class AdminTest {
         DeleteAdminRequest request = new DeleteAdminRequest();
         adminService.deleteAll(request);
         assertEquals(0,adminRepository.findAll().size());
+    }
+
+    @Test
+    public void testThatACustomerCanBeDeleted() throws ServiceFusionException {
+        AdminDeleteCustomerRequest request = new AdminDeleteCustomerRequest();
+        request.setAdminId(102L);
+        request.setCustomerId(1L);
+        AdminDeleteCustomerResponse response = adminService.deleteCustomer(request);
+        assertThat(response).isNotNull();
+    }
+
+    @Test
+    public void testThatAdminCanDeleteServiceProvider() throws ServiceFusionException {
+        AdminDeleteServiceProviderRequest request = new AdminDeleteServiceProviderRequest();
+        request.setAdminId(102L);
+        request.setServiceProviderId(1L);
+        AdminDeleteServiceProviderResponse response = adminService.deleteServiceProvider(request);
+        assertThat(response).isNotNull();
     }
 
 }
