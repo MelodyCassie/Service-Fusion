@@ -7,6 +7,7 @@ import com.serviceFusion.Capstone.dtos.requests.*;
 import com.serviceFusion.Capstone.dtos.responses.AdminLoginResponse;
 import com.serviceFusion.Capstone.dtos.responses.AdminRegistrationResponse;
 import com.serviceFusion.Capstone.dtos.responses.AdminUpdateProfileResponse;
+import com.serviceFusion.Capstone.dtos.responses.DeleteAdminResponse;
 import com.serviceFusion.Capstone.exceptions.ServiceFusionException;
 import com.serviceFusion.Capstone.services.AdminService;
 import org.junit.jupiter.api.Test;
@@ -139,7 +140,18 @@ public class AdminTest {
     @Test
     public void  testThatAnAdminCanBeDelete(){
         DeleteAdminRequest request = new DeleteAdminRequest();
+        request.setAdminId(1L);
+        DeleteAdminResponse response = adminService.deleteAdmin(request);
 
+        assertThat(response).isNotNull();
+
+    }
+
+    @Test
+    public void testThatAllAdminsCanBeDeleted(){
+        DeleteAdminRequest request = new DeleteAdminRequest();
+        adminService.deleteAll(request);
+        assertEquals(0,adminRepository.findAll().size());
     }
 
 }

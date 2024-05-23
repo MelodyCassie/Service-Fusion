@@ -3,13 +3,11 @@ package com.serviceFusion.Capstone.services;
 import com.serviceFusion.Capstone.data.models.Admin;
 import com.serviceFusion.Capstone.data.models.Role;
 import com.serviceFusion.Capstone.data.repositories.AdminRepository;
-import com.serviceFusion.Capstone.dtos.requests.AdminLoginRequest;
-import com.serviceFusion.Capstone.dtos.requests.AdminLogoutRequest;
-import com.serviceFusion.Capstone.dtos.requests.AdminRegistrationRequest;
-import com.serviceFusion.Capstone.dtos.requests.AdminUpdateProfileRequest;
+import com.serviceFusion.Capstone.dtos.requests.*;
 import com.serviceFusion.Capstone.dtos.responses.AdminLoginResponse;
 import com.serviceFusion.Capstone.dtos.responses.AdminRegistrationResponse;
 import com.serviceFusion.Capstone.dtos.responses.AdminUpdateProfileResponse;
+import com.serviceFusion.Capstone.dtos.responses.DeleteAdminResponse;
 import com.serviceFusion.Capstone.exceptions.ServiceFusionException;
 import lombok.AllArgsConstructor;
 import org.modelmapper.ModelMapper;
@@ -90,6 +88,22 @@ public class AdminServiceApp implements AdminService {
 
         admin.setLogin(false);
         adminRepository.save(admin);
+    }
+
+    @Override
+    public DeleteAdminResponse deleteAdmin(DeleteAdminRequest request) {
+
+        adminRepository.findById(request.getAdminId());
+        adminRepository.deleteById(request.getAdminId());
+
+        DeleteAdminResponse response = new DeleteAdminResponse();
+        response.setMessage("Admin successfully deleted");
+        return response;
+    }
+
+    @Override
+    public void deleteAll(DeleteAdminRequest request) {
+        adminRepository.deleteAll();
     }
 
     private static AdminUpdateProfileResponse getUpdateProfileResponse(Admin existingAdmin) {
