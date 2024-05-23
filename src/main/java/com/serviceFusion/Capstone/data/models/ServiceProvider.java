@@ -29,7 +29,7 @@ public class ServiceProvider {
     @ManyToOne(fetch = FetchType.EAGER,cascade = CascadeType.ALL)
     private Admin admin;
     @OneToMany(fetch = FetchType.EAGER,cascade = CascadeType.ALL)
-    private List<ServiceProvided> serviceProvideds;
+    private List<ServiceProvided> serviceProvided;
     @OneToMany(fetch = FetchType.EAGER,cascade = CascadeType.ALL)
     private List<Booking> bookings;
     @OneToMany(fetch = FetchType.EAGER,cascade = CascadeType.ALL)

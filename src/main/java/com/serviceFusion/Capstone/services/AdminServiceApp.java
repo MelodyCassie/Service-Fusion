@@ -3,6 +3,7 @@ package com.serviceFusion.Capstone.services;
 import com.serviceFusion.Capstone.data.models.Admin;
 import com.serviceFusion.Capstone.data.models.Customer;
 import com.serviceFusion.Capstone.data.models.Role;
+import com.serviceFusion.Capstone.data.models.ServiceProvider;
 import com.serviceFusion.Capstone.data.repositories.AdminRepository;
 import com.serviceFusion.Capstone.data.repositories.CustomerRepository;
 import com.serviceFusion.Capstone.dtos.requests.*;
@@ -125,6 +126,7 @@ public class AdminServiceApp implements AdminService {
     public AdminDeleteServiceProviderResponse deleteServiceProvider(AdminDeleteServiceProviderRequest request) throws ServiceFusionException {
         Admin admin = adminRepository.findById(request.getAdminId()).orElse(null);
         if (admin==null) throw new ServiceFusionException("Admin not found");
+        if (!admin.isLogin()) throw new ServiceFusionException("Kindly login to perform your operations");
         serviceProviderRepository.deleteById(request.getServiceProviderId());
         AdminDeleteServiceProviderResponse response = new AdminDeleteServiceProviderResponse();
         response.setMessage(request.getServiceProviderId() + " has been successfully deleted");
