@@ -9,6 +9,7 @@ import com.serviceFusion.Capstone.dtos.requests.*;
 import com.serviceFusion.Capstone.dtos.responses.*;
 import com.serviceFusion.Capstone.exceptions.ServiceFusionException;
 import com.serviceFusion.Capstone.repository.ServiceProvidedRepository;
+import com.serviceFusion.Capstone.repository.ServiceProviderRepository;
 import lombok.AllArgsConstructor;
 import org.modelmapper.ModelMapper;
 import org.springframework.stereotype.Service;
@@ -26,6 +27,7 @@ public class AdminServiceApp implements AdminService {
     private final ModelMapper modelMapper;
     private final CustomerRepository customerRepository;
     private final ServiceProvidedRepository serviceProvidedRepository;
+    private final ServiceProviderRepository serviceProviderRepository;
 
     @Override
     public AdminRegistrationResponse registerAdmin(AdminRegistrationRequest request) throws ServiceFusionException {
@@ -123,7 +125,7 @@ public class AdminServiceApp implements AdminService {
     public AdminDeleteServiceProviderResponse deleteServiceProvider(AdminDeleteServiceProviderRequest request) throws ServiceFusionException {
         Admin admin = adminRepository.findById(request.getAdminId()).orElse(null);
         if (admin==null) throw new ServiceFusionException("Admin not found");
-        serviceProvidedRepository.deleteById(request.getServiceProviderId());
+        serviceProviderRepository.deleteById(request.getServiceProviderId());
         AdminDeleteServiceProviderResponse response = new AdminDeleteServiceProviderResponse();
         response.setMessage(request.getServiceProviderId() + " has been successfully deleted");
 
