@@ -1,9 +1,10 @@
 package com.serviceFusion.Capstone.AdminTests;
 
+import com.serviceFusion.Capstone.data.models.Admin;
 import com.serviceFusion.Capstone.data.models.Role;
-import com.serviceFusion.Capstone.dtos.requests.AdminLoginRequest;
-import com.serviceFusion.Capstone.dtos.requests.AdminRegistrationRequest;
-import com.serviceFusion.Capstone.dtos.requests.AdminUpdateProfileRequest;
+import com.serviceFusion.Capstone.data.repositories.AdminRepository;
+import com.serviceFusion.Capstone.dtos.requests.*;
+import com.serviceFusion.Capstone.dtos.responses.AdminLoginResponse;
 import com.serviceFusion.Capstone.dtos.responses.AdminRegistrationResponse;
 import com.serviceFusion.Capstone.dtos.responses.AdminUpdateProfileResponse;
 import com.serviceFusion.Capstone.exceptions.ServiceFusionException;
@@ -15,13 +16,16 @@ import org.springframework.boot.test.context.SpringBootTest;
 import java.time.LocalDateTime;
 
 import static org.assertj.core.api.Assertions.assertThat;
-import static org.junit.jupiter.api.Assertions.assertThrows;
+import static org.junit.jupiter.api.Assertions.*;
 
 @SpringBootTest
 public class AdminTest {
 
     @Autowired
     private AdminService adminService;
+
+    @Autowired
+    private AdminRepository adminRepository;
 
     @Test
     public void testThatAdminCanRegister() throws ServiceFusionException {
@@ -114,11 +118,27 @@ public class AdminTest {
     }
 
     @Test
-    public void testThatAdminCanLogin(){
+    public void testThatAdminCanLogin() throws ServiceFusionException {
         AdminLoginRequest request = new AdminLoginRequest();
         request.setEmail("tobi4tee@gmail.com");
         request.setPassword("1307Agbool");
-        adminService.login(request);
+        AdminLoginResponse response = adminService.login(request);
+        assertThat(response).isNotNull();
+
+    }
+
+    @Test
+    public void testThatAdminCanLogout() throws ServiceFusionException {
+        AdminLogoutRequest request = new AdminLogoutRequest();
+        request.setId(1L);
+      adminService.logout(request);
+      Admin admin = adminRepository.findByEmail("tobi4tee@gmail.com");
+        assertFalse(admin.isLogin());
+    }
+
+    @Test
+    public void  testThatAnAdminCanBeDelete(){
+        DeleteAdminRequest request = new DeleteAdminRequest();
 
     }
 

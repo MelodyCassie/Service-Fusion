@@ -3,8 +3,11 @@ package com.serviceFusion.Capstone.services;
 import com.serviceFusion.Capstone.data.models.Admin;
 import com.serviceFusion.Capstone.data.models.Role;
 import com.serviceFusion.Capstone.data.repositories.AdminRepository;
+import com.serviceFusion.Capstone.dtos.requests.AdminLoginRequest;
+import com.serviceFusion.Capstone.dtos.requests.AdminLogoutRequest;
 import com.serviceFusion.Capstone.dtos.requests.AdminRegistrationRequest;
 import com.serviceFusion.Capstone.dtos.requests.AdminUpdateProfileRequest;
+import com.serviceFusion.Capstone.dtos.responses.AdminLoginResponse;
 import com.serviceFusion.Capstone.dtos.responses.AdminRegistrationResponse;
 import com.serviceFusion.Capstone.dtos.responses.AdminUpdateProfileResponse;
 import com.serviceFusion.Capstone.exceptions.ServiceFusionException;
@@ -19,7 +22,7 @@ import static com.serviceFusion.Capstone.utils.Verification.verifyPassword;
 
 @Service
 @AllArgsConstructor
-public class AdminServiceApp implements com.serviceFusion.Capstone.services.AdminService {
+public class AdminServiceApp implements AdminService {
 
     private final AdminRepository adminRepository;
     private final ModelMapper modelMapper;
@@ -57,6 +60,7 @@ public class AdminServiceApp implements com.serviceFusion.Capstone.services.Admi
     @Override
     public AdminUpdateProfileResponse updateProfile(AdminUpdateProfileRequest request) throws ServiceFusionException {
         Admin existingAdmin = getAdmin(request);
+        if (existingAdmin.isLogin()) throw new ServiceFusionException("Kindly login to update profile");
         modelMapper.map(request, existingAdmin);
         existingAdmin.setRole(Role.ADMIN);
         existingAdmin.setUpdatedAt(LocalDateTime.now());
@@ -64,6 +68,28 @@ public class AdminServiceApp implements com.serviceFusion.Capstone.services.Admi
 
         return getUpdateProfileResponse(existingAdmin);
 
+    }
+
+    @Override
+    public AdminLoginResponse login(AdminLoginRequest request) throws ServiceFusionException {
+        Admin admin = adminRepository.findByEmail(request.getEmail());
+        if (admin==null) throw new ServiceFusionException("Admin not found");
+        if (!admin.getPassword().equals(request.getPassword())) throw new ServiceFusionException("Incorrect password");
+        admin.setLogin(true);
+        adminRepository.save(admin);
+
+        AdminLoginResponse response = new AdminLoginResponse();
+        response.setMessage("Login successful");
+        return response;
+    }
+
+    @Override
+    public void logout(AdminLogoutRequest request) throws ServiceFusionException {
+        Admin admin = adminRepository.findById(request.getId()).orElse(null);
+        if (admin==null) throw new ServiceFusionException("User not found");
+
+        admin.setLogin(false);
+        adminRepository.save(admin);
     }
 
     private static AdminUpdateProfileResponse getUpdateProfileResponse(Admin existingAdmin) {

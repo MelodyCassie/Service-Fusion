@@ -1,6 +1,7 @@
 package com.serviceFusion.Capstone.services;
 
 import com.serviceFusion.Capstone.dtos.requests.AdminLoginRequest;
+import com.serviceFusion.Capstone.dtos.requests.AdminLogoutRequest;
 import com.serviceFusion.Capstone.dtos.requests.AdminRegistrationRequest;
 import com.serviceFusion.Capstone.dtos.requests.AdminUpdateProfileRequest;
 import com.serviceFusion.Capstone.dtos.responses.AdminLoginResponse;
@@ -13,5 +14,7 @@ public interface AdminService {
 
     AdminUpdateProfileResponse updateProfile(AdminUpdateProfileRequest request) throws ServiceFusionException;
 
-    AdminLoginResponse login(AdminLoginRequest request);
+    AdminLoginResponse login(AdminLoginRequest request) throws ServiceFusionException;
+
+    void logout(AdminLogoutRequest request) throws ServiceFusionException;
 }
