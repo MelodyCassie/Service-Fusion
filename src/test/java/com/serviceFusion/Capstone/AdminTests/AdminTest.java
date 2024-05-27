@@ -37,6 +37,18 @@ public class AdminTest {
     }
 
     @Test
+    public void testThatAdminCanRegister2() throws ServiceFusionException {
+        AdminRegistrationRequest request = new AdminRegistrationRequest();
+        request.setEmail("favourmbata520@gmail.com");
+        request.setUsername("mbataFavour");
+        request.setPassword("mbataFavour520.");
+        request.setFullName("Favour Mbata");
+
+        AdminRegistrationResponse response = adminService.registerAdmin(request);
+        assertThat(response).isNotNull();
+    }
+
+    @Test
     public void testThatMoreThanOneAdminCanRegister() throws ServiceFusionException {
         AdminRegistrationRequest request = new AdminRegistrationRequest();
         request.setEmail("mbata1Favour@gmail.com");
@@ -74,7 +86,7 @@ public class AdminTest {
     @Test
     public void testThatAttemptToRegisterWithInvalidPasswordFormatThrowsException(){
         AdminRegistrationRequest request = new AdminRegistrationRequest();
-        request.setEmail("favourmbatagmail.com");
+        request.setEmail("qudusa55@gmail.com");
         request.setUsername("Favvy");
         request.setPassword("111");
         request.setFullName("Mbatata Favour");
