@@ -30,7 +30,7 @@ public class AdminTest {
         request.setEmail("tobi4tee@gmail.com");
         request.setUsername("AgboolaToby");
         request.setPassword("1307Temmylove.");
-        request.setName("Agboola Tobi Samuel");
+        request.setFullName("Agboola Tobi Samuel");
 
         AdminRegistrationResponse response = adminService.registerAdmin(request);
         assertThat(response).isNotNull();
@@ -42,7 +42,7 @@ public class AdminTest {
         request.setEmail("mbata1Favour@gmail.com");
         request.setUsername("Favvy");
         request.setPassword("favourMbata1234.");
-        request.setName("Mbatata Favour");
+        request.setFullName("Mbatata Favour");
         request.setCreatedAt(LocalDateTime.now());
 
         AdminRegistrationResponse response = adminService.registerAdmin(request);
@@ -55,7 +55,7 @@ public class AdminTest {
         request.setEmail("mbataFavour@gmail.com");
         request.setUsername("Favvy");
         request.setPassword("favourMbata1234.");
-        request.setName("Mbatata Favour");
+        request.setFullName("Mbatata Favour");
         request.setCreatedAt(LocalDateTime.now());
         assertThrows(ServiceFusionException.class,()->adminService.registerAdmin(request));
     }
@@ -66,7 +66,7 @@ public class AdminTest {
         request.setEmail("favourmbatagmail.com");
         request.setUsername("Favvy");
         request.setPassword("favourMbata1234.");
-        request.setName("Mbatata Favour");
+        request.setFullName("Mbatata Favour");
         request.setCreatedAt(LocalDateTime.now());
         assertThrows(ServiceFusionException.class,()->adminService.registerAdmin(request));
     }
@@ -77,7 +77,7 @@ public class AdminTest {
         request.setEmail("favourmbatagmail.com");
         request.setUsername("Favvy");
         request.setPassword("111");
-        request.setName("Mbatata Favour");
+        request.setFullName("Mbatata Favour");
         request.setCreatedAt(LocalDateTime.now());
         assertThrows(ServiceFusionException.class,()->adminService.registerAdmin(request));
     }

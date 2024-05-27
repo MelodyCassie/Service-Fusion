@@ -12,6 +12,6 @@ public class AdminRegistrationRequest {
     private String username;
     private String email;
     private String password;
-    private String name;
+    private String fullName;
     private LocalDateTime createdAt;
 }

@@ -7,32 +7,30 @@ import com.serviceFusion.Capstone.dtos.requests.LoginRequest;
 import com.serviceFusion.Capstone.dtos.responses.CustomerRegistrationResponse;
 import com.serviceFusion.Capstone.dtos.responses.LoginResponse;
 import com.serviceFusion.Capstone.exceptions.ServiceFusionException;
-import com.serviceFusion.Capstone.utils.Verification;
 import lombok.AllArgsConstructor;
-import lombok.SneakyThrows;
-import org.springframework.beans.factory.annotation.Autowired;
+import org.modelmapper.ModelMapper;
 import org.springframework.stereotype.Service;
+
+import java.time.LocalDateTime;
+
+import static com.serviceFusion.Capstone.utils.Verification.*;
 
 @Service
 @AllArgsConstructor
-public class CustomerServiceImpl implements CustomerService{
+public class CustomerServiceApp implements CustomerService{
 
     private final CustomerRepository customerRepository;
-    private final Verification verification;
+    private final ModelMapper modelMapper;
 
     @Override
     public CustomerRegistrationResponse register(CustomerRegistrationRequest request) throws ServiceFusionException {
         boolean isRegistered  = customerRepository.findByEmail(request.getEmail())!=null;
         if (isRegistered) throw new ServiceFusionException("Registration details already taken");
-        Customer customer = new Customer();
-        customer.setName(request.getName());
-        customer.setEmail(request.getEmail());
-        customer.setUsername(request.getUsername());
-        customer.setPassword(request.getPassword());
-        customer.setPhoneNumber(request.getPhoneNumber());
-        customer.setAddress(request.getAddress());
-        customer.setCreatedAt(request.getCreatedAt());
-
+        if (verifyEmail(request.getEmail())) throw new ServiceFusionException("Invalid email format");
+        if (verifyPassword(request.getPassword())) throw new ServiceFusionException("Invalid password format");
+        if (verifyPhoneNumber(request.getPassword())) throw new ServiceFusionException("Invalid phoneNumber format");
+        Customer customer = modelMapper.map((request), Customer.class);
+        customer.setCreatedAt(LocalDateTime.now());
         customerRepository.save(customer);
 
         CustomerRegistrationResponse response = new CustomerRegistrationResponse();

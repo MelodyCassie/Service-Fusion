@@ -1,9 +1,8 @@
 package com.serviceFusion.Capstone.data.models;
 
 import jakarta.persistence.*;
-import lombok.AllArgsConstructor;
+import jakarta.validation.constraints.NotBlank;
 import lombok.Getter;
-import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 import java.time.LocalDateTime;
@@ -16,10 +15,14 @@ public class Admin {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
+    @NotBlank(message = "Username is a mandatory field")
     private String username;
+    @NotBlank(message = "Email is a mandatory field")
     private String email;
+    @NotBlank(message = "Password is a mandatory field")
     private String password;
-    private String name;
+    @NotBlank(message = "FullName is a mandatory field")
+    private String fullName;
     @Enumerated(EnumType.STRING)
     private Role role;
     private boolean isLogin;

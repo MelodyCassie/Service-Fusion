@@ -1,15 +1,12 @@
 package com.serviceFusion.Capstone.services;
 
 import com.serviceFusion.Capstone.data.models.Admin;
-import com.serviceFusion.Capstone.data.models.Customer;
 import com.serviceFusion.Capstone.data.models.Role;
-import com.serviceFusion.Capstone.data.models.ServiceProvider;
 import com.serviceFusion.Capstone.data.repositories.AdminRepository;
 import com.serviceFusion.Capstone.data.repositories.CustomerRepository;
 import com.serviceFusion.Capstone.dtos.requests.*;
 import com.serviceFusion.Capstone.dtos.responses.*;
 import com.serviceFusion.Capstone.exceptions.ServiceFusionException;
-import com.serviceFusion.Capstone.repository.ServiceProvidedRepository;
 import com.serviceFusion.Capstone.repository.ServiceProviderRepository;
 import lombok.AllArgsConstructor;
 import org.modelmapper.ModelMapper;
@@ -17,8 +14,7 @@ import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;
 
-import static com.serviceFusion.Capstone.utils.Verification.verifyEmail;
-import static com.serviceFusion.Capstone.utils.Verification.verifyPassword;
+import static com.serviceFusion.Capstone.utils.Verification.*;
 
 @Service
 @AllArgsConstructor
@@ -27,7 +23,6 @@ public class AdminServiceApp implements AdminService {
     private final AdminRepository adminRepository;
     private final ModelMapper modelMapper;
     private final CustomerRepository customerRepository;
-    private final ServiceProvidedRepository serviceProvidedRepository;
     private final ServiceProviderRepository serviceProviderRepository;
 
     @Override
@@ -51,8 +46,9 @@ public class AdminServiceApp implements AdminService {
     }
 
     private static void verifyAdmin(AdminRegistrationRequest request) throws ServiceFusionException {
-        if(!verifyEmail(request.getEmail())) throw new ServiceFusionException("Invalid email format");
-        if(!verifyPassword(request.getPassword())) throw new ServiceFusionException("Invalid password format");
+        if(verifyEmail(request.getEmail())) throw new ServiceFusionException("Invalid email format");
+        if(verifyPassword(request.getPassword())) throw new ServiceFusionException("Invalid password format");
+        if (verifyUserName(request.getUsername())) throw new ServiceFusionException("Invalid username format");
     }
 
     private void existingAdmin(AdminRegistrationRequest request) throws ServiceFusionException {
