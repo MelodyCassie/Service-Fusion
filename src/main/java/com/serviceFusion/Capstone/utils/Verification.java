@@ -28,7 +28,7 @@ public class Verification {
 
         public static boolean verifyPhoneNumber(String request) throws ServiceFusionException {
             if (request.length() < 11) throw new ServiceFusionException("Phone number must not be less than 11 characters");
-            String regex = "((^+)(234)[0–9]{10})";
+            String regex = "^(0)([789])([01])[0-9]{8}$";
 
             return !request.matches(regex);
         }

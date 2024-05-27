@@ -23,8 +23,6 @@ public class AdminController {
 
     @PostMapping("register")
     public ResponseEntity<AdminRegistrationResponse> addAdmin(@Valid @RequestBody AdminRegistrationRequest request) throws ServiceFusionException {
-//        logger.trace("Entering addAdmin method");
-        return ResponseEntity.status((HttpStatus.CREATED))
-                .body(adminService.registerAdmin(request));
+        return new ResponseEntity<>(adminService.registerAdmin(request), HttpStatus.CREATED);
     }
 }

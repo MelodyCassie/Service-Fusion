@@ -24,20 +24,34 @@ public class CustomerServiceApp implements CustomerService{
 
     @Override
     public CustomerRegistrationResponse register(CustomerRegistrationRequest request) throws ServiceFusionException {
-        boolean isRegistered  = customerRepository.findByEmail(request.getEmail())!=null;
-        if (isRegistered) throw new ServiceFusionException("Registration details already taken");
-        if (verifyEmail(request.getEmail())) throw new ServiceFusionException("Invalid email format");
-        if (verifyPassword(request.getPassword())) throw new ServiceFusionException("Invalid password format");
-        if (verifyPhoneNumber(request.getPassword())) throw new ServiceFusionException("Invalid phoneNumber format");
+        alreadyRegisteredCheck(request);
+        verifyDetails(request);
         Customer customer = modelMapper.map((request), Customer.class);
         customer.setCreatedAt(LocalDateTime.now());
         customerRepository.save(customer);
 
+        return response(customer);
+    }
+
+    private static CustomerRegistrationResponse response(Customer customer) {
         CustomerRegistrationResponse response = new CustomerRegistrationResponse();
         response.setId(customer.getId());
         response.setMessage("Registered Successfully");
-
         return response;
+    }
+
+    private void alreadyRegisteredCheck(CustomerRegistrationRequest request) throws ServiceFusionException {
+        boolean isRegistered  = customerRepository.findByEmail(request.getEmail())!=null;
+        if (isRegistered) throw new ServiceFusionException("Registration details already taken");
+    }
+
+    private static void verifyDetails(CustomerRegistrationRequest request) throws ServiceFusionException {
+        if (verifyEmail(request.getEmail())) throw new ServiceFusionException("Invalid email format");
+        if (verifyPassword(request.getPassword())) throw new ServiceFusionException("Invalid password format");
+        if (verifyPhoneNumber(request.getPhoneNumber())) throw new ServiceFusionException("Invalid phoneNumber format");
+        if (verifyAddress(request.getAddress())) throw new ServiceFusionException("Invalid address format");
+        if (verifyName(request.getName())) throw new ServiceFusionException("Invalid name format");
+        if (verifyUserName(request.getUsername())) throw new ServiceFusionException("Invalid username format");
     }
 
     @Override
