@@ -29,7 +29,6 @@ public class CustomerServiceApp implements CustomerService{
         Customer customer = modelMapper.map((request), Customer.class);
         customer.setCreatedAt(LocalDateTime.now());
         customerRepository.save(customer);
-
         return response(customer);
     }
 
@@ -46,12 +45,14 @@ public class CustomerServiceApp implements CustomerService{
     }
 
     private static void verifyDetails(CustomerRegistrationRequest request) throws ServiceFusionException {
+        if (request.getFullName().length() < 3) throw new ServiceFusionException("FullName must be at least 3 characters");
+        if (request.getUsername().length() < 3) throw new ServiceFusionException("Username must be at least 3 characters");
+        if (request.getAddress().length() < 3) throw new ServiceFusionException("Address must be at least 3 characters");
         if (verifyEmail(request.getEmail())) throw new ServiceFusionException("Invalid email format");
         if (verifyPassword(request.getPassword())) throw new ServiceFusionException("Invalid password format");
         if (verifyPhoneNumber(request.getPhoneNumber())) throw new ServiceFusionException("Invalid phoneNumber format");
-        if (verifyAddress(request.getAddress())) throw new ServiceFusionException("Invalid address format");
-        if (verifyName(request.getName())) throw new ServiceFusionException("Invalid name format");
-        if (verifyUserName(request.getUsername())) throw new ServiceFusionException("Invalid username format");
+
+
     }
 
     @Override

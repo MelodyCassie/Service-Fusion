@@ -8,7 +8,7 @@ import java.time.LocalDateTime;
 @AllArgsConstructor
 @NoArgsConstructor
 public class CustomerRegistrationRequest {
-    private String name;
+    private String fullName;
     private String email;
     private String username;
     private String password;

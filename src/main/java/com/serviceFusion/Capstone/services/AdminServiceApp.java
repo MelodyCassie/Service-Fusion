@@ -48,7 +48,7 @@ public class AdminServiceApp implements AdminService {
     private static void verifyAdmin(AdminRegistrationRequest request) throws ServiceFusionException {
         if(verifyEmail(request.getEmail())) throw new ServiceFusionException("Invalid email format");
         if(verifyPassword(request.getPassword())) throw new ServiceFusionException("Invalid password format");
-        if (verifyUserName(request.getUsername())) throw new ServiceFusionException("Invalid username format");
+        if (request.getUsername().length() < 3) throw new ServiceFusionException("Invalid username format");
     }
 
     private void existingAdmin(AdminRegistrationRequest request) throws ServiceFusionException {

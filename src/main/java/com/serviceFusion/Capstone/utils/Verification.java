@@ -17,25 +17,12 @@ public class Verification {
             return !password.matches(regex);
         }
 
-        public static boolean verifyUserName(String request) throws ServiceFusionException {
-            if (request.length() < 6) throw new ServiceFusionException("Username must be at least 6 characters");
-            return false;
-        }
-        public static boolean verifyName(String request) throws ServiceFusionException {
-            if (request.length() < 5) throw new ServiceFusionException("Full name must be at least 5 characters");
-            return false;
-        }
 
         public static boolean verifyPhoneNumber(String request) throws ServiceFusionException {
             if (request.length() < 11) throw new ServiceFusionException("Phone number must not be less than 11 characters");
             String regex = "^(0)([789])([01])[0-9]{8}$";
 
             return !request.matches(regex);
-        }
-
-        public static boolean verifyAddress(String request) throws ServiceFusionException {
-            if (request.length() < 5) throw new ServiceFusionException("Address must be at least 5 characters");
-            return false;
         }
 
 }

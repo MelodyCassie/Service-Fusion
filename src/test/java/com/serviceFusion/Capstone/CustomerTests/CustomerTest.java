@@ -1,7 +1,6 @@
 package com.serviceFusion.Capstone.CustomerTests;
 
 import com.serviceFusion.Capstone.data.repositories.CustomerRepository;
-import com.serviceFusion.Capstone.dtos.requests.AdminDeleteCustomerRequest;
 import com.serviceFusion.Capstone.dtos.requests.LoginRequest;
 import com.serviceFusion.Capstone.dtos.requests.CustomerRegistrationRequest;
 import com.serviceFusion.Capstone.dtos.responses.LoginResponse;
@@ -26,7 +25,7 @@ public class CustomerTest {
     @Test
     public void testThatACustomerCanRegister() throws ServiceFusionException {
         CustomerRegistrationRequest request = new CustomerRegistrationRequest();
-        request.setName("Jack Smith");
+        request.setFullName("Jack Smith");
         request.setEmail("JackSmith123@gmail.com");
         request.setUsername("jack");
         request.setPassword("password");
@@ -42,7 +41,7 @@ public class CustomerTest {
     @Test
     public void testThatMultipleCustomersCanRegister() throws ServiceFusionException {
         CustomerRegistrationRequest request = new CustomerRegistrationRequest();
-        request.setName("Melody Cassie2");
+        request.setFullName("Melody Cassie2");
         request.setEmail("melodycassie@gmail.com");
         request.setUsername("Melody Cassieee");
         request.setPassword("melody1234");
@@ -58,7 +57,7 @@ public class CustomerTest {
     @Test
     public void testThatWhenCustomerAttemptsToRegisterWithAlreadyTakenDetailsExceptionIsThrown(){
         CustomerRegistrationRequest request = new CustomerRegistrationRequest();
-        request.setName("Melody Cassie2");
+        request.setFullName("Melody Cassie2");
         request.setEmail("melodycassie@gmail.com");
         request.setUsername("Melody Cassieee");
         request.setPassword("melody1234");
