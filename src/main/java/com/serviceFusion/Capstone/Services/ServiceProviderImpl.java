@@ -1,15 +1,14 @@
-package com.serviceFusion.Capstone.services.Implementations;
+package com.serviceFusion.Capstone.services;
 
 import com.serviceFusion.Capstone.data.models.ServiceProvider;
-import com.serviceFusion.Capstone.dtos.request.LoginRequest;
-import com.serviceFusion.Capstone.dtos.request.ServiceProviderRequest;
-import com.serviceFusion.Capstone.dtos.response.LoginResponse;
+import com.serviceFusion.Capstone.dtos.requests.ServiceProviderLoginRequest;
+import com.serviceFusion.Capstone.dtos.requests.ServiceProviderRegistrationRequest;
+import com.serviceFusion.Capstone.dtos.responses.ServiceProviderLoginResponse;
 import com.serviceFusion.Capstone.exceptions.EmailAlreadyExistsException;
 import com.serviceFusion.Capstone.exceptions.IncorrectPasswordException;
 import com.serviceFusion.Capstone.exceptions.InvalidEmailFormatException;
 import com.serviceFusion.Capstone.exceptions.UserNotFoundException;
-import com.serviceFusion.Capstone.repository.ServiceProviderRepository;
-import com.serviceFusion.Capstone.services.Interfaces.ServiceProviderService;
+import com.serviceFusion.Capstone.data.repositories.ServiceProviderRepository;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
 
@@ -23,7 +22,7 @@ public class ServiceProviderImpl  implements ServiceProviderService {
 
 
     @Override
-    public ServiceProvider registerServiceProvider(ServiceProviderRequest request) throws EmailAlreadyExistsException, InvalidEmailFormatException {
+    public ServiceProvider registerServiceProvider(ServiceProviderRegistrationRequest request) throws EmailAlreadyExistsException, InvalidEmailFormatException {
        validate(request);
         ServiceProvider serviceProvider = new ServiceProvider();
         serviceProvider.setFullName(request.getFullName());
@@ -48,25 +47,25 @@ public class ServiceProviderImpl  implements ServiceProviderService {
     }
 
     @Override
-    public LoginResponse loginServiceProvider(LoginRequest loginRequest) throws UserNotFoundException, IncorrectPasswordException {
-     ServiceProvider foundUser = serviceProviderRepository.findByEmail(loginRequest.getEmail());
+    public ServiceProviderLoginResponse loginServiceProvider(ServiceProviderLoginRequest serviceProviderLoginRequest) throws UserNotFoundException, IncorrectPasswordException {
+     ServiceProvider foundUser = serviceProviderRepository.findByEmail(serviceProviderLoginRequest.getEmail());
       if(foundUser == null)throw new UserNotFoundException("User not found");
-      if (!foundUser .getPassword().equalsIgnoreCase(loginRequest.getPassword()))
+      if (!foundUser .getPassword().equalsIgnoreCase(serviceProviderLoginRequest.getPassword()))
           throw new IncorrectPasswordException("invalid password");
 
         foundUser.setLogin(true);
         serviceProviderRepository.save(foundUser);
 
-        LoginResponse response = new LoginResponse();
+        ServiceProviderLoginResponse response = new ServiceProviderLoginResponse();
         response.setMessage("login successful");
         return response;
     }
 
-    private void validate(ServiceProviderRequest serviceProviderRequest) throws InvalidEmailFormatException, EmailAlreadyExistsException {
+    private void validate(ServiceProviderRegistrationRequest serviceProviderRegistrationRequest) throws InvalidEmailFormatException, EmailAlreadyExistsException {
 
-       if (!isValidEmail(serviceProviderRequest.getEmail()))
+       if (!isValidEmail(serviceProviderRegistrationRequest.getEmail()))
            throw new InvalidEmailFormatException("invalid email format");
-        if (serviceProviderRepository.existsByEmail(serviceProviderRequest.getEmail())) {
+        if (serviceProviderRepository.existsByEmail(serviceProviderRegistrationRequest.getEmail())) {
             throw new EmailAlreadyExistsException("Email already exist");
         }
     }

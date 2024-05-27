@@ -3,7 +3,7 @@ package com.serviceFusion.Capstone.services;
 import com.serviceFusion.Capstone.data.models.Booking;
 import com.serviceFusion.Capstone.dtos.requests.BookingRequest;
 import com.serviceFusion.Capstone.dtos.responses.BookingResponse;
-import com.serviceFusion.Capstone.repository.BookingRepository;
+import com.serviceFusion.Capstone.data.repositories.BookingRepository;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
 

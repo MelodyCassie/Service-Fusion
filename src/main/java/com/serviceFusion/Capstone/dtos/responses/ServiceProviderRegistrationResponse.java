@@ -1,11 +1,11 @@
-package com.serviceFusion.Capstone.dtos.response;
+package com.serviceFusion.Capstone.dtos.responses;
 
 import lombok.Getter;
 import lombok.Setter;
 
 @Setter
 @Getter
-public class ServiceProviderResponse {
+public class ServiceProviderRegistrationResponse {
     private String fullName;
     private String phonenumber;
     private String email;

@@ -3,7 +3,7 @@ package com.serviceFusion.Capstone.services;
 import com.serviceFusion.Capstone.data.models.ServiceProvided;
 import com.serviceFusion.Capstone.dtos.requests.ServiceCreationRequest;
 import com.serviceFusion.Capstone.dtos.responses.ServiceCreationResponse;
-import com.serviceFusion.Capstone.repository.ServiceProvidedRepository;
+import com.serviceFusion.Capstone.data.repositories.ServiceProvidedRepository;
 import lombok.AllArgsConstructor;
 import org.modelmapper.ModelMapper;
 import org.springframework.stereotype.Service;

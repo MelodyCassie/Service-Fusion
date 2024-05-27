@@ -1,4 +1,4 @@
-package com.serviceFusion.Capstone.dtos.request;
+package com.serviceFusion.Capstone.dtos.requests;
 
 import com.serviceFusion.Capstone.data.models.ServiceCategory;
 import lombok.Getter;
@@ -8,7 +8,7 @@ import java.time.LocalDateTime;
 
 @Setter
 @Getter
-public class ServiceProviderRequest {
+public class ServiceProviderRegistrationRequest {
 
     private String fullName;
     private String phoneNumber;

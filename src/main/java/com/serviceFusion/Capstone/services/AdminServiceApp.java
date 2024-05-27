@@ -7,7 +7,7 @@ import com.serviceFusion.Capstone.data.repositories.CustomerRepository;
 import com.serviceFusion.Capstone.dtos.requests.*;
 import com.serviceFusion.Capstone.dtos.responses.*;
 import com.serviceFusion.Capstone.exceptions.ServiceFusionException;
-import com.serviceFusion.Capstone.repository.ServiceProviderRepository;
+import com.serviceFusion.Capstone.data.repositories.ServiceProviderRepository;
 import lombok.AllArgsConstructor;
 import org.modelmapper.ModelMapper;
 import org.springframework.stereotype.Service;
