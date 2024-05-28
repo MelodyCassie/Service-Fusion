@@ -1,12 +1,16 @@
 package com.serviceFusion.Capstone.CustomerTests;
 
+import com.serviceFusion.Capstone.data.models.Location;
+import com.serviceFusion.Capstone.data.models.ServiceCategory;
 import com.serviceFusion.Capstone.data.repositories.CustomerRepository;
 import com.serviceFusion.Capstone.dtos.requests.CustomerLoginRequest;
 import com.serviceFusion.Capstone.dtos.requests.CustomerRegistrationRequest;
 import com.serviceFusion.Capstone.dtos.requests.CustomerUpdateProfileRequest;
+import com.serviceFusion.Capstone.dtos.requests.SearchServiceProviderRequest;
 import com.serviceFusion.Capstone.dtos.responses.CustomerUpdateResponse;
 import com.serviceFusion.Capstone.dtos.responses.LoginResponse;
 import com.serviceFusion.Capstone.dtos.responses.CustomerRegistrationResponse;
+import com.serviceFusion.Capstone.dtos.responses.SearchServiceProviderResponse;
 import com.serviceFusion.Capstone.exceptions.ServiceFusionException;
 
 import com.serviceFusion.Capstone.services.CustomerService;
@@ -90,7 +94,16 @@ public class CustomerTest {
         request.setAddress("Germany");
         CustomerUpdateResponse response = customerService.updateCustomer(request);
         assertThat(response).isNotNull();
+    }
 
+    @Test
+    public void searchServiceProviderTest(){
+        SearchServiceProviderRequest request = new SearchServiceProviderRequest();
+        request.setCategory(ServiceCategory.HAIRSTYLISTS);
+        request.setLocation(Location.EJIGBO);
+        SearchServiceProviderResponse response = customerService.searchForServiceProvider(request);
+        System.out.println(response.getServiceProviders().size());
+        assertThat(response).isNotNull();
     }
 
 }

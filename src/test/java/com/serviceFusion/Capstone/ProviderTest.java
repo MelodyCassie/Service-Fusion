@@ -2,10 +2,7 @@ package com.serviceFusion.Capstone;
 
 import com.serviceFusion.Capstone.data.models.Location;
 import com.serviceFusion.Capstone.data.models.ServiceCategory;
-import com.serviceFusion.Capstone.dtos.requests.FindServiceProviderByCategoryRequest;
-import com.serviceFusion.Capstone.dtos.requests.FindServiceProviderByLocationRequest;
-import com.serviceFusion.Capstone.dtos.requests.ServiceProviderRegistrationRequest;
-import com.serviceFusion.Capstone.dtos.requests.UpdateServiceProviderProfileRequest;
+import com.serviceFusion.Capstone.dtos.requests.*;
 import com.serviceFusion.Capstone.dtos.responses.FIndServiceProviderByLocationResponse;
 import com.serviceFusion.Capstone.dtos.responses.FindServiceProviderByCategoryResponse;
 import com.serviceFusion.Capstone.dtos.responses.ServiceProviderRegistrationResponse;
@@ -69,6 +66,8 @@ public class ProviderTest {
         System.out.println(response);
         assertThat(response).isNotNull();
     }
+
+
 
     @Test
     public void testThatServiceProviderCanUpdateProfile() throws ServiceFusionException {

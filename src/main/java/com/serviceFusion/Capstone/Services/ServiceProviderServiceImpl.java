@@ -128,6 +128,11 @@ public class ServiceProviderServiceImpl implements ServiceProviderService {
         return response;
     }
 
+    @Override
+    public List<ServiceProvider> findByServiceProvideByCategory(ServiceCategory category) {
+        return serviceProviderRepository.findAllByServiceCategory(category);
+    }
+
 
     private void validate(ServiceProviderRequest serviceProviderRequest) throws InvalidEmailFormatException, EmailAlreadyExistsException {
 

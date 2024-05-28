@@ -5,6 +5,8 @@ import com.serviceFusion.Capstone.data.models.ServiceCategory;
 import com.serviceFusion.Capstone.data.models.ServiceProvider;
 import org.springframework.data.jpa.repository.JpaRepository;
 
+import java.util.List;
+
 
 public interface ServiceProviderRepository extends JpaRepository<ServiceProvider, Long> {
 
@@ -15,4 +17,6 @@ public interface ServiceProviderRepository extends JpaRepository<ServiceProvider
     ServiceProvider findByServiceCategory(ServiceCategory serviceCategory);
 
     ServiceProvider findByLocation(Location location);
+
+    List<ServiceProvider> findAllByServiceCategory(ServiceCategory category);
 }
