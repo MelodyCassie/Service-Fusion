@@ -1,6 +1,6 @@
 package com.serviceFusion.Capstone.services;
 
-import com.serviceFusion.Capstone.data.models.Admin;
+import com.serviceFusion.Capstone.Services.CustomerService;
 import com.serviceFusion.Capstone.data.models.Customer;
 import com.serviceFusion.Capstone.data.repositories.AdminRepository;
 import com.serviceFusion.Capstone.data.repositories.CustomerRepository;
@@ -10,23 +10,18 @@ import com.serviceFusion.Capstone.dtos.responses.CustomerRegistrationResponse;
 import com.serviceFusion.Capstone.dtos.responses.LoginResponse;
 import com.serviceFusion.Capstone.exceptions.ServiceFusionException;
 import lombok.AllArgsConstructor;
-import lombok.NoArgsConstructor;
-import lombok.RequiredArgsConstructor;
 import org.modelmapper.ModelMapper;
 import org.springframework.stereotype.Service;
-
 import java.time.LocalDateTime;
-
 import static com.serviceFusion.Capstone.utils.Verification.*;
-
 @Service
 @AllArgsConstructor
+
 public class CustomerServiceApp implements CustomerService{
 
     private final CustomerRepository customerRepository;
     private final ModelMapper modelMapper;
     private final AdminRepository adminRepository;
-    private final AdminServiceApp adminServiceApp;
 
     @Override
     public CustomerRegistrationResponse register(CustomerRegistrationRequest request) throws ServiceFusionException {

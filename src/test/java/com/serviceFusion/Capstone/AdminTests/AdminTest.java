@@ -22,7 +22,6 @@ public class AdminTest {
 
     @Autowired
     private AdminService adminService;
-
     @Autowired
     private AdminRepository adminRepository;
 

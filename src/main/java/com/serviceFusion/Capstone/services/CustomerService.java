@@ -1,4 +1,4 @@
-package com.serviceFusion.Capstone.services;
+package com.serviceFusion.Capstone.Services;
 
 import com.serviceFusion.Capstone.dtos.requests.CustomerRegistrationRequest;
 import com.serviceFusion.Capstone.dtos.requests.LoginRequest;
