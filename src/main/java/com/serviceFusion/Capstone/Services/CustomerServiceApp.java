@@ -1,6 +1,7 @@
 package com.serviceFusion.Capstone.services;
 
 import com.serviceFusion.Capstone.data.models.Customer;
+import com.serviceFusion.Capstone.data.models.Role;
 import com.serviceFusion.Capstone.data.repositories.AdminRepository;
 import com.serviceFusion.Capstone.data.repositories.CustomerRepository;
 import com.serviceFusion.Capstone.dtos.requests.CustomerRegistrationRequest;
@@ -11,6 +12,7 @@ import com.serviceFusion.Capstone.dtos.responses.CustomerUpdateResponse;
 import com.serviceFusion.Capstone.dtos.responses.LoginResponse;
 import com.serviceFusion.Capstone.exceptions.ServiceFusionException;
 import lombok.AllArgsConstructor;
+import org.jetbrains.annotations.NotNull;
 import org.modelmapper.ModelMapper;
 import org.springframework.stereotype.Service;
 import java.time.LocalDateTime;
@@ -77,25 +79,23 @@ public class CustomerServiceApp implements CustomerService{
     public CustomerUpdateResponse updateCustomer(CustomerUpdateProfileRequest request) throws ServiceFusionException {
         Customer existingCustomer = customerRepository.findById(request.getCustomerId()).orElse(null);
         if (existingCustomer==null) throw new ServiceFusionException("User not found exception");
-        if (existingCustomer.isLoginStatus()) throw new ServiceFusionException("Kindly login to update your profile");
-        if (!existingCustomer.getPassword().equals(request.getPassword())) throw new ServiceFusionException("Invalid password");
-        existingCustomer.setEmail(request.getEmail());
-        existingCustomer.setFullName(request.getFullName());
-        existingCustomer.setUsername(request.getUsername());
-        existingCustomer.setPassword(request.getPassword());
-        existingCustomer.setPhoneNumber(request.getPhoneNumber());
-        existingCustomer.setAddress(request.getAddress());
-        existingCustomer.setCreatedAt(LocalDateTime.now());
+        if (!existingCustomer.isLoginStatus()) throw new ServiceFusionException("Kindly login to update your profile");
+        modelMapper.map(request, existingCustomer);
+        existingCustomer.setUpdatedAt(LocalDateTime.now());
 
         customerRepository.save(existingCustomer);
 
+        return getUpdateResponse(existingCustomer);
+
+
+
+    }
+
+    private static @NotNull CustomerUpdateResponse getUpdateResponse(Customer existingCustomer) {
         CustomerUpdateResponse response = new CustomerUpdateResponse();
         response.setMessage("Updated Successfully");
         response.setCustomerId(existingCustomer.getId());
         return response;
-
-
-
     }
 }
 
