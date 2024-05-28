@@ -5,7 +5,7 @@ import lombok.Setter;
 
 @Setter
 @Getter
-public class AdminLoginRequest {
-    private String email;
-    private String password;
+public class AdminDeleteCustomerRequest {
+    private Long adminId;
+    private Long customerId;
 }

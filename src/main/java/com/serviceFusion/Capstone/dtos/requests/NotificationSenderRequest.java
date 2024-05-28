@@ -2,10 +2,12 @@ package com.serviceFusion.Capstone.dtos.requests;
 
 import lombok.Getter;
 import lombok.Setter;
+import lombok.ToString;
 
 @Setter
 @Getter
-public class AdminLoginRequest {
+@ToString
+public class NotificationSenderRequest {
+    private String name;
     private String email;
-    private String password;
 }

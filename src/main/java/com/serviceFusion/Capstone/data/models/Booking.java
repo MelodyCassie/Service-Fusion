@@ -17,6 +17,6 @@ public class Booking {
     private Long serviceProviderId;
     private Long serviceId;
     private LocalDateTime bookingDate;
-    private BookingStatus bookingStatus;
-
+    @Enumerated(EnumType.STRING)
+    private BookingStatus bookingStatus = BookingStatus.PENDING;
 }

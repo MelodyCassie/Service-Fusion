@@ -6,6 +6,8 @@ import com.serviceFusion.Capstone.dtos.requests.AdminRegistrationRequest;
 import com.serviceFusion.Capstone.dtos.responses.AdminRegistrationResponse;
 import com.serviceFusion.Capstone.exceptions.ServiceFusionException;
 
+import com.serviceFusion.Capstone.services.AdminService;
+import jakarta.validation.Valid;
 import lombok.AllArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -22,9 +24,7 @@ public class AdminController {
 //    private final Logger logger = LoggerFactory.getLogger(AdminController.class);
 
     @PostMapping("register")
-    public ResponseEntity<AdminRegistrationResponse> addAdmin(@RequestBody AdminRegistrationRequest request) throws ServiceFusionException {
-//        logger.trace("Entering addAdmin method");
-        return ResponseEntity.status((HttpStatus.CREATED))
-                .body(adminService.registerAdmin(request));
+    public ResponseEntity<AdminRegistrationResponse> addAdmin(@Valid @RequestBody AdminRegistrationRequest request) throws ServiceFusionException {
+        return new ResponseEntity<>(adminService.registerAdmin(request), HttpStatus.CREATED);
     }
 }

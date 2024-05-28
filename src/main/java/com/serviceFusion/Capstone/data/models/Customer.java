@@ -30,9 +30,4 @@ public class Customer {
     private List<Booking> bookings;
     @ManyToMany(fetch = FetchType.EAGER,cascade = CascadeType.ALL)
     private List<Review> reviews;
-
-
-
-
-
 }

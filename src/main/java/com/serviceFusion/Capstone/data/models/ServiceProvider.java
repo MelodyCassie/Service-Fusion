@@ -1,7 +1,6 @@
 package com.serviceFusion.Capstone.data.models;
 
 import jakarta.persistence.*;
-import lombok.Data;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -30,7 +29,7 @@ public class ServiceProvider {
     @ManyToOne(fetch = FetchType.EAGER,cascade = CascadeType.ALL)
     private Admin admin;
     @OneToMany(fetch = FetchType.EAGER,cascade = CascadeType.ALL)
-    private List<Service> services;
+    private List<ServiceProvided> serviceProvided;
     @OneToMany(fetch = FetchType.EAGER,cascade = CascadeType.ALL)
     private List<Booking> bookings;
     @OneToMany(fetch = FetchType.EAGER,cascade = CascadeType.ALL)
