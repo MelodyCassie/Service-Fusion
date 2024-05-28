@@ -4,7 +4,7 @@ package com.serviceFusion.Capstone.services;
 import com.serviceFusion.Capstone.data.models.ServiceCategory;
 import com.serviceFusion.Capstone.data.models.ServiceProvider;
 import com.serviceFusion.Capstone.data.repositories.ServiceProviderRepository;
-import com.serviceFusion.Capstone.dtos.requests.LoginRequest;
+import com.serviceFusion.Capstone.dtos.requests.CustomerLoginRequest;
 import com.serviceFusion.Capstone.dtos.requests.ServiceProviderRequest;
 import com.serviceFusion.Capstone.dtos.responses.LoginResponse;
 import com.serviceFusion.Capstone.dtos.responses.ServiceProviderResponse;
@@ -52,10 +52,10 @@ public class ServiceProviderImpl  implements ServiceProviderService {
     }
 
     @Override
-    public LoginResponse loginServiceProvider(LoginRequest loginRequest) throws UserNotFoundException, IncorrectPasswordException {
-        ServiceProvider foundUser = serviceProviderRepository.findByEmail(loginRequest.getEmail());
+    public LoginResponse loginServiceProvider(CustomerLoginRequest customerLoginRequest) throws UserNotFoundException, IncorrectPasswordException {
+        ServiceProvider foundUser = serviceProviderRepository.findByEmail(customerLoginRequest.getEmail());
         if(foundUser == null)throw new UserNotFoundException("User not found");
-        if (!foundUser .getPassword().equalsIgnoreCase(loginRequest.getPassword()))
+        if (!foundUser .getPassword().equalsIgnoreCase(customerLoginRequest.getPassword()))
             throw new IncorrectPasswordException("invalid password");
 
         foundUser.setLogin(true);

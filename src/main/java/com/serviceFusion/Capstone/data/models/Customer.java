@@ -18,7 +18,7 @@ public class Customer {
     private String username;
     private String email;
     private String password;
-    private String name;
+    private String fullName;
     private String phoneNumber;
     private String address;
     private LocalDateTime createdAt;

@@ -1,7 +1,7 @@
 package com.serviceFusion.Capstone.serviceProviderTests;
 import com.serviceFusion.Capstone.data.models.ServiceCategory;
 
-import com.serviceFusion.Capstone.dtos.requests.LoginRequest;
+import com.serviceFusion.Capstone.dtos.requests.CustomerLoginRequest;
 import com.serviceFusion.Capstone.dtos.requests.ServiceProviderRequest;
 import com.serviceFusion.Capstone.dtos.responses.ServiceProviderResponse;
 import com.serviceFusion.Capstone.exceptions.EmailAlreadyExistsException;
@@ -24,7 +24,7 @@ public class ServiceProviderTest {
     private ServiceProviderRequest request;
     private ServiceProviderRequest request1;
     private ServiceProviderRequest request2;
-    private LoginRequest loginRequest;
+    private CustomerLoginRequest customerLoginRequest;
 
     private ServiceProviderRequest updateDetailsRequest;
 
@@ -58,7 +58,7 @@ public class ServiceProviderTest {
         request2.setExperience(2);
         request2.setDescription("Am joe a professional barber");
 
-        loginRequest = new LoginRequest();
+        customerLoginRequest = new CustomerLoginRequest();
 
         updateDetailsRequest = new ServiceProviderRequest();
         updateDetailsRequest.setFullName("chuks chichi");
@@ -98,11 +98,11 @@ public class ServiceProviderTest {
     @Test
     @DisplayName("Test that service provider can login")
     void loginServiceProvider() {
-        loginRequest.setEmail("example@gmail.com");
-        loginRequest.setPassword("password");
+        customerLoginRequest.setEmail("example@gmail.com");
+        customerLoginRequest.setPassword("password");
 
         assertDoesNotThrow(() -> {
-            serviceProviderService.loginServiceProvider(loginRequest);
+            serviceProviderService.loginServiceProvider(customerLoginRequest);
         });
     }
 

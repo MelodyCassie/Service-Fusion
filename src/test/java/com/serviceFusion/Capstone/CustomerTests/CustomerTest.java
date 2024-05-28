@@ -1,12 +1,15 @@
 package com.serviceFusion.Capstone.CustomerTests;
 
 import com.serviceFusion.Capstone.data.repositories.CustomerRepository;
-import com.serviceFusion.Capstone.dtos.requests.LoginRequest;
+import com.serviceFusion.Capstone.dtos.requests.CustomerLoginRequest;
 import com.serviceFusion.Capstone.dtos.requests.CustomerRegistrationRequest;
+import com.serviceFusion.Capstone.dtos.requests.CustomerUpdateProfileRequest;
+import com.serviceFusion.Capstone.dtos.responses.CustomerUpdateResponse;
 import com.serviceFusion.Capstone.dtos.responses.LoginResponse;
 import com.serviceFusion.Capstone.dtos.responses.CustomerRegistrationResponse;
 import com.serviceFusion.Capstone.exceptions.ServiceFusionException;
 
+import com.serviceFusion.Capstone.services.CustomerService;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
@@ -18,7 +21,7 @@ import static org.junit.jupiter.api.Assertions.*;
 @SpringBootTest
 public class CustomerTest {
     @Autowired
-    private com.serviceFusion.Capstone.Services.CustomerService customerService;
+    private CustomerService customerService;
     @Autowired
     private CustomerRepository customerRepository;
 
@@ -67,11 +70,26 @@ public class CustomerTest {
 
     @Test
     public void testThatCustomerCanLogin() throws ServiceFusionException {
-        LoginRequest request = new LoginRequest();
+        CustomerLoginRequest request = new CustomerLoginRequest();
         request.setEmail("JackSmith123@gmail.com");
-        request.setPassword("password");
+        request.setPassword("13071994Temmylove.");
         LoginResponse response = customerService.login(request);
         assertThat(response).isNotNull();
+    }
+
+    @Test
+    public void testThatCustomerCanUpdateProfile() throws ServiceFusionException {
+       CustomerUpdateProfileRequest request = new  CustomerUpdateProfileRequest();
+       request.setCustomerId(1L);
+        request.setFullName("Melody Oluchi");
+        request.setEmail("melodycassie2@gmail.com");
+        request.setUsername("Melody Cassieee");
+        request.setPassword("melody1234@");
+        request.setPhoneNumber("08134546780");
+        request.setAddress("Germany");
+        CustomerUpdateResponse response = customerService.updateCustomer(request);
+        assertThat(response).isNotNull();
+
     }
 
 }
