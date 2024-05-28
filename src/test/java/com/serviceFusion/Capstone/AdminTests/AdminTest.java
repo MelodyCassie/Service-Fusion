@@ -39,6 +39,18 @@ public class AdminTest {
     }
 
     @Test
+    public void testThatAdminCanRegister3() throws ServiceFusionException {
+        AdminRegistrationRequest request = new AdminRegistrationRequest();
+        request.setEmail("melodyoluchi848@gmail.com");
+        request.setUsername("Melodyoluchi");
+        request.setPassword("Melodyoluchi848.");
+        request.setFullName("Melody Cassie");
+
+        AdminRegistrationResponse response = adminService.registerAdmin(request);
+        assertThat(response).isNotNull();
+    }
+
+    @Test
     public void testThatAdminCanRegister2() throws ServiceFusionException {
         AdminRegistrationRequest request = new AdminRegistrationRequest();
         request.setEmail("favourmbata520@gmail.com");
