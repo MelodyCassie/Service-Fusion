@@ -1,6 +1,7 @@
 package com.serviceFusion.Capstone.services;
 
 import com.serviceFusion.Capstone.data.models.Admin;
+import com.serviceFusion.Capstone.data.models.Customer;
 import com.serviceFusion.Capstone.data.models.Role;
 import com.serviceFusion.Capstone.data.repositories.AdminRepository;
 import com.serviceFusion.Capstone.data.repositories.CustomerRepository;
@@ -13,6 +14,7 @@ import org.modelmapper.ModelMapper;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;
+import java.util.List;
 
 import static com.serviceFusion.Capstone.utils.Verification.*;
 
@@ -34,10 +36,10 @@ public class AdminServiceApp implements AdminService {
         admin.setRole(Role.ADMIN);
         admin.setCreatedAt(LocalDateTime.now());
         adminRepository.save(admin);
-        WelcomeMessageRequest welcomeRequest = new WelcomeMessageRequest();
-        welcomeRequest.setEmail(admin.getEmail());
-        welcomeRequest.setFullName(admin.getFullName());
-        fusionNotificationService.welcomeMail(welcomeRequest);
+//        WelcomeMessageRequest welcomeRequest = new WelcomeMessageRequest();
+//        welcomeRequest.setEmail(admin.getEmail());
+//        welcomeRequest.setFullName(admin.getFullName());
+//        fusionNotificationService.welcomeMail(welcomeRequest);
 
 
         return getResponse(admin);
@@ -134,6 +136,11 @@ public class AdminServiceApp implements AdminService {
         response.setMessage(request.getServiceProviderId() + " has been successfully deleted");
 
         return response;
+    }
+
+    @Override
+    public List<Customer> findAllCustomers(AdminViewAllCustomersRequest request) throws ServiceFusionException {
+        return customerRepository.findAll();
     }
 
     private static AdminUpdateProfileResponse getUpdateProfileResponse(Admin existingAdmin) {

@@ -1,6 +1,7 @@
 package com.serviceFusion.Capstone.AdminTests;
 
 import com.serviceFusion.Capstone.data.models.Admin;
+import com.serviceFusion.Capstone.data.models.Customer;
 import com.serviceFusion.Capstone.data.repositories.AdminRepository;
 import com.serviceFusion.Capstone.dtos.requests.*;
 import com.serviceFusion.Capstone.dtos.responses.*;
@@ -11,6 +12,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 
 import java.time.LocalDateTime;
+import java.util.List;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.junit.jupiter.api.Assertions.*;
@@ -178,6 +180,16 @@ public class AdminTest {
         request.setServiceProviderId(1L);
         AdminDeleteServiceProviderResponse response = adminService.deleteServiceProvider(request);
         assertThat(response).isNotNull();
+    }
+
+
+    @Test
+    public void testThatAdminCanViewAllCustomers() throws ServiceFusionException {
+        AdminViewAllCustomersRequest request = new AdminViewAllCustomersRequest();
+        request.setAdminEmail("tobi4tee@gmail.com");
+        List<Customer> customers = adminService.findAllCustomers(request);
+        assertThat(customers).isNotNull();
+        assertEquals(2,customers.size());
     }
 
 }

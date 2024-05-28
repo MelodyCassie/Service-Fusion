@@ -28,10 +28,9 @@ public class CustomerTest {
         request.setFullName("Jack Smith");
         request.setEmail("JackSmith123@gmail.com");
         request.setUsername("jack");
-        request.setPassword("password");
-        request.setPhoneNumber("873736567");
+        request.setPassword("13071994Temmylove.");
+        request.setPhoneNumber("08073736567");
         request.setAddress("Water St");
-        request.setCreatedAt(LocalDateTime.now());
 
         CustomerRegistrationResponse response = customerService.register(request);
 
@@ -44,10 +43,9 @@ public class CustomerTest {
         request.setFullName("Melody Cassie2");
         request.setEmail("melodycassie@gmail.com");
         request.setUsername("Melody Cassieee");
-        request.setPassword("melody1234");
+        request.setPassword("13071994Temmylove.");
         request.setPhoneNumber("08134546780");
         request.setAddress("London");
-        request.setCreatedAt(LocalDateTime.now());
 
         CustomerRegistrationResponse response = customerService.register(request);
 
@@ -63,7 +61,6 @@ public class CustomerTest {
         request.setPassword("melody1234");
         request.setPhoneNumber("08134546780");
         request.setAddress("London");
-        request.setCreatedAt(LocalDateTime.now());
 
         assertThrows(ServiceFusionException.class,()->customerService.register(request));
     }

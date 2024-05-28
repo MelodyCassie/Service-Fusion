@@ -1,6 +1,8 @@
 package com.serviceFusion.Capstone.services;
 
+import com.serviceFusion.Capstone.data.models.Admin;
 import com.serviceFusion.Capstone.data.models.Customer;
+import com.serviceFusion.Capstone.data.repositories.AdminRepository;
 import com.serviceFusion.Capstone.data.repositories.CustomerRepository;
 import com.serviceFusion.Capstone.dtos.requests.CustomerRegistrationRequest;
 import com.serviceFusion.Capstone.dtos.requests.LoginRequest;
@@ -8,6 +10,8 @@ import com.serviceFusion.Capstone.dtos.responses.CustomerRegistrationResponse;
 import com.serviceFusion.Capstone.dtos.responses.LoginResponse;
 import com.serviceFusion.Capstone.exceptions.ServiceFusionException;
 import lombok.AllArgsConstructor;
+import lombok.NoArgsConstructor;
+import lombok.RequiredArgsConstructor;
 import org.modelmapper.ModelMapper;
 import org.springframework.stereotype.Service;
 
@@ -21,6 +25,8 @@ public class CustomerServiceApp implements CustomerService{
 
     private final CustomerRepository customerRepository;
     private final ModelMapper modelMapper;
+    private final AdminRepository adminRepository;
+    private final AdminServiceApp adminServiceApp;
 
     @Override
     public CustomerRegistrationResponse register(CustomerRegistrationRequest request) throws ServiceFusionException {
@@ -29,6 +35,7 @@ public class CustomerServiceApp implements CustomerService{
         Customer customer = modelMapper.map((request), Customer.class);
         customer.setCreatedAt(LocalDateTime.now());
         customerRepository.save(customer);
+
         return response(customer);
     }
 

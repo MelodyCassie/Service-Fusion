@@ -14,5 +14,4 @@ public class CustomerRegistrationRequest {
     private String password;
     private String phoneNumber;
     private String address;
-    private LocalDateTime createdAt;
 }
