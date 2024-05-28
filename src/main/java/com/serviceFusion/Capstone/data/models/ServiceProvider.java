@@ -3,6 +3,7 @@ package com.serviceFusion.Capstone.data.models;
 import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.Setter;
+import lombok.ToString;
 
 import java.time.LocalDateTime;
 import java.util.List;
@@ -10,6 +11,7 @@ import java.util.List;
 @Setter
 @Entity
 @Getter
+
 public class ServiceProvider {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
@@ -19,6 +21,8 @@ public class ServiceProvider {
     private String password;
     private String phoneNumber;
     private String description;
+    @Enumerated(EnumType.STRING)
+    private Location location;
     @Enumerated(EnumType.STRING)
     private ServiceCategory serviceCategory;
     private int yearsOfExperience;

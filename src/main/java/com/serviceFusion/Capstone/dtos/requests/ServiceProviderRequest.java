@@ -1,5 +1,6 @@
 package com.serviceFusion.Capstone.dtos.requests;
 
+import com.serviceFusion.Capstone.data.models.Location;
 import com.serviceFusion.Capstone.data.models.ServiceCategory;
 import lombok.Getter;
 import lombok.Setter;
@@ -14,6 +15,7 @@ public class ServiceProviderRequest {
     private String password;
     private int experience;
     private String description;
+    private Location location;
     private ServiceCategory serviceCategory;
 
 }
