@@ -2,7 +2,6 @@
 package com.serviceFusion.Capstone.services;
 
 import com.serviceFusion.Capstone.data.models.ServiceProvider;
-import com.serviceFusion.Capstone.dtos.requests.ServiceProviderLoginRequest;
 import com.serviceFusion.Capstone.dtos.requests.ServiceProviderRegistrationRequest;
 import com.serviceFusion.Capstone.dtos.responses.ServiceProviderLoginResponse;
 =======
@@ -10,9 +9,7 @@ package com.serviceFusion.Capstone.Services.Implementations;
 
 import com.serviceFusion.Capstone.Services.Interfaces.ServiceProviderService;
 import com.serviceFusion.Capstone.data.models.ServiceCategory;
-import com.serviceFusion.Capstone.data.models.ServiceProvider;
 import com.serviceFusion.Capstone.dtos.requests.ChangePasswordRequest;
-import com.serviceFusion.Capstone.dtos.requests.ServiceProviderRequest;
 import com.serviceFusion.Capstone.dtos.responses.ChangePasswordResponse;
 import com.serviceFusion.Capstone.dtos.responses.ServiceProviderResponse;
 >>>>>>> origin/submain:src/main/java/com/serviceFusion/Capstone/Services/Implementations/ServiceProviderImpl.java
