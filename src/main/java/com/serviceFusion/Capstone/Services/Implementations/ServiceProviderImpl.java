@@ -1,18 +1,21 @@
-package com.serviceFusion.Capstone.services.Implementations;
+package com.serviceFusion.Capstone.Services.Implementations;
 
 import com.serviceFusion.Capstone.Services.Interfaces.ServiceProviderService;
+import com.serviceFusion.Capstone.data.models.ServiceCategory;
 import com.serviceFusion.Capstone.data.models.ServiceProvider;
-import com.serviceFusion.Capstone.dtos.request.LoginRequest;
-import com.serviceFusion.Capstone.dtos.request.ServiceProviderRequest;
-import com.serviceFusion.Capstone.dtos.response.LoginResponse;
+import com.serviceFusion.Capstone.dtos.requests.ChangePasswordRequest;
+import com.serviceFusion.Capstone.dtos.requests.ServiceProviderRequest;
+import com.serviceFusion.Capstone.dtos.responses.ChangePasswordResponse;
+import com.serviceFusion.Capstone.dtos.responses.ServiceProviderResponse;
 import com.serviceFusion.Capstone.exceptions.EmailAlreadyExistsException;
 import com.serviceFusion.Capstone.exceptions.IncorrectPasswordException;
 import com.serviceFusion.Capstone.exceptions.InvalidEmailFormatException;
 import com.serviceFusion.Capstone.exceptions.UserNotFoundException;
-import com.serviceFusion.Capstone.repository.ServiceProviderRepository;
+import com.serviceFusion.Capstone.data.repositories.ServiceProviderRepository;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
 
+import java.time.LocalDateTime;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -23,27 +26,28 @@ public class ServiceProviderImpl  implements ServiceProviderService {
 
 
     @Override
-    public ServiceProvider registerServiceProvider(ServiceProviderRequest request) throws EmailAlreadyExistsException, InvalidEmailFormatException {
+    public ServiceProviderResponse registerServiceProvider(ServiceProviderRequest request) throws EmailAlreadyExistsException, InvalidEmailFormatException {
        validate(request);
+        ServiceProvider serviceProvider = mapAndvalidateServiceProvider(request);
+        ServiceProvider savedProvider = serviceProviderRepository.save(serviceProvider);
+
+        ServiceProviderResponse response = new ServiceProviderResponse();
+        response.setMessage("Registration sucessful");
+        response.setId(savedProvider.getId());
+        return response;
+    }
+
+    private static ServiceProvider mapAndvalidateServiceProvider(ServiceProviderRequest request) {
         ServiceProvider serviceProvider = new ServiceProvider();
         serviceProvider.setFullName(request.getFullName());
         serviceProvider.setYearsOfExperience(request.getExperience());
         serviceProvider.setPassword(request.getPassword());
         serviceProvider.setEmail(request.getEmail());
-        serviceProvider.setPhoneNumber(request.getPhonenumber());
+        serviceProvider.setPhoneNumber(request.getPhoneNumber());
         serviceProvider.setDescription(request.getDescription());
-
-
-        ServiceProvider savedProvider = serviceProviderRepository.save(serviceProvider);
-        ServiceProvider response = new ServiceProvider();
-
-        response.setFullName(savedProvider.getFullName());
-        response.setDescription(savedProvider.getDescription());
-        response.setYearsOfExperience(savedProvider.getYearsOfExperience());
-        response.setEmail(savedProvider.getEmail());
-        response.setPhoneNumber(savedProvider.getPhoneNumber());
-
-        return response;
+        serviceProvider.setCreatedAt(LocalDateTime.now());
+        serviceProvider.setServiceCategory(ServiceCategory.BARBERS);
+        return serviceProvider;
     }
 
     @Override
@@ -58,6 +62,42 @@ public class ServiceProviderImpl  implements ServiceProviderService {
 
         LoginResponse response = new LoginResponse();
         response.setMessage("login sucessful");
+        return response;
+    }
+
+    @Override
+    public ServiceProviderResponse updateProfile(ServiceProviderRequest updateDetailsRequest) throws UserNotFoundException {
+       ServiceProvider foundUser = serviceProviderRepository.findByEmail(updateDetailsRequest.getEmail());
+       if (foundUser == null) throw new UserNotFoundException("User not found");
+       foundUser.setFullName(updateDetailsRequest.getFullName());
+        foundUser.setEmail(updateDetailsRequest.getEmail());
+        foundUser.setPassword(updateDetailsRequest.getPassword());
+        foundUser.setDescription(updateDetailsRequest.getDescription());
+        foundUser.setYearsOfExperience(updateDetailsRequest.getExperience());
+        foundUser.setPassword(updateDetailsRequest.getPassword());
+        foundUser.setPhoneNumber(updateDetailsRequest.getPhoneNumber());
+        foundUser.setServiceCategory(ServiceCategory.CLEANERS);
+       ServiceProvider updatedProfile = serviceProviderRepository.save(foundUser);
+
+       ServiceProviderResponse response = new ServiceProviderResponse();
+       response.setId(updatedProfile.getId());
+       response.setMessage("update successful");
+       response.setFullName(updatedProfile.getFullName());
+      return response;
+    }
+
+    @Override
+    public ChangePasswordResponse changePassword(ChangePasswordRequest changePassword) throws UserNotFoundException, IncorrectPasswordException {
+     ServiceProvider foundUser = serviceProviderRepository.findByEmail(changePassword.getEmail());
+      if (foundUser == null)throw new UserNotFoundException("service provider not found");
+      if (!foundUser.getPassword().equalsIgnoreCase(changePassword.getOldPassword()))
+         throw new IncorrectPasswordException("invalid password");
+        foundUser.setPassword(changePassword.getPassword());
+       serviceProviderRepository.save(foundUser);
+
+       ChangePasswordResponse response = new ChangePasswordResponse();
+       response.setStatus("password changed successfully");
+//       response.setPassword(changePassword.getPassword());
         return response;
     }
 

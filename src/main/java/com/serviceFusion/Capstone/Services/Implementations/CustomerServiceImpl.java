@@ -1,5 +1,6 @@
-package com.serviceFusion.Capstone.services;
+package com.serviceFusion.Capstone.Services.Implementations;
 
+import com.serviceFusion.Capstone.Services.CustomerService;
 import com.serviceFusion.Capstone.data.models.Customer;
 import com.serviceFusion.Capstone.data.repositories.CustomerRepository;
 import com.serviceFusion.Capstone.dtos.requests.CustomerRegistrationRequest;
@@ -15,7 +16,7 @@ import org.springframework.stereotype.Service;
 
 @Service
 @AllArgsConstructor
-public class CustomerServiceImpl implements CustomerService{
+public class CustomerServiceImpl implements CustomerService {
 
     private final CustomerRepository customerRepository;
     private final Verification verification;

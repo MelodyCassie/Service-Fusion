@@ -1,5 +1,6 @@
-package com.serviceFusion.Capstone.services;
+package com.serviceFusion.Capstone.Services.Implementations;
 
+import com.serviceFusion.Capstone.Services.AdminService;
 import com.serviceFusion.Capstone.data.models.Admin;
 import com.serviceFusion.Capstone.data.repositories.AdminRepository;
 import com.serviceFusion.Capstone.dtos.requests.AdminRegistrationRequest;
@@ -18,7 +19,7 @@ import static com.serviceFusion.Capstone.utils.Verification.verifyPassword;
 
 @Service
 @AllArgsConstructor
-public class AdminServiceApp implements com.serviceFusion.Capstone.services.AdminService {
+public class AdminServiceApp implements AdminService {
 
     private final AdminRepository adminRepository;
     private final ModelMapper modelMapper;
