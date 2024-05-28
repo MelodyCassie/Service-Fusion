@@ -1,11 +1,10 @@
 package com.serviceFusion.Capstone.controllers;
 
-
-import com.serviceFusion.Capstone.Services.Interfaces.ServiceProviderService;
 import com.serviceFusion.Capstone.dtos.requests.ServiceProviderRequest;
 import com.serviceFusion.Capstone.dtos.responses.ServiceProviderResponse;
 import com.serviceFusion.Capstone.exceptions.EmailAlreadyExistsException;
 import com.serviceFusion.Capstone.exceptions.InvalidEmailFormatException;
+import com.serviceFusion.Capstone.services.ServiceProviderService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;

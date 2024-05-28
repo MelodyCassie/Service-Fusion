@@ -6,19 +6,19 @@ import com.serviceFusion.Capstone.dtos.requests.CustomerRegistrationRequest;
 import com.serviceFusion.Capstone.dtos.responses.LoginResponse;
 import com.serviceFusion.Capstone.dtos.responses.CustomerRegistrationResponse;
 import com.serviceFusion.Capstone.exceptions.ServiceFusionException;
-import com.serviceFusion.Capstone.services.CustomerService;
+
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 
-import java.time.LocalDateTime;
+
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.junit.jupiter.api.Assertions.*;
 @SpringBootTest
 public class CustomerTest {
     @Autowired
-    private CustomerService customerService;
+    private com.serviceFusion.Capstone.Services.CustomerService customerService;
     @Autowired
     private CustomerRepository customerRepository;
 

@@ -1,7 +1,5 @@
 package com.serviceFusion.Capstone.controllers;
 
-
-import com.serviceFusion.Capstone.Services.AdminService;
 import com.serviceFusion.Capstone.dtos.requests.AdminRegistrationRequest;
 import com.serviceFusion.Capstone.dtos.responses.AdminRegistrationResponse;
 import com.serviceFusion.Capstone.exceptions.ServiceFusionException;

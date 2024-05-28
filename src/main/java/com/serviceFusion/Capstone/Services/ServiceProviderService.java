@@ -1,17 +1,20 @@
 package com.serviceFusion.Capstone.services;
 
-import com.serviceFusion.Capstone.data.models.ServiceProvider;
-import com.serviceFusion.Capstone.dtos.requests.ServiceProviderLoginRequest;
-import com.serviceFusion.Capstone.dtos.requests.ServiceProviderRegistrationRequest;
-import com.serviceFusion.Capstone.dtos.responses.ServiceProviderLoginResponse;
+import com.serviceFusion.Capstone.dtos.requests.LoginRequest;
+import com.serviceFusion.Capstone.dtos.requests.ServiceProviderRequest;
+import com.serviceFusion.Capstone.dtos.responses.LoginResponse;
+import com.serviceFusion.Capstone.dtos.responses.ServiceProviderResponse;
 import com.serviceFusion.Capstone.exceptions.EmailAlreadyExistsException;
 import com.serviceFusion.Capstone.exceptions.IncorrectPasswordException;
 import com.serviceFusion.Capstone.exceptions.InvalidEmailFormatException;
 import com.serviceFusion.Capstone.exceptions.UserNotFoundException;
 
 public interface ServiceProviderService {
-    ServiceProvider registerServiceProvider(ServiceProviderRegistrationRequest request) throws EmailAlreadyExistsException, InvalidEmailFormatException;
 
-    ServiceProviderLoginResponse loginServiceProvider(ServiceProviderLoginRequest serviceProviderLoginRequest) throws UserNotFoundException, IncorrectPasswordException;
+    ServiceProviderResponse registerServiceProvider(ServiceProviderRequest request) throws EmailAlreadyExistsException, InvalidEmailFormatException;
+
+    LoginResponse loginServiceProvider(LoginRequest loginRequest) throws UserNotFoundException, IncorrectPasswordException;
+
+    ServiceProviderResponse updateProfile(ServiceProviderRequest updateDetailsRequest) throws UserNotFoundException;
 
 }
