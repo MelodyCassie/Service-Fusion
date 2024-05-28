@@ -7,15 +7,8 @@ import lombok.Setter;
 
 @Setter
 @Getter
-public class ServiceProviderRequest {
+public class SearchServiceProviderRequest {
 
-    private String fullName;
-    private String phoneNumber;
-    private String email;
-    private String password;
-    private int experience;
-    private String description;
     private Location location;
-    private ServiceCategory serviceCategory;
-
+    private ServiceCategory category;
 }

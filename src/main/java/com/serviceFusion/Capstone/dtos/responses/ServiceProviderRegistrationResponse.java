@@ -5,5 +5,7 @@ import lombok.Setter;
 
 @Setter
 @Getter
-public class ServiceProviderRegistration {
+public class ServiceProviderRegistrationResponse {
+    private Long id;
+    private String message;
 }
