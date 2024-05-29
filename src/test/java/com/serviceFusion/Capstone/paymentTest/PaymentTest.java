@@ -24,7 +24,6 @@ public class PaymentTest {
         request.setBookingId(1L);
         request.setCustomerId(1L);
         request.setAmount(BigDecimal.valueOf(5000));
-
         PaymentResponse response = paymentService.payForBooking(request);
         assertThat(response).isNotNull();
 

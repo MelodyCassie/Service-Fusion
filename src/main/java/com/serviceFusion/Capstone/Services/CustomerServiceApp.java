@@ -125,6 +125,16 @@ public class CustomerServiceApp implements CustomerService{
         return response;
     }
 
+    @Override
+    public Customer findById(Long customerId) {
+        return customerRepository.findById(customerId).get();
+    }
+
+    @Override
+    public void save(Customer existingCustomer) {
+        customerRepository.save(existingCustomer);
+    }
+
     private @NotNull Customer getExistingCustomer(CustomerBookingRequest request) throws ServiceFusionException {
         Customer existingCustomer = customerRepository.findById(request.getCustomerId()).orElse(null);
         if (existingCustomer==null) throw new ServiceFusionException("Kindly register to book a service");
