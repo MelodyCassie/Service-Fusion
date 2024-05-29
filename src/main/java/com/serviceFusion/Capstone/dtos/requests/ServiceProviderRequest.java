@@ -13,7 +13,7 @@ public class ServiceProviderRequest {
     private String phoneNumber;
     private String email;
     private String password;
-    private int experience;
+    private String experienceInYears;
     private String description;
     private Location location;
     private ServiceCategory serviceCategory;

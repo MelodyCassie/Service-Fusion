@@ -17,24 +17,16 @@ public class ServiceProvider {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
-    @NotBlank
     private String fullName;
-    @NotBlank
     private String email;
-    @NotBlank
     private String password;
-    @NotBlank
     private String phoneNumber;
-    @NotBlank
     private String description;
-    @NotBlank
     @Enumerated(EnumType.STRING)
     private Location location;
-    @NotBlank
     @Enumerated(EnumType.STRING)
     private ServiceCategory serviceCategory;
-    @NotBlank
-    private int yearsOfExperience;
+    private String yearsOfExperience;
     private LocalDateTime createdAt;
     private LocalDateTime updatedAt;
     private boolean isLogin;

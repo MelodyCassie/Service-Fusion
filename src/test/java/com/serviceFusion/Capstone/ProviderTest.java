@@ -28,7 +28,8 @@ public class ProviderTest {
         request.setCategory(ServiceCategory.HAIRSTYLISTS);
         request.setEmail("lanlehin@gmail.com");
         request.setDescription("Does both male and female hair styling");
-        request.setExperience(3);
+        request.setExperienceInYears("2 years");
+        request.setPhoneNumber("08068952954");
         request.setLocation(Location.EJIGBO);
         request.setPassword("lanlehinTifeh13@");
 
@@ -42,9 +43,12 @@ public class ProviderTest {
         request.setFullName("Adeniyi Daniel");
         request.setCategory(ServiceCategory.BARBERS);
         request.setEmail("adeniyidaniel@gmail.com");
-        request.setDescription("Does both male and female hair styling");
-        request.setExperience(1);
+        request.setDescription("Male and Female hair styling");
+        request.setExperienceInYears("2 years");
         request.setLocation(Location.ISOLO);
+        request.setPassword("Daniel234@");
+        request.setPhoneNumber("08168952046");
+
         ServiceProviderRegistrationResponse response = serviceProviderService.registerServiceProvider(request);
         assertThat(response).isNotNull();
     }

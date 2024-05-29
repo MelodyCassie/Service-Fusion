@@ -1,13 +1,7 @@
 package com.serviceFusion.Capstone.services;
 
-import com.serviceFusion.Capstone.dtos.requests.CustomerRegistrationRequest;
-import com.serviceFusion.Capstone.dtos.requests.CustomerLoginRequest;
-import com.serviceFusion.Capstone.dtos.requests.CustomerUpdateProfileRequest;
-import com.serviceFusion.Capstone.dtos.requests.SearchServiceProviderRequest;
-import com.serviceFusion.Capstone.dtos.responses.CustomerRegistrationResponse;
-import com.serviceFusion.Capstone.dtos.responses.CustomerUpdateResponse;
-import com.serviceFusion.Capstone.dtos.responses.LoginResponse;
-import com.serviceFusion.Capstone.dtos.responses.SearchServiceProviderResponse;
+import com.serviceFusion.Capstone.dtos.requests.*;
+import com.serviceFusion.Capstone.dtos.responses.*;
 import com.serviceFusion.Capstone.exceptions.ServiceFusionException;
 
 public interface CustomerService {
@@ -18,4 +12,6 @@ public interface CustomerService {
     CustomerUpdateResponse updateCustomer(CustomerUpdateProfileRequest request) throws ServiceFusionException;
 
     SearchServiceProviderResponse searchForServiceProvider(SearchServiceProviderRequest request);
+
+    CustomerBookingResponse bookService(CustomerBookingRequest request) throws ServiceFusionException;
 }

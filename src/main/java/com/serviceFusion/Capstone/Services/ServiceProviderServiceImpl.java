@@ -7,7 +7,6 @@ import com.serviceFusion.Capstone.dtos.requests.*;
 import com.serviceFusion.Capstone.dtos.responses.*;
 import com.serviceFusion.Capstone.exceptions.*;
 import lombok.AllArgsConstructor;
-import org.jetbrains.annotations.NotNull;
 import org.modelmapper.ModelMapper;
 import org.springframework.stereotype.Service;
 
@@ -33,10 +32,10 @@ public class ServiceProviderServiceImpl implements ServiceProviderService {
 
 
         ServiceProvider serviceProvider = getServiceProvider(request);
-        WelcomeMessageRequest welcomeRequest = new WelcomeMessageRequest();
-            welcomeRequest.setEmail(serviceProvider.getEmail());
-            welcomeRequest.setFullName(serviceProvider.getFullName());
-            fusionNotificationService.welcomeMail(welcomeRequest);
+//        WelcomeMessageRequest welcomeRequest = new WelcomeMessageRequest();
+//            welcomeRequest.setEmail(serviceProvider.getEmail());
+//            welcomeRequest.setFullName(serviceProvider.getFullName());
+//            fusionNotificationService.welcomeMail(welcomeRequest);
 
         return  getProviderRegistrationResponse(serviceProvider);
 
@@ -49,7 +48,7 @@ public class ServiceProviderServiceImpl implements ServiceProviderService {
         return response;
     }
 
-    private @NotNull ServiceProvider getServiceProvider(ServiceProviderRegistrationRequest request) {
+    private ServiceProvider getServiceProvider(ServiceProviderRegistrationRequest request) {
         ServiceProvider serviceProvider = modelMapper.map(request, ServiceProvider.class);
         serviceProvider.setLocation(request.getLocation());
         serviceProvider.setCreatedAt(LocalDateTime.now());
@@ -85,7 +84,7 @@ public class ServiceProviderServiceImpl implements ServiceProviderService {
         foundUser.setEmail(updateDetailsRequest.getEmail());
         foundUser.setPassword(updateDetailsRequest.getPassword());
         foundUser.setDescription(updateDetailsRequest.getDescription());
-        foundUser.setYearsOfExperience(updateDetailsRequest.getExperience());
+        foundUser.setYearsOfExperience(updateDetailsRequest.getExperienceInYears());
         foundUser.setPassword(updateDetailsRequest.getPassword());
         foundUser.setPhoneNumber(updateDetailsRequest.getPhoneNumber());
         foundUser.setServiceCategory(ServiceCategory.CLEANERS);
