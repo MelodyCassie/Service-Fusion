@@ -14,4 +14,5 @@ public interface CustomerService {
     SearchServiceProviderResponse searchForServiceProvider(SearchServiceProviderRequest request);
 
     CustomerBookingResponse bookService(CustomerBookingRequest request) throws ServiceFusionException;
+
 }
