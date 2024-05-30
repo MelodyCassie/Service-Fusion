@@ -26,6 +26,7 @@ public class CustomerServiceApp implements CustomerService{
     private final ModelMapper modelMapper;
     private final ServiceProviderService providerService;
     private final BookingRepository bookingRepository;
+    private final ServiceFusionNotificationService fusionNotificationService;
 
     @Override
     public CustomerRegistrationResponse register(CustomerRegistrationRequest request) throws ServiceFusionException {
@@ -35,6 +36,10 @@ public class CustomerServiceApp implements CustomerService{
         customer.setCreatedAt(LocalDateTime.now());
         customerRepository.save(customer);
 
+        RegistrationMessageRequest welcomeRequest = new RegistrationMessageRequest();
+        welcomeRequest.setEmail(customer.getEmail());
+        welcomeRequest.setFullName(customer.getFullName());
+        fusionNotificationService.registrationNotification(welcomeRequest);
         return response(customer);
     }
 
@@ -52,7 +57,7 @@ public class CustomerServiceApp implements CustomerService{
 
     private static void verifyDetails(CustomerRegistrationRequest request) throws ServiceFusionException {
         if (request.getFullName().length() < 3) throw new ServiceFusionException("FullName must be at least 3 characters");
-        if (request.getUsername().length() < 3) throw new ServiceFusionException("Username must be at least 3 characters");
+//        if (request.getUsername().length() < 3) throw new ServiceFusionException("Username must be at least 3 characters");
         if (request.getAddress().length() < 3) throw new ServiceFusionException("Address must be at least 3 characters");
         if (verifyEmail(request.getEmail())) throw new ServiceFusionException("Invalid email format");
         if (verifyPassword(request.getPassword())) throw new ServiceFusionException("Invalid password format");
@@ -85,6 +90,11 @@ public class CustomerServiceApp implements CustomerService{
         existingCustomer.setUpdatedAt(LocalDateTime.now());
 
         customerRepository.save(existingCustomer);
+
+        UpdateMessageRequest updateRequest = new UpdateMessageRequest();
+        updateRequest.setEmail(existingCustomer.getEmail());
+        updateRequest.setFullName(existingCustomer.getFullName());
+        fusionNotificationService.updateNotification(updateRequest);
 
         return getUpdateResponse(existingCustomer);
 
