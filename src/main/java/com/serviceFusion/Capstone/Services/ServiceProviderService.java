@@ -29,4 +29,6 @@ public interface ServiceProviderService {
     ServiceProviderLoginResponse login(ServiceProviderLoginRequest request);
 
     void logout(ServiceProviderLogoutRequest request);
+
+    UpdateServiceProviderProfileResponse updateProfile(UpdateServiceProviderProfileRequest request);
 }

@@ -1,6 +1,5 @@
-package com.serviceFusion.Capstone.services.implementation;
+package com.serviceFusion.Capstone.services;
 
-import com.serviceFusion.Capstone.services.interfaces.ServiceService;
 import com.serviceFusion.Capstone.data.models.ServiceProvided;
 import com.serviceFusion.Capstone.dtos.requests.ServiceCreationRequest;
 import com.serviceFusion.Capstone.dtos.responses.ServiceCreationResponse;
@@ -11,7 +10,11 @@ import org.springframework.stereotype.Service;
 
 @Service
 @AllArgsConstructor
+<<<<<<< HEAD:src/main/java/com/serviceFusion/Capstone/Services/ServiceServiceApp.java
 public class ServiceServiceApp implements ServiceService {
+=======
+public class ServiceProvidedServiceApp implements ServiceProvidedService {
+>>>>>>> origin/submain:src/main/java/com/serviceFusion/Capstone/Services/ServiceProvidedServiceApp.java
     private final ModelMapper modelMapper;
     private final ServiceProvidedRepository serviceProvidedRepository;
 

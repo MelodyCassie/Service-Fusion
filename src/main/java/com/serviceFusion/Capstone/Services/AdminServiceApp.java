@@ -35,10 +35,17 @@ public class AdminServiceApp implements AdminService {
         admin.setRole(Role.ADMIN);
         admin.setCreatedAt(LocalDateTime.now());
         adminRepository.save(admin);
+<<<<<<< HEAD
 //        WelcomeMessageRequest welcomeRequest = new WelcomeMessageRequest();
 //        welcomeRequest.setEmail(admin.getEmail());
 //        welcomeRequest.setFullName(admin.getFullName());
 //        fusionNotificationService.welcomeMail(welcomeRequest);
+=======
+        RegistrationMessageRequest welcomeRequest = new RegistrationMessageRequest();
+        welcomeRequest.setEmail(admin.getEmail());
+        welcomeRequest.setFullName(admin.getFullName());
+        fusionNotificationService.registrationNotification(welcomeRequest);
+>>>>>>> origin/submain
 
 
         return getResponse(admin);
