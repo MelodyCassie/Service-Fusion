@@ -25,7 +25,6 @@ public class CustomerTest {
         CustomerRegistrationRequest request = new CustomerRegistrationRequest();
         request.setFullName("Jack Smith");
         request.setEmail("JackSmith123@gmail.com");
-        request.setUsername("jack");
         request.setPassword("13071994Temmylove.");
         request.setPhoneNumber("08073736567");
         request.setAddress("Water St");
@@ -40,7 +39,6 @@ public class CustomerTest {
         CustomerRegistrationRequest request = new CustomerRegistrationRequest();
         request.setFullName("Melody Cassie2");
         request.setEmail("melodycassie@gmail.com");
-        request.setUsername("Melody Cassieee");
         request.setPassword("13071994Temmylove.");
         request.setPhoneNumber("08134546780");
         request.setAddress("London");
@@ -55,7 +53,6 @@ public class CustomerTest {
         CustomerRegistrationRequest request = new CustomerRegistrationRequest();
         request.setFullName("Melody Cassie2");
         request.setEmail("melodycassie@gmail.com");
-        request.setUsername("Melody Cassieee");
         request.setPassword("melody1234");
         request.setPhoneNumber("08134546780");
         request.setAddress("London");
@@ -73,6 +70,15 @@ public class CustomerTest {
         assertThat(response).isNotNull();
     }
 
+    @Test
+    public void testThatCustomerTwoCanLogin() throws ServiceFusionException {
+        CustomerLoginRequest request = new CustomerLoginRequest();
+        request.setEmail("melodycassie2@gmail.com");
+
+        request.setPassword("melody1234@");
+        CustomerLoginResponse response = customerService.login(request);
+        assertThat(response).isNotNull();
+    }
     @Test
     public void testThatCustomerCanUpdateProfile() throws ServiceFusionException {
        CustomerUpdateProfileRequest request = new  CustomerUpdateProfileRequest();

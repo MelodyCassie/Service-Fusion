@@ -10,7 +10,6 @@ import java.time.LocalDateTime;
 public class CustomerRegistrationRequest {
     private String fullName;
     private String email;
-    private String username;
     private String password;
     private String phoneNumber;
     private String address;

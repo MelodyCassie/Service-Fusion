@@ -1,5 +1,6 @@
-package com.serviceFusion.Capstone.services;
+package com.serviceFusion.Capstone.services.implementation;
 
+import com.serviceFusion.Capstone.services.interfaces.ServiceService;
 import com.serviceFusion.Capstone.data.models.ServiceProvided;
 import com.serviceFusion.Capstone.dtos.requests.ServiceCreationRequest;
 import com.serviceFusion.Capstone.dtos.responses.ServiceCreationResponse;

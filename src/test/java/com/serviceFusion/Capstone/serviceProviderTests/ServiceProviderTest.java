@@ -1,13 +1,15 @@
 //package com.serviceFusion.Capstone.serviceProviderTests;
-//import com.serviceFusion.Capstone.data.models.ServiceCategory;
 //
-//import com.serviceFusion.Capstone.dtos.requests.CustomerLoginRequest;
-//import com.serviceFusion.Capstone.dtos.requests.ServiceProviderRequest;
+//import com.serviceFusion.Capstone.Services.Interfaces.ServiceProviderService;
+//import com.serviceFusion.Capstone.data.models.ServiceCategory;
+//import com.serviceFusion.Capstone.dtos.requests.ChangePasswordRequest;
+//import com.serviceFusion.Capstone.dtos.requests.LoginRequest;
+//import com.serviceFusion.Capstone.dtos.responses.ChangePasswordResponse;
 //import com.serviceFusion.Capstone.dtos.responses.ServiceProviderResponse;
 //import com.serviceFusion.Capstone.exceptions.EmailAlreadyExistsException;
+//import com.serviceFusion.Capstone.exceptions.IncorrectPasswordException;
 //import com.serviceFusion.Capstone.exceptions.InvalidEmailFormatException;
 //import com.serviceFusion.Capstone.exceptions.UserNotFoundException;
-//import com.serviceFusion.Capstone.services.ServiceProviderService;
 //import org.junit.jupiter.api.BeforeEach;
 //import org.junit.jupiter.api.DisplayName;
 //import org.junit.jupiter.api.Test;
@@ -24,8 +26,8 @@
 //    private ServiceProviderRequest request;
 //    private ServiceProviderRequest request1;
 //    private ServiceProviderRequest request2;
-//    private CustomerLoginRequest customerLoginRequest;
-//
+//    private LoginRequest loginRequest;
+//    private ChangePasswordRequest changePassword;
 //    private ServiceProviderRequest updateDetailsRequest;
 //
 //
@@ -58,7 +60,7 @@
 //        request2.setExperience(2);
 //        request2.setDescription("Am joe a professional barber");
 //
-//        customerLoginRequest = new CustomerLoginRequest();
+//        loginRequest = new LoginRequest();
 //
 //        updateDetailsRequest = new ServiceProviderRequest();
 //        updateDetailsRequest.setFullName("chuks chichi");
@@ -69,12 +71,20 @@
 //        updateDetailsRequest.setExperience(2);
 //        updateDetailsRequest.setDescription("Am joe a professional barber");
 //
+//        changePassword = new ChangePasswordRequest();
+//        changePassword.setEmail("example@gmail.com");
+//        changePassword.setOldPassword("password123");
+//        changePassword.setPassword("newPassword");
+//
+//
+//
 //    }
 //
 //    @Test
 //    @DisplayName("Test that service provider can register")
 //    void registerSkillProvider() {
-//        assertDoesNotThrow(() -> serviceProviderService.registerServiceProvider(request));
+//        assertDoesNotThrow(() -> serviceProviderService
+//                .registerServiceProvider(request));
 //    }
 //
 //
@@ -98,11 +108,11 @@
 //    @Test
 //    @DisplayName("Test that service provider can login")
 //    void loginServiceProvider() {
-//        customerLoginRequest.setEmail("example@gmail.com");
-//        customerLoginRequest.setPassword("password");
+//        loginRequest.setEmail("example@gmail.com");
+//        loginRequest.setPassword("password");
 //
 //        assertDoesNotThrow(() -> {
-//            serviceProviderService.loginServiceProvider(customerLoginRequest);
+//            serviceProviderService.loginServiceProvider(loginRequest);
 //        });
 //    }
 //
@@ -113,4 +123,10 @@
 //       assertEquals("chuks chichi",response.getFullName());
 //    }
 //
+//    @Test
+//    @DisplayName("Test that service provider can change password")
+//    void changePassword() throws UserNotFoundException, IncorrectPasswordException {
+//    ChangePasswordResponse response = serviceProviderService.changePassword(changePassword);
+//    assertEquals("password changed successfully",response.getStatus());
+//    }
 //}

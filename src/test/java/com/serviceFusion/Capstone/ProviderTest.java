@@ -1,5 +1,6 @@
 package com.serviceFusion.Capstone;
 
+import com.serviceFusion.Capstone.services.ServiceProviderService;
 import com.serviceFusion.Capstone.data.models.Location;
 import com.serviceFusion.Capstone.data.models.ServiceCategory;
 import com.serviceFusion.Capstone.data.repositories.ServiceProviderRepository;
@@ -11,7 +12,7 @@ import com.serviceFusion.Capstone.dtos.responses.ServiceProviderRegistrationResp
 import com.serviceFusion.Capstone.exceptions.IncorrectPasswordException;
 import com.serviceFusion.Capstone.exceptions.ServiceFusionException;
 import com.serviceFusion.Capstone.exceptions.UserNotFoundException;
-import com.serviceFusion.Capstone.services.ServiceProviderService;
+
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;

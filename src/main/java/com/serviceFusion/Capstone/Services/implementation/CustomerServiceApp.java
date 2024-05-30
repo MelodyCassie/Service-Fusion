@@ -1,4 +1,4 @@
-package com.serviceFusion.Capstone.services;
+package com.serviceFusion.Capstone.services.implementation;
 
 import com.serviceFusion.Capstone.data.models.Booking;
 import com.serviceFusion.Capstone.data.models.Customer;
@@ -9,6 +9,8 @@ import com.serviceFusion.Capstone.data.repositories.CustomerRepository;
 import com.serviceFusion.Capstone.dtos.requests.*;
 import com.serviceFusion.Capstone.dtos.responses.*;
 import com.serviceFusion.Capstone.exceptions.ServiceFusionException;
+import com.serviceFusion.Capstone.services.interfaces.CustomerService;
+import com.serviceFusion.Capstone.services.interfaces.ServiceProviderService;
 import lombok.AllArgsConstructor;
 import org.jetbrains.annotations.NotNull;
 import org.modelmapper.ModelMapper;

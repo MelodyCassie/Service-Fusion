@@ -1,4 +1,4 @@
-package com.serviceFusion.Capstone.services;
+package com.serviceFusion.Capstone.services.interfaces;
 
 import com.serviceFusion.Capstone.data.models.ServiceCategory;
 import com.serviceFusion.Capstone.data.models.ServiceProvider;

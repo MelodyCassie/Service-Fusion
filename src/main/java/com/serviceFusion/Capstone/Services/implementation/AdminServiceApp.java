@@ -1,4 +1,5 @@
-package com.serviceFusion.Capstone.services;
+package com.serviceFusion.Capstone.services.implementation;
+import com.serviceFusion.Capstone.services.interfaces.AdminService;
 import com.serviceFusion.Capstone.data.models.Admin;
 import com.serviceFusion.Capstone.data.models.Customer;
 import com.serviceFusion.Capstone.data.models.Role;
