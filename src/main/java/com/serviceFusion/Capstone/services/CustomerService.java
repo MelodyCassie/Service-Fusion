@@ -8,7 +8,7 @@ import com.serviceFusion.Capstone.exceptions.ServiceFusionException;
 public interface CustomerService {
     CustomerRegistrationResponse register(CustomerRegistrationRequest customerRegistrationRequest) throws ServiceFusionException;
 
-    LoginResponse login(CustomerLoginRequest request) throws ServiceFusionException;
+    CustomerLoginResponse login(CustomerLoginRequest request) throws ServiceFusionException;
 
     CustomerUpdateResponse updateCustomer(CustomerUpdateProfileRequest request) throws ServiceFusionException;
 

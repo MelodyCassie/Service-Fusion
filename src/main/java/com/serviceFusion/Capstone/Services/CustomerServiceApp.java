@@ -2,9 +2,7 @@ package com.serviceFusion.Capstone.services;
 
 import com.serviceFusion.Capstone.data.models.Booking;
 import com.serviceFusion.Capstone.data.models.Customer;
-import com.serviceFusion.Capstone.data.models.Role;
 import com.serviceFusion.Capstone.data.models.ServiceProvider;
-import com.serviceFusion.Capstone.data.repositories.AdminRepository;
 import com.serviceFusion.Capstone.data.repositories.BookingRepository;
 import com.serviceFusion.Capstone.data.repositories.CustomerRepository;
 import com.serviceFusion.Capstone.dtos.requests.*;
@@ -64,7 +62,7 @@ public class CustomerServiceApp implements CustomerService{
     }
 
     @Override
-    public LoginResponse login(CustomerLoginRequest request) throws ServiceFusionException {
+    public CustomerLoginResponse login(CustomerLoginRequest request) throws ServiceFusionException {
         Customer existingCustomer = customerRepository.findByEmail(request.getEmail());
         if (existingCustomer==null) throw new ServiceFusionException("User not found");
         String password = existingCustomer.getPassword();
@@ -72,7 +70,7 @@ public class CustomerServiceApp implements CustomerService{
         existingCustomer.setLoginStatus(true);
         customerRepository.save(existingCustomer);
 
-        LoginResponse response = new LoginResponse();
+        CustomerLoginResponse response = new CustomerLoginResponse();
         response.setMessage("Login successful");
 
         return response;
@@ -108,21 +106,30 @@ public class CustomerServiceApp implements CustomerService{
     public CustomerBookingResponse bookService(CustomerBookingRequest request) throws ServiceFusionException {
         Customer existingCustomer = getExistingCustomer(request);
         if (existingCustomer.isLoginStatus()) throw new ServiceFusionException("Kindly login to book a service");
-        Booking booking = new Booking();
-        booking.setCustomerId(request.getCustomerId());
-        booking.setPreferredDate(request.getPreferredDate());
-        booking.setCreatedAt(LocalDateTime.now());
-        booking.setServiceProviderId(request.getCustomerId());
+        Booking booking = getBooking(request);
         bookingRepository.save(booking);
         List<Booking> customerBooking = new ArrayList<>();
         customerBooking.add(booking);
         existingCustomer.setBookings(customerBooking);
         customerRepository.save(existingCustomer);
 
+        return getResponse(booking, existingCustomer);
+    }
+
+    private static @NotNull CustomerBookingResponse getResponse(Booking booking, Customer existingCustomer) {
         CustomerBookingResponse response = new CustomerBookingResponse();
         response.setBookingId(booking.getId());
         response.setMessage("Dear " + existingCustomer.getUsername()  + " your booking was successful.");
         return response;
+    }
+
+    private static @NotNull Booking getBooking(CustomerBookingRequest request) {
+        Booking booking = new Booking();
+        booking.setCustomerId(request.getCustomerId());
+        booking.setPreferredDate(request.getPreferredDate());
+        booking.setCreatedAt(LocalDateTime.now());
+        booking.setServiceProviderId(request.getCustomerId());
+        return booking;
     }
 
     @Override

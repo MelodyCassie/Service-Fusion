@@ -10,15 +10,7 @@ import org.springframework.web.bind.annotation.ExceptionHandler;
 public class GlobalExceptionHandler {
 
     @ExceptionHandler(ServiceFusionException.class)
-//    public ResponseEntity<ApiResponse> blogException(BlogException exception){
-//        return new ResponseEntity<>(ApiResponse.builder()
-//                .data(exception.getMessage())
-//                .httpStatus(HttpStatus.BAD_REQUEST)
-//                .statusCode(HttpStatus.BAD_REQUEST.value())
-//                .isSuccessful(false)
-//                .build(), HttpStatus.BAD_REQUEST);
-//    }
-    public ResponseEntity<String> handleServiceFusionException(ServiceFusionException exception){
+    public ResponseEntity<String> serviceFusionException(ServiceFusionException exception){
      return new ResponseEntity<>(exception.getMessage(), HttpStatus.BAD_REQUEST);
     }
 

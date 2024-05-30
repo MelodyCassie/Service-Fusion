@@ -69,7 +69,7 @@ public class CustomerTest {
         request.setEmail("JackSmith123@gmail.com");
 
         request.setPassword("13071994Temmylove.");
-        LoginResponse response = customerService.login(request);
+        CustomerLoginResponse response = customerService.login(request);
         assertThat(response).isNotNull();
     }
 
