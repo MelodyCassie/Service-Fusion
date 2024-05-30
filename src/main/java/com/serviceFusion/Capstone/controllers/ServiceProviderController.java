@@ -3,7 +3,6 @@ package com.serviceFusion.Capstone.controllers;
 import com.serviceFusion.Capstone.dtos.requests.ServiceProviderRegistrationRequest;
 import com.serviceFusion.Capstone.dtos.responses.ServiceProviderRegistrationResponse;
 import com.serviceFusion.Capstone.exceptions.ServiceFusionException;
-import com.serviceFusion.Capstone.services.ServiceProviderService;
 
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;

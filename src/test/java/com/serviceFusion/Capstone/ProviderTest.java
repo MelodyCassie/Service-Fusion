@@ -1,6 +1,5 @@
 package com.serviceFusion.Capstone;
 
-import com.serviceFusion.Capstone.services.ServiceProviderService;
 import com.serviceFusion.Capstone.data.models.Location;
 import com.serviceFusion.Capstone.data.models.ServiceCategory;
 import com.serviceFusion.Capstone.data.repositories.ServiceProviderRepository;
