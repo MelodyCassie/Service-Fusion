@@ -2,7 +2,6 @@ package com.serviceFusion.Capstone.CustomerTests;
 
 import com.serviceFusion.Capstone.data.models.Location;
 import com.serviceFusion.Capstone.data.models.ServiceCategory;
-import com.serviceFusion.Capstone.data.repositories.CustomerRepository;
 import com.serviceFusion.Capstone.dtos.requests.*;
 import com.serviceFusion.Capstone.dtos.responses.*;
 import com.serviceFusion.Capstone.exceptions.ServiceFusionException;
@@ -20,8 +19,6 @@ import static org.junit.jupiter.api.Assertions.*;
 public class CustomerTest {
     @Autowired
     private CustomerService customerService;
-    @Autowired
-    private CustomerRepository customerRepository;
 
     @Test
     public void testThatACustomerCanRegister() throws ServiceFusionException {
@@ -110,6 +107,16 @@ public class CustomerTest {
 
         CustomerBookingResponse response = customerService.bookService(request);
         assertThat(response).isNotNull();
+    }
+
+    @Test
+    public void testThatAListOfCustomerBookingCanBeFound(){
+        ViewAllCstomerBookingRequest request = new ViewAllCstomerBookingRequest();
+        request.setCustomerId(2L);
+        ViewAllCustomerBookingResponse response = customerService.viewCustomerBooking(request);
+        System.out.println(response.getCustomerBooking().size());
+        assertThat(response).isNotNull();
+
     }
 
 }

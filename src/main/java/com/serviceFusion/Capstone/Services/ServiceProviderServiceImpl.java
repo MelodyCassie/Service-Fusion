@@ -61,22 +61,9 @@ public class ServiceProviderServiceImpl implements ServiceProviderService {
         if (isRegistered) throw new ServiceFusionException("Submitted email already taken");
     }
 
-    @Override
-    public LoginResponse loginServiceProvider(CustomerLoginRequest customerLoginRequest) throws UserNotFoundException, IncorrectPasswordException {
-        ServiceProvider foundUser = serviceProviderRepository.findByEmail(customerLoginRequest.getEmail());
-        if(foundUser == null)throw new UserNotFoundException("User not found");
-        if (!foundUser .getPassword().equalsIgnoreCase(customerLoginRequest.getPassword()))
-            throw new IncorrectPasswordException("invalid password");
 
-        foundUser.setLogin(true);
-        serviceProviderRepository.save(foundUser);
 
-        LoginResponse response = new LoginResponse();
-        response.setMessage("login sucessful");
-        return response;
-    }
-
-    @Override
+//    @Override
     public ServiceProviderResponse updateProfile(ServiceProviderRequest updateDetailsRequest) throws UserNotFoundException {
         ServiceProvider foundUser = serviceProviderRepository.findByEmail(updateDetailsRequest.getEmail());
         if (foundUser == null) throw new UserNotFoundException("User not found");
@@ -132,22 +119,26 @@ public class ServiceProviderServiceImpl implements ServiceProviderService {
         return serviceProviderRepository.findAllByServiceCategory(category);
     }
 
+    @Override
+    public ServiceProviderLoginResponse login(ServiceProviderLoginRequest request) throws UserNotFoundException, IncorrectPasswordException {
+        ServiceProvider existingServiceProvider = serviceProviderRepository.findByEmail(request.getEmail());
+        if(existingServiceProvider == null)throw new UserNotFoundException("User not found");
+        if (!existingServiceProvider .getPassword().equalsIgnoreCase(request.getPassword()))
+            throw new IncorrectPasswordException("invalid password");
 
-    private void validate(ServiceProviderRequest serviceProviderRequest) throws InvalidEmailFormatException, EmailAlreadyExistsException {
-
-        if (!isValidEmail(serviceProviderRequest.getEmail()))
-            throw new InvalidEmailFormatException("invalid email format");
-        if (serviceProviderRepository.existsByEmail(serviceProviderRequest.getEmail())) {
-            throw new EmailAlreadyExistsException("Email already exist");
-        }
+        existingServiceProvider.setLogin(true);
+        serviceProviderRepository.save(existingServiceProvider);
+        ServiceProviderLoginResponse response = new ServiceProviderLoginResponse();
+        response.setMessage("Login successful");
+        return response;
     }
 
-    private boolean isValidEmail(String email) {
-        if (email == null) return false;
-        String emailRegex =
-                "^[a-zA-Z0-9_+&-]+(?:\\.[a-zA-Z0-9_+&-]+)*@(?:[a-zA-Z0-9-]+\\.)+[a-zA-Z]{2,7}$";
-        Pattern pattern = Pattern.compile(emailRegex);
-        Matcher matcher = pattern.matcher(email);
-        return matcher.matches();
+    @Override
+    public void logout(ServiceProviderLogoutRequest request) {
+        ServiceProvider existingProvider = serviceProviderRepository.findById(request.getProviderId()).get();
+        existingProvider.setLogin(false);
+        serviceProviderRepository.save(existingProvider);
+
     }
+
 }

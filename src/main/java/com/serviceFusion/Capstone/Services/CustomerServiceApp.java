@@ -26,7 +26,6 @@ public class CustomerServiceApp implements CustomerService{
 
     private final CustomerRepository customerRepository;
     private final ModelMapper modelMapper;
-    private final AdminRepository adminRepository;
     private final ServiceProviderService providerService;
     private final BookingRepository bookingRepository;
 
@@ -108,6 +107,7 @@ public class CustomerServiceApp implements CustomerService{
     @Override
     public CustomerBookingResponse bookService(CustomerBookingRequest request) throws ServiceFusionException {
         Customer existingCustomer = getExistingCustomer(request);
+        if (existingCustomer.isLoginStatus()) throw new ServiceFusionException("Kindly login to book a service");
         Booking booking = new Booking();
         booking.setCustomerId(request.getCustomerId());
         booking.setPreferredDate(request.getPreferredDate());
@@ -133,6 +133,17 @@ public class CustomerServiceApp implements CustomerService{
     @Override
     public void save(Customer existingCustomer) {
         customerRepository.save(existingCustomer);
+    }
+
+    @Override
+    public ViewAllCustomerBookingResponse viewCustomerBooking(ViewAllCstomerBookingRequest request) {
+        Customer existingCustomer = customerRepository.findById(request.getCustomerId()).get();
+        List<Booking> allBooking = existingCustomer.getBookings();
+
+        ViewAllCustomerBookingResponse response = new ViewAllCustomerBookingResponse();
+        response.setCustomerBooking(allBooking);
+
+        return response;
     }
 
     private @NotNull Customer getExistingCustomer(CustomerBookingRequest request) throws ServiceFusionException {

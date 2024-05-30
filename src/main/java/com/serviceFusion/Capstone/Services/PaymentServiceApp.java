@@ -1,10 +1,8 @@
 package com.serviceFusion.Capstone.services;
 
 import com.serviceFusion.Capstone.configs.PayStackConfig;
-import com.serviceFusion.Capstone.data.models.Booking;
 import com.serviceFusion.Capstone.data.models.Customer;
 import com.serviceFusion.Capstone.data.models.Payment;
-import com.serviceFusion.Capstone.data.repositories.CustomerRepository;
 import com.serviceFusion.Capstone.data.repositories.PaymentRepository;
 import com.serviceFusion.Capstone.dtos.requests.InitializeTransactionRequest;
 import com.serviceFusion.Capstone.dtos.requests.PaymentRequest;

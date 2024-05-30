@@ -19,4 +19,6 @@ public interface CustomerService {
     Customer findById(Long customerId);
 
     void save(Customer existingCustomer);
+
+    ViewAllCustomerBookingResponse viewCustomerBooking(ViewAllCstomerBookingRequest request);
 }
