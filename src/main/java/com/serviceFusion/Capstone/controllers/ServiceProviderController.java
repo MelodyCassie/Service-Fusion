@@ -4,6 +4,7 @@ import com.serviceFusion.Capstone.dtos.requests.ServiceProviderRegistrationReque
 import com.serviceFusion.Capstone.dtos.responses.ServiceProviderRegistrationResponse;
 import com.serviceFusion.Capstone.exceptions.ServiceFusionException;
 
+import com.serviceFusion.Capstone.services.ServiceProviderService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;

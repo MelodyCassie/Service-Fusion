@@ -17,6 +17,7 @@ import static org.assertj.core.api.Assertions.assertThat;
 import static org.junit.jupiter.api.Assertions.*;
 @SpringBootTest
 public class CustomerTest {
+
     @Autowired
     private CustomerService customerService;
 
@@ -25,7 +26,6 @@ public class CustomerTest {
         CustomerRegistrationRequest request = new CustomerRegistrationRequest();
         request.setFullName("Jack Smith");
         request.setEmail("tobi4tee@gmail.com");
-        request.setUsername("jack");
         request.setPassword("13071994Temmylove.");
         request.setPhoneNumber("08073736567");
         request.setAddress("Water St");
@@ -40,7 +40,6 @@ public class CustomerTest {
         CustomerRegistrationRequest request = new CustomerRegistrationRequest();
         request.setFullName("Melody Cassie2");
         request.setEmail("melodyoluchi848@gmail.com");
-        request.setUsername("Melody Cassieee");
         request.setPassword("13071994Melody.");
         request.setPhoneNumber("08058098539");
         request.setAddress("London");
@@ -55,7 +54,6 @@ public class CustomerTest {
         CustomerRegistrationRequest request = new CustomerRegistrationRequest();
         request.setFullName("Melody Cassie2");
         request.setEmail("melodycassie@gmail.com");
-        request.setUsername("Melody Cassieee");
         request.setPassword("melody1234");
         request.setPhoneNumber("08134546780");
         request.setAddress("London");
