@@ -2,15 +2,8 @@ package com.serviceFusion.Capstone.CustomerTests;
 
 import com.serviceFusion.Capstone.data.models.Location;
 import com.serviceFusion.Capstone.data.models.ServiceCategory;
-import com.serviceFusion.Capstone.data.repositories.CustomerRepository;
-import com.serviceFusion.Capstone.dtos.requests.CustomerLoginRequest;
-import com.serviceFusion.Capstone.dtos.requests.CustomerRegistrationRequest;
-import com.serviceFusion.Capstone.dtos.requests.CustomerUpdateProfileRequest;
-import com.serviceFusion.Capstone.dtos.requests.SearchServiceProviderRequest;
-import com.serviceFusion.Capstone.dtos.responses.CustomerUpdateResponse;
-import com.serviceFusion.Capstone.dtos.responses.LoginResponse;
-import com.serviceFusion.Capstone.dtos.responses.CustomerRegistrationResponse;
-import com.serviceFusion.Capstone.dtos.responses.SearchServiceProviderResponse;
+import com.serviceFusion.Capstone.dtos.requests.*;
+import com.serviceFusion.Capstone.dtos.responses.*;
 import com.serviceFusion.Capstone.exceptions.ServiceFusionException;
 
 import com.serviceFusion.Capstone.services.CustomerService;
@@ -26,8 +19,6 @@ import static org.junit.jupiter.api.Assertions.*;
 public class CustomerTest {
     @Autowired
     private CustomerService customerService;
-    @Autowired
-    private CustomerRepository customerRepository;
 
     @Test
     public void testThatACustomerCanRegister() throws ServiceFusionException {
@@ -78,7 +69,7 @@ public class CustomerTest {
         request.setEmail("JackSmith123@gmail.com");
 
         request.setPassword("13071994Temmylove.");
-        LoginResponse response = customerService.login(request);
+        CustomerLoginResponse response = customerService.login(request);
         assertThat(response).isNotNull();
     }
 
@@ -104,6 +95,28 @@ public class CustomerTest {
         SearchServiceProviderResponse response = customerService.searchForServiceProvider(request);
         System.out.println(response.getServiceProviders().size());
         assertThat(response).isNotNull();
+    }
+
+    @Test
+    public void testThatACustomerCanBookASpecificServiceProvider() throws ServiceFusionException {
+        CustomerBookingRequest request = new CustomerBookingRequest();
+        request.setCustomerId(2L);
+        request.setCustomerName("Jack Smith");
+        request.setCustomerAddress("312, Sabo Yaba");
+        request.setPreferredDate("05/06/2024");
+
+        CustomerBookingResponse response = customerService.bookService(request);
+        assertThat(response).isNotNull();
+    }
+
+    @Test
+    public void testThatAListOfCustomerBookingCanBeFound(){
+        ViewAllCstomerBookingRequest request = new ViewAllCstomerBookingRequest();
+        request.setCustomerId(2L);
+        ViewAllCustomerBookingResponse response = customerService.viewCustomerBooking(request);
+        System.out.println(response.getCustomerBooking().size());
+        assertThat(response).isNotNull();
+
     }
 
 }

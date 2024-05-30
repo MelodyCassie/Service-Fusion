@@ -1,6 +1,8 @@
 package com.serviceFusion.Capstone.controllers;
 
+import com.serviceFusion.Capstone.dtos.requests.CustomerBookingRequest;
 import com.serviceFusion.Capstone.dtos.requests.CustomerRegistrationRequest;
+import com.serviceFusion.Capstone.dtos.responses.CustomerBookingResponse;
 import com.serviceFusion.Capstone.dtos.responses.CustomerRegistrationResponse;
 import com.serviceFusion.Capstone.exceptions.ServiceFusionException;
 
@@ -22,5 +24,9 @@ public class CustomerController {
     public ResponseEntity<CustomerRegistrationResponse> register(@RequestBody CustomerRegistrationRequest registrationRequest) throws ServiceFusionException {
         return ResponseEntity.status(HttpStatus.CREATED)
                 .body(customerService.register(registrationRequest));
+    }
+    @PostMapping("bookService")
+    public ResponseEntity<CustomerBookingResponse> bookForService(@RequestBody CustomerBookingRequest bookingRequest) throws ServiceFusionException {
+        return new ResponseEntity<>(customerService.bookService(bookingRequest), HttpStatus.CREATED);
     }
 }

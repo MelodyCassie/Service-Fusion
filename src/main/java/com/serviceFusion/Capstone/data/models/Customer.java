@@ -31,8 +31,10 @@ public class Customer {
     private LocalDateTime createdAt;
     private LocalDateTime updatedAt;
     private boolean loginStatus;
-    @ManyToMany(fetch = FetchType.EAGER,cascade = CascadeType.ALL)
+    @OneToMany(fetch = FetchType.EAGER,cascade = CascadeType.ALL)
     private List<Booking> bookings;
-    @ManyToMany(fetch = FetchType.EAGER,cascade = CascadeType.ALL)
+    @OneToMany(fetch = FetchType.EAGER,cascade = CascadeType.ALL)
     private List<Review> reviews;
+    @OneToMany(fetch= FetchType.EAGER, cascade = CascadeType.ALL)
+    private List<Payment> payments;
 }

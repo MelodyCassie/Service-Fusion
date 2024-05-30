@@ -1,14 +1,11 @@
 package com.serviceFusion.Capstone.services;
 
+import com.serviceFusion.Capstone.data.models.Booking;
 import com.serviceFusion.Capstone.data.models.Customer;
-import com.serviceFusion.Capstone.data.models.Role;
 import com.serviceFusion.Capstone.data.models.ServiceProvider;
-import com.serviceFusion.Capstone.data.repositories.AdminRepository;
+import com.serviceFusion.Capstone.data.repositories.BookingRepository;
 import com.serviceFusion.Capstone.data.repositories.CustomerRepository;
-import com.serviceFusion.Capstone.dtos.requests.CustomerRegistrationRequest;
-import com.serviceFusion.Capstone.dtos.requests.CustomerLoginRequest;
-import com.serviceFusion.Capstone.dtos.requests.CustomerUpdateProfileRequest;
-import com.serviceFusion.Capstone.dtos.requests.SearchServiceProviderRequest;
+import com.serviceFusion.Capstone.dtos.requests.*;
 import com.serviceFusion.Capstone.dtos.responses.*;
 import com.serviceFusion.Capstone.exceptions.ServiceFusionException;
 import lombok.AllArgsConstructor;
@@ -16,6 +13,7 @@ import org.jetbrains.annotations.NotNull;
 import org.modelmapper.ModelMapper;
 import org.springframework.stereotype.Service;
 import java.time.LocalDateTime;
+import java.util.ArrayList;
 import java.util.List;
 
 import static com.serviceFusion.Capstone.utils.Verification.*;
@@ -26,8 +24,8 @@ public class CustomerServiceApp implements CustomerService{
 
     private final CustomerRepository customerRepository;
     private final ModelMapper modelMapper;
-    private final AdminRepository adminRepository;
     private final ServiceProviderService providerService;
+    private final BookingRepository bookingRepository;
 
     @Override
     public CustomerRegistrationResponse register(CustomerRegistrationRequest request) throws ServiceFusionException {
@@ -64,7 +62,7 @@ public class CustomerServiceApp implements CustomerService{
     }
 
     @Override
-    public LoginResponse login(CustomerLoginRequest request) throws ServiceFusionException {
+    public CustomerLoginResponse login(CustomerLoginRequest request) throws ServiceFusionException {
         Customer existingCustomer = customerRepository.findByEmail(request.getEmail());
         if (existingCustomer==null) throw new ServiceFusionException("User not found");
         String password = existingCustomer.getPassword();
@@ -72,7 +70,7 @@ public class CustomerServiceApp implements CustomerService{
         existingCustomer.setLoginStatus(true);
         customerRepository.save(existingCustomer);
 
-        LoginResponse response = new LoginResponse();
+        CustomerLoginResponse response = new CustomerLoginResponse();
         response.setMessage("Login successful");
 
         return response;
@@ -102,6 +100,63 @@ public class CustomerServiceApp implements CustomerService{
                 .filter(location -> location.getLocation().equals(request.getLocation())).toList();
         response.setServiceProviders(serviceProviders);
         return response;
+    }
+
+    @Override
+    public CustomerBookingResponse bookService(CustomerBookingRequest request) throws ServiceFusionException {
+        Customer existingCustomer = getExistingCustomer(request);
+        if (existingCustomer.isLoginStatus()) throw new ServiceFusionException("Kindly login to book a service");
+        Booking booking = getBooking(request);
+        bookingRepository.save(booking);
+        List<Booking> customerBooking = new ArrayList<>();
+        customerBooking.add(booking);
+        existingCustomer.setBookings(customerBooking);
+        customerRepository.save(existingCustomer);
+
+        return getResponse(booking, existingCustomer);
+    }
+
+    private static @NotNull CustomerBookingResponse getResponse(Booking booking, Customer existingCustomer) {
+        CustomerBookingResponse response = new CustomerBookingResponse();
+        response.setBookingId(booking.getId());
+        response.setMessage("Dear " + existingCustomer.getUsername()  + " your booking was successful.");
+        return response;
+    }
+
+    private static @NotNull Booking getBooking(CustomerBookingRequest request) {
+        Booking booking = new Booking();
+        booking.setCustomerId(request.getCustomerId());
+        booking.setPreferredDate(request.getPreferredDate());
+        booking.setCreatedAt(LocalDateTime.now());
+        booking.setServiceProviderId(request.getCustomerId());
+        return booking;
+    }
+
+    @Override
+    public Customer findById(Long customerId) {
+        return customerRepository.findById(customerId).get();
+    }
+
+    @Override
+    public void save(Customer existingCustomer) {
+        customerRepository.save(existingCustomer);
+    }
+
+    @Override
+    public ViewAllCustomerBookingResponse viewCustomerBooking(ViewAllCstomerBookingRequest request) {
+        Customer existingCustomer = customerRepository.findById(request.getCustomerId()).get();
+        List<Booking> allBooking = existingCustomer.getBookings();
+
+        ViewAllCustomerBookingResponse response = new ViewAllCustomerBookingResponse();
+        response.setCustomerBooking(allBooking);
+
+        return response;
+    }
+
+    private @NotNull Customer getExistingCustomer(CustomerBookingRequest request) throws ServiceFusionException {
+        Customer existingCustomer = customerRepository.findById(request.getCustomerId()).orElse(null);
+        if (existingCustomer==null) throw new ServiceFusionException("Kindly register to book a service");
+        return existingCustomer;
     }
 
     private static @NotNull CustomerUpdateResponse getUpdateResponse(Customer existingCustomer) {

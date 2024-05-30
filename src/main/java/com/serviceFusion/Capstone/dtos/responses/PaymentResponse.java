@@ -5,11 +5,8 @@ import lombok.Setter;
 
 @Setter
 @Getter
-public class ServiceProviderResponse {
-    private Long id;
+public class PaymentResponse {
+    private Long paymentId;
+    private String paymentStatus;
     private String message;
-    private String fullName;
-    private String phoneNumber;
-
-
 }
