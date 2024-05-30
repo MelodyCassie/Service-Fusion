@@ -24,7 +24,7 @@ public class CustomerTest {
     public void testThatACustomerCanRegister() throws ServiceFusionException {
         CustomerRegistrationRequest request = new CustomerRegistrationRequest();
         request.setFullName("Jack Smith");
-        request.setEmail("JackSmith123@gmail.com");
+        request.setEmail("tobi4tee@gmail.com");
         request.setUsername("jack");
         request.setPassword("13071994Temmylove.");
         request.setPhoneNumber("08073736567");
@@ -39,10 +39,10 @@ public class CustomerTest {
     public void testThatMultipleCustomersCanRegister() throws ServiceFusionException {
         CustomerRegistrationRequest request = new CustomerRegistrationRequest();
         request.setFullName("Melody Cassie2");
-        request.setEmail("melodycassie@gmail.com");
+        request.setEmail("melodyoluchi848@gmail.com");
         request.setUsername("Melody Cassieee");
-        request.setPassword("13071994Temmylove.");
-        request.setPhoneNumber("08134546780");
+        request.setPassword("13071994Melody.");
+        request.setPhoneNumber("08058098539");
         request.setAddress("London");
 
         CustomerRegistrationResponse response = customerService.register(request);
@@ -66,9 +66,8 @@ public class CustomerTest {
     @Test
     public void testThatCustomerCanLogin() throws ServiceFusionException {
         CustomerLoginRequest request = new CustomerLoginRequest();
-        request.setEmail("JackSmith123@gmail.com");
-
-        request.setPassword("13071994Temmylove.");
+        request.setEmail("melodyoluchi848@gmail.com");
+        request.setPassword("13071994Melody.");
         CustomerLoginResponse response = customerService.login(request);
         assertThat(response).isNotNull();
     }
@@ -76,12 +75,12 @@ public class CustomerTest {
     @Test
     public void testThatCustomerCanUpdateProfile() throws ServiceFusionException {
        CustomerUpdateProfileRequest request = new  CustomerUpdateProfileRequest();
-       request.setCustomerId(1L);
-        request.setFullName("Melody Oluchi");
-        request.setEmail("melodycassie2@gmail.com");
+       request.setCustomerId(2L);
+        request.setFullName("Melody Cassie");
+        request.setEmail("melodyoluchi848@gmail.com");
         request.setUsername("Melody Cassieee");
-        request.setPassword("melody1234@");
-        request.setPhoneNumber("08134546780");
+        request.setPassword("13071994Melody.");
+        request.setPhoneNumber("08068952954");
         request.setAddress("Germany");
         CustomerUpdateResponse response = customerService.updateCustomer(request);
         assertThat(response).isNotNull();

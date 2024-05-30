@@ -16,17 +16,11 @@ public class Customer {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
-    @NotBlank
     private String username;
-    @NotBlank
     private String email;
-    @NotBlank
     private String password;
-    @NotBlank
     private String fullName;
-    @NotBlank
     private String phoneNumber;
-    @NotBlank
     private String address;
     private LocalDateTime createdAt;
     private LocalDateTime updatedAt;

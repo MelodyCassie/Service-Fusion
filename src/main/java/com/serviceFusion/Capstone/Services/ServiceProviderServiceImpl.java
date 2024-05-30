@@ -13,8 +13,6 @@ import org.springframework.stereotype.Service;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.regex.Matcher;
-import java.util.regex.Pattern;
 
 
 @AllArgsConstructor
@@ -32,10 +30,10 @@ public class ServiceProviderServiceImpl implements ServiceProviderService {
 
 
         ServiceProvider serviceProvider = getServiceProvider(request);
-//        WelcomeMessageRequest welcomeRequest = new WelcomeMessageRequest();
-//            welcomeRequest.setEmail(serviceProvider.getEmail());
-//            welcomeRequest.setFullName(serviceProvider.getFullName());
-//            fusionNotificationService.welcomeMail(welcomeRequest);
+        RegistrationMessageRequest welcomeRequest = new RegistrationMessageRequest();
+            welcomeRequest.setEmail(serviceProvider.getEmail());
+            welcomeRequest.setFullName(serviceProvider.getFullName());
+            fusionNotificationService.registrationNotification(welcomeRequest);
 
         return  getProviderRegistrationResponse(serviceProvider);
 
@@ -62,27 +60,6 @@ public class ServiceProviderServiceImpl implements ServiceProviderService {
     }
 
 
-
-//    @Override
-    public ServiceProviderResponse updateProfile(ServiceProviderRequest updateDetailsRequest) throws UserNotFoundException {
-        ServiceProvider foundUser = serviceProviderRepository.findByEmail(updateDetailsRequest.getEmail());
-        if (foundUser == null) throw new UserNotFoundException("User not found");
-        foundUser.setFullName(updateDetailsRequest.getFullName());
-        foundUser.setEmail(updateDetailsRequest.getEmail());
-        foundUser.setPassword(updateDetailsRequest.getPassword());
-        foundUser.setDescription(updateDetailsRequest.getDescription());
-        foundUser.setYearsOfExperience(updateDetailsRequest.getExperienceInYears());
-        foundUser.setPassword(updateDetailsRequest.getPassword());
-        foundUser.setPhoneNumber(updateDetailsRequest.getPhoneNumber());
-        foundUser.setServiceCategory(ServiceCategory.CLEANERS);
-        ServiceProvider updatedProfile = serviceProviderRepository.save(foundUser);
-
-        ServiceProviderResponse response = new ServiceProviderResponse();
-        response.setId(updatedProfile.getId());
-        response.setMessage("update successful");
-        response.setFullName(updatedProfile.getFullName());
-        return response;
-    }
 
     @Override
     public FIndServiceProviderByLocationResponse findByLocation(FindServiceProviderByLocationRequest request) throws ServiceFusionException {
@@ -139,6 +116,27 @@ public class ServiceProviderServiceImpl implements ServiceProviderService {
         existingProvider.setLogin(false);
         serviceProviderRepository.save(existingProvider);
 
+    }
+
+    @Override
+    public UpdateServiceProviderProfileResponse updateProfile(UpdateServiceProviderProfileRequest request) {
+        ServiceProvider existingProvider = serviceProviderRepository.findByEmail(request.getEmail());
+        existingProvider.setEmail(request.getEmail());
+        existingProvider.setFullName(request.getFullName());
+        existingProvider.setServiceCategory(request.getServiceCategory());
+        existingProvider.setLocation(request.getLocation());
+        existingProvider.setDescription(request.getDescription());
+        existingProvider.setPassword(request.getPassword());
+        existingProvider.setUpdatedAt(LocalDateTime.now());
+        serviceProviderRepository.save(existingProvider);
+        UpdateServiceProviderProfileResponse response = new UpdateServiceProviderProfileResponse();
+        response.setMessage("Profile successfully updated");
+        response.setId(existingProvider.getId());
+        UpdateMessageRequest updateMessageRequest = new UpdateMessageRequest();
+        updateMessageRequest.setEmail(existingProvider.getEmail());
+        updateMessageRequest.setFullName(existingProvider.getFullName());
+        fusionNotificationService.updateNotification(updateMessageRequest);
+        return response;
     }
 
 }

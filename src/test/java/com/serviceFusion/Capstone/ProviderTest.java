@@ -4,10 +4,7 @@ import com.serviceFusion.Capstone.data.models.Location;
 import com.serviceFusion.Capstone.data.models.ServiceCategory;
 import com.serviceFusion.Capstone.data.repositories.ServiceProviderRepository;
 import com.serviceFusion.Capstone.dtos.requests.*;
-import com.serviceFusion.Capstone.dtos.responses.FIndServiceProviderByLocationResponse;
-import com.serviceFusion.Capstone.dtos.responses.FindServiceProviderByCategoryResponse;
-import com.serviceFusion.Capstone.dtos.responses.ServiceProviderLoginResponse;
-import com.serviceFusion.Capstone.dtos.responses.ServiceProviderRegistrationResponse;
+import com.serviceFusion.Capstone.dtos.responses.*;
 import com.serviceFusion.Capstone.exceptions.IncorrectPasswordException;
 import com.serviceFusion.Capstone.exceptions.ServiceFusionException;
 import com.serviceFusion.Capstone.exceptions.UserNotFoundException;
@@ -33,7 +30,7 @@ public class ProviderTest {
         ServiceProviderRegistrationRequest request = new ServiceProviderRegistrationRequest();
         request.setFullName("Boluwatife Agboola");
         request.setCategory(ServiceCategory.HAIRSTYLISTS);
-        request.setEmail("lanlehin@gmail.com");
+        request.setEmail("lanlehin3@gmail.com");
         request.setDescription("Does both male and female hair styling");
         request.setExperienceInYears("2 years");
         request.setPhoneNumber("08068952954");
@@ -79,7 +76,7 @@ public class ProviderTest {
     }
 
     @Test
-    public void testThatServiceProviderCanUpdateProfile() throws ServiceFusionException {
+    public void testThatServiceProviderCanUpdateProfile(){
         UpdateServiceProviderProfileRequest request = new UpdateServiceProviderProfileRequest();
         request.setEmail("");
         request.setFullName("Boluwatife Agboola");
@@ -90,11 +87,10 @@ public class ProviderTest {
         request.setYearsOfExperience("6 years");
         request.setDescription("Over 6 years experience");
 
+        UpdateServiceProviderProfileResponse response = serviceProviderService.updateProfile(request);
+        assertThat(response).isNotNull();
 
-
-    }
-
-
+}
     @Test
     public void testThatServiceProviderCanBeFoundByCategory() throws ServiceFusionException {
         FindServiceProviderByCategoryRequest request = new FindServiceProviderByCategoryRequest();
@@ -112,6 +108,5 @@ public class ProviderTest {
         System.out.println(response);
         assertThat(response).isNotNull();
     }
-
 
 }

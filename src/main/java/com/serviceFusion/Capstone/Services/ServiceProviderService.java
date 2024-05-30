@@ -21,4 +21,6 @@ public interface ServiceProviderService {
     ServiceProviderLoginResponse login(ServiceProviderLoginRequest request) throws UserNotFoundException, IncorrectPasswordException;
 
     void logout(ServiceProviderLogoutRequest request);
+
+    UpdateServiceProviderProfileResponse updateProfile(UpdateServiceProviderProfileRequest request);
 }
