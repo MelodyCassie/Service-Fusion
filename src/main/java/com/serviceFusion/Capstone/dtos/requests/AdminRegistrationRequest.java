@@ -1,6 +1,5 @@
 package com.serviceFusion.Capstone.dtos.requests;
 
-import com.serviceFusion.Capstone.data.models.Role;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -13,7 +12,6 @@ public class AdminRegistrationRequest {
     private String username;
     private String email;
     private String password;
-    private String name;
-    private Role role;
+    private String fullName;
     private LocalDateTime createdAt;
 }

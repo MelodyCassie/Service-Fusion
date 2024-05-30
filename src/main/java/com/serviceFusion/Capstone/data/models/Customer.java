@@ -2,6 +2,7 @@ package com.serviceFusion.Capstone.data.models;
 
 
 import jakarta.persistence.*;
+import jakarta.validation.constraints.NotBlank;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -15,24 +16,25 @@ public class Customer {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
+    @NotBlank
     private String username;
+    @NotBlank
     private String email;
+    @NotBlank
     private String password;
-    private String name;
+    @NotBlank
+    private String fullName;
+    @NotBlank
     private String phoneNumber;
+    @NotBlank
     private String address;
     private LocalDateTime createdAt;
     private LocalDateTime updatedAt;
     private boolean loginStatus;
-    @ManyToOne(fetch = FetchType.EAGER,cascade = CascadeType.ALL)
-    private Admin admin;
-    @ManyToMany(fetch = FetchType.EAGER,cascade = CascadeType.ALL)
+    @OneToMany(fetch = FetchType.EAGER,cascade = CascadeType.ALL)
     private List<Booking> bookings;
-    @ManyToMany(fetch = FetchType.EAGER,cascade = CascadeType.ALL)
+    @OneToMany(fetch = FetchType.EAGER,cascade = CascadeType.ALL)
     private List<Review> reviews;
-
-
-
-
-
+    @OneToMany(fetch= FetchType.EAGER, cascade = CascadeType.ALL)
+    private List<Payment> payments;
 }
