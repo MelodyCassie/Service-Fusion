@@ -10,7 +10,7 @@ import org.springframework.stereotype.Service;
 
 @Service
 @AllArgsConstructor
-public class ServiceServiceApp implements ServiceService{
+public class ServiceProvidedServiceApp implements com.serviceFusion.Capstone.services.ServiceProvidedService {
     private final ModelMapper modelMapper;
     private final ServiceProvidedRepository serviceProvidedRepository;
 

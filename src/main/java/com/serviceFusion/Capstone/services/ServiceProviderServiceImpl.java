@@ -1,11 +1,17 @@
 package com.serviceFusion.Capstone.services;
 
+
 import com.serviceFusion.Capstone.data.models.ServiceCategory;
 import com.serviceFusion.Capstone.data.models.ServiceProvider;
 import com.serviceFusion.Capstone.data.repositories.ServiceProviderRepository;
 import com.serviceFusion.Capstone.dtos.requests.*;
-import com.serviceFusion.Capstone.dtos.responses.*;
-import com.serviceFusion.Capstone.exceptions.*;
+import com.serviceFusion.Capstone.dtos.responses.FIndServiceProviderByLocationResponse;
+import com.serviceFusion.Capstone.dtos.responses.FindServiceProviderByCategoryResponse;
+import com.serviceFusion.Capstone.dtos.responses.ServiceProviderLoginResponse;
+import com.serviceFusion.Capstone.dtos.responses.ServiceProviderRegistrationResponse;
+import com.serviceFusion.Capstone.exceptions.IncorrectPasswordException;
+import com.serviceFusion.Capstone.exceptions.ServiceFusionException;
+import com.serviceFusion.Capstone.exceptions.UserNotFoundException;
 import lombok.AllArgsConstructor;
 import org.modelmapper.ModelMapper;
 import org.springframework.stereotype.Service;
@@ -13,17 +19,12 @@ import org.springframework.stereotype.Service;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.regex.Matcher;
-import java.util.regex.Pattern;
 
-
-@AllArgsConstructor
 @Service
-public class ServiceProviderServiceImpl implements ServiceProviderService {
-    private final ServiceProviderRepository serviceProviderRepository;
+@AllArgsConstructor
+public class ServiceProviderServiceImpl implements ServiceProviderService{
     private final ModelMapper modelMapper;
-    private final ServiceFusionNotificationService fusionNotificationService;
-
+    private ServiceProviderRepository serviceProviderRepository;
 
 
     @Override
@@ -62,27 +63,6 @@ public class ServiceProviderServiceImpl implements ServiceProviderService {
     }
 
 
-
-//    @Override
-    public ServiceProviderResponse updateProfile(ServiceProviderRequest updateDetailsRequest) throws UserNotFoundException {
-        ServiceProvider foundUser = serviceProviderRepository.findByEmail(updateDetailsRequest.getEmail());
-        if (foundUser == null) throw new UserNotFoundException("User not found");
-        foundUser.setFullName(updateDetailsRequest.getFullName());
-        foundUser.setEmail(updateDetailsRequest.getEmail());
-        foundUser.setPassword(updateDetailsRequest.getPassword());
-        foundUser.setDescription(updateDetailsRequest.getDescription());
-        foundUser.setYearsOfExperience(updateDetailsRequest.getExperienceInYears());
-        foundUser.setPassword(updateDetailsRequest.getPassword());
-        foundUser.setPhoneNumber(updateDetailsRequest.getPhoneNumber());
-        foundUser.setServiceCategory(ServiceCategory.CLEANERS);
-        ServiceProvider updatedProfile = serviceProviderRepository.save(foundUser);
-
-        ServiceProviderResponse response = new ServiceProviderResponse();
-        response.setId(updatedProfile.getId());
-        response.setMessage("update successful");
-        response.setFullName(updatedProfile.getFullName());
-        return response;
-    }
 
     @Override
     public FIndServiceProviderByLocationResponse findByLocation(FindServiceProviderByLocationRequest request) throws ServiceFusionException {
@@ -140,5 +120,4 @@ public class ServiceProviderServiceImpl implements ServiceProviderService {
         serviceProviderRepository.save(existingProvider);
 
     }
-
 }

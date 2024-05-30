@@ -11,8 +11,8 @@ import java.util.List;
 
 @AllArgsConstructor
 @Service
-public class ServiceFusionNotificationApp implements ServiceFusionNotificationService{
-    private final NotificationSetUpServiceNoticeApp notificationSetUpServiceNoticeApp;
+public class ServiceFusionNotificationApp implements com.serviceFusion.Capstone.services.ServiceFusionNotificationService {
+    private final com.serviceFusion.Capstone.services.NotificationSetUpServiceNoticeApp notificationSetUpServiceNoticeApp;
     @Override
     public void welcomeMail(WelcomeMessageRequest request) {
         NotificationSenderRequest senderRequest = new NotificationSenderRequest();

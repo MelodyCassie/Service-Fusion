@@ -19,13 +19,13 @@ import static com.serviceFusion.Capstone.utils.Verification.*;
 
 @Service
 @AllArgsConstructor
-public class AdminServiceApp implements AdminService {
+public class AdminServiceApp implements com.serviceFusion.Capstone.services.AdminService {
 
     private final AdminRepository adminRepository;
     private final ModelMapper modelMapper;
     private final CustomerRepository customerRepository;
     private final ServiceProviderRepository serviceProviderRepository;
-    private final ServiceFusionNotificationService fusionNotificationService;
+    private final com.serviceFusion.Capstone.services.ServiceFusionNotificationService fusionNotificationService;
 
     @Override
     public AdminRegistrationResponse registerAdmin(AdminRegistrationRequest request) throws ServiceFusionException {
@@ -35,10 +35,10 @@ public class AdminServiceApp implements AdminService {
         admin.setRole(Role.ADMIN);
         admin.setCreatedAt(LocalDateTime.now());
         adminRepository.save(admin);
-        WelcomeMessageRequest welcomeRequest = new WelcomeMessageRequest();
-        welcomeRequest.setEmail(admin.getEmail());
-        welcomeRequest.setFullName(admin.getFullName());
-        fusionNotificationService.welcomeMail(welcomeRequest);
+//        WelcomeMessageRequest welcomeRequest = new WelcomeMessageRequest();
+//        welcomeRequest.setEmail(admin.getEmail());
+//        welcomeRequest.setFullName(admin.getFullName());
+//        fusionNotificationService.welcomeMail(welcomeRequest);
 
 
         return getResponse(admin);

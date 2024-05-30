@@ -20,12 +20,12 @@ import static com.serviceFusion.Capstone.utils.Verification.*;
 @Service
 @AllArgsConstructor
 
-public class CustomerServiceApp implements CustomerService{
+public class CustomerServiceApp implements CustomerService {
 
     private final CustomerRepository customerRepository;
     private final ModelMapper modelMapper;
-    private final ServiceProviderService providerService;
     private final BookingRepository bookingRepository;
+    private final ServiceProviderService serviceProviderService;
 
     @Override
     public CustomerRegistrationResponse register(CustomerRegistrationRequest request) throws ServiceFusionException {
@@ -95,7 +95,7 @@ public class CustomerServiceApp implements CustomerService{
     @Override
     public SearchServiceProviderResponse searchForServiceProvider(SearchServiceProviderRequest request) {
         SearchServiceProviderResponse response = new SearchServiceProviderResponse();
-        List<ServiceProvider> providers = providerService.findByServiceProvideByCategory(request.getCategory());
+        List<ServiceProvider> providers = serviceProviderService.findByServiceProvideByCategory(request.getCategory());
         List<ServiceProvider> serviceProviders = providers.stream()
                 .filter(location -> location.getLocation().equals(request.getLocation())).toList();
         response.setServiceProviders(serviceProviders);
