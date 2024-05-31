@@ -9,6 +9,7 @@ import com.serviceFusion.Capstone.exceptions.IncorrectPasswordException;
 import com.serviceFusion.Capstone.exceptions.ServiceFusionException;
 import com.serviceFusion.Capstone.exceptions.UserNotFoundException;
 
+import com.serviceFusion.Capstone.services.ServiceProviderService;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;

@@ -136,6 +136,7 @@ public class CustomerServiceApp implements  CustomerService{
     private static @NotNull Booking getBooking(CustomerBookingRequest request) {
         Booking booking = new Booking();
         booking.setCustomerId(request.getCustomerId());
+        booking.setServiceProviderId(request.getServiceProviderId());
         booking.setPreferredDate(request.getPreferredDate());
         booking.setCreatedAt(LocalDateTime.now());
         booking.setServiceProviderId(request.getCustomerId());

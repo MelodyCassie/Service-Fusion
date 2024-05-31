@@ -98,6 +98,7 @@ public class CustomerTest {
     public void testThatACustomerCanBookASpecificServiceProvider() throws ServiceFusionException {
         CustomerBookingRequest request = new CustomerBookingRequest();
         request.setCustomerId(2L);
+        request.setServiceProviderId(1L);
         request.setCustomerName("Jack Smith");
         request.setCustomerAddress("312, Sabo Yaba");
         request.setPreferredDate("05/06/2024");
