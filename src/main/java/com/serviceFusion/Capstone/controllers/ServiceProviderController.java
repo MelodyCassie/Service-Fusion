@@ -29,7 +29,6 @@ public class ServiceProviderController {
 
     private final ServiceProviderService serviceProviderService;
     private final ServiceProviderRepository serviceProviderRepository;
-    private final ServiceProvidedRepository serviceProvidedRepository;
 
     @PostMapping("register")
     public ResponseEntity<ServiceProviderRegistrationResponse> register(@Valid @RequestBody ServiceProviderRegistrationRequest request) throws ServiceFusionException {

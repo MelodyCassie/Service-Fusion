@@ -12,7 +12,7 @@ import java.util.List;
 @Setter
 @Entity
 @Getter
-
+@ToString
 public class ServiceProvider {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
@@ -33,9 +33,6 @@ public class ServiceProvider {
 
     @OneToMany(fetch = FetchType.EAGER,cascade = CascadeType.ALL)
     private List<ServiceProvided> serviceProvided;
-    @OneToMany(fetch = FetchType.EAGER,cascade = CascadeType.ALL)
-    private List<Booking> bookings;
-    @OneToMany(fetch = FetchType.EAGER,cascade = CascadeType.ALL)
-    private List<Customer> customers;
-
+//    @OneToMany(fetch = FetchType.EAGER,cascade = CascadeType.ALL)
+//    private List<Booking> bookings;
 }
