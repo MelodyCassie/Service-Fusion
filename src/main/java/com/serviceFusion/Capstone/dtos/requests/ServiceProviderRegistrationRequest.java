@@ -15,7 +15,7 @@ public class ServiceProviderRegistrationRequest {
     private String phoneNumber;
     private String email;
     private String password;
-    private String experienceInYears;
+    private String yearsOfExperience;
     private String description;
     private ServiceCategory category;
     private Location location;

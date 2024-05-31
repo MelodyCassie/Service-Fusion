@@ -28,11 +28,11 @@ public class ProviderTest {
     @Test
     public void testThatServiceProviderCanRegister() throws ServiceFusionException {
         ServiceProviderRegistrationRequest request = new ServiceProviderRegistrationRequest();
-        request.setFullName("Boluwatife Agboola");
-        request.setCategory(ServiceCategory.HAIRSTYLISTS);
-        request.setEmail("tobi4tee@gmail.com");
+        request.setFullName("Sola Agboola");
+        request.setCategory(ServiceCategory.BARBERS);
+        request.setEmail("sola@gmail.com");
         request.setDescription("Does both male and female hair styling");
-        request.setExperienceInYears("2 years");
+        request.setYearsOfExperience("5 years");
         request.setPhoneNumber("08068952954");
         request.setLocation(Location.EJIGBO);
         request.setPassword("lanlehinTifeh13@");
@@ -48,7 +48,7 @@ public class ProviderTest {
         request.setCategory(ServiceCategory.BARBERS);
         request.setEmail("adeniyidaniel@gmail.com");
         request.setDescription("Male and Female hair styling");
-        request.setExperienceInYears("2 years");
+        request.setYearsOfExperience("2 years");
         request.setLocation(Location.ISOLO);
         request.setPassword("Daniel234@");
         request.setPhoneNumber("08168952046");
@@ -107,6 +107,11 @@ public class ProviderTest {
         FIndServiceProviderByLocationResponse response = serviceProviderService.findByLocation(request);
         System.out.println(response);
         assertThat(response).isNotNull();
+    }
+
+    @Test
+    public void testThatAllRegisteredServiceProvidersCanBeFound(){
+        serviceProviderRepository.findAll().forEach(System.out::println);
     }
 
 }
