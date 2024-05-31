@@ -173,10 +173,13 @@ public class CustomerServiceApp implements CustomerService{
     @Override
     public ViewAllCustomerBookingResponse viewCustomerBooking(ViewAllCstomerBookingRequest request) {
         Customer existingCustomer = customerRepository.findById(request.getCustomerId()).get();
-        List<Booking> allBooking = existingCustomer.getBookings();
+
+        List<Booking> customerBooking = existingCustomer.getBookings();
+
+
 
         ViewAllCustomerBookingResponse response = new ViewAllCustomerBookingResponse();
-        response.setCustomerBooking(allBooking);
+        response.setCustomerBooking(customerBooking);
 
         return response;
     }
