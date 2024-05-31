@@ -18,5 +18,5 @@ public class Booking {
     private String preferredDate;
     private LocalDateTime createdAt;
     @Enumerated(EnumType.STRING)
-    private BookingStatus bookingStatus = BookingStatus.PENDING;
+    private BookingStatus bookingStatus = BookingStatus.ACCEPTED;
 }

@@ -30,7 +30,7 @@ public class ProviderTest {
         ServiceProviderRegistrationRequest request = new ServiceProviderRegistrationRequest();
         request.setFullName("Boluwatife Agboola");
         request.setCategory(ServiceCategory.HAIRSTYLISTS);
-        request.setEmail("lanlehin3@gmail.com");
+        request.setEmail("tobi4tee@gmail.com");
         request.setDescription("Does both male and female hair styling");
         request.setExperienceInYears("2 years");
         request.setPhoneNumber("08068952954");
@@ -59,8 +59,8 @@ public class ProviderTest {
     @Test
     public void testThatServiceProviderCanLogin() throws UserNotFoundException, IncorrectPasswordException {
         ServiceProviderLoginRequest request = new ServiceProviderLoginRequest();
-        request.setEmail("adeniyidaniel@gmail.com");
-        request.setPassword("Daniel234@");
+        request.setEmail("tobi4tee@gmail.com");
+        request.setPassword("lanlehinTifeh13@");
         ServiceProviderLoginResponse response = serviceProviderService.login(request);
         assertThat(response).isNotNull();
 

@@ -23,4 +23,6 @@ public interface ServiceProviderService {
     void logout(ServiceProviderLogoutRequest request);
 
     UpdateServiceProviderProfileResponse updateProfile(UpdateServiceProviderProfileRequest request);
+
+    ServiceProvider findById(Long serviceProviderId);
 }

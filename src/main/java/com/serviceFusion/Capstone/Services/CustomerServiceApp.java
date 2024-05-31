@@ -33,6 +33,8 @@ public class CustomerServiceApp implements CustomerService{
         alreadyRegisteredCheck(request);
         verifyDetails(request);
         Customer customer = modelMapper.map((request), Customer.class);
+        List<Booking> bookings = new ArrayList<>();
+        customer.setBookings(bookings);
         customer.setCreatedAt(LocalDateTime.now());
         customerRepository.save(customer);
 
@@ -115,13 +117,28 @@ public class CustomerServiceApp implements CustomerService{
     @Override
     public CustomerBookingResponse bookService(CustomerBookingRequest request) throws ServiceFusionException {
         Customer existingCustomer = getExistingCustomer(request);
-        if (existingCustomer.isLoginStatus()) throw new ServiceFusionException("Kindly login to book a service");
+        if (!existingCustomer.isLoginStatus()) throw new ServiceFusionException("Kindly login to book a service");
         Booking booking = getBooking(request);
         bookingRepository.save(booking);
-        List<Booking> customerBooking = new ArrayList<>();
-        customerBooking.add(booking);
-        existingCustomer.setBookings(customerBooking);
+
+        existingCustomer.getBookings().add(booking);
+
         customerRepository.save(existingCustomer);
+        System.out.println(existingCustomer.getBookings().size());
+
+
+        CustomerBookingMessageRequest messageRequest = new CustomerBookingMessageRequest();
+        messageRequest.setEmail(existingCustomer.getEmail());
+        messageRequest.setFullName(existingCustomer.getFullName());
+        fusionNotificationService.customerBookingNotification(messageRequest);
+
+        ServiceProvider provider = providerService.findById(request.getServiceProviderId());
+
+        ServiceProviderBookingMessageRequest providerBookingMessageRequest = new ServiceProviderBookingMessageRequest();
+        providerBookingMessageRequest.setEmail(provider.getEmail());
+        providerBookingMessageRequest.setFullName(provider.getFullName());
+        fusionNotificationService.serviceProviderBookingNotification(providerBookingMessageRequest,booking.getPreferredDate());
+
 
         return getResponse(booking, existingCustomer);
     }
@@ -136,6 +153,7 @@ public class CustomerServiceApp implements CustomerService{
     private static @NotNull Booking getBooking(CustomerBookingRequest request) {
         Booking booking = new Booking();
         booking.setCustomerId(request.getCustomerId());
+        booking.setServiceProviderId(request.getServiceProviderId());
         booking.setPreferredDate(request.getPreferredDate());
         booking.setCreatedAt(LocalDateTime.now());
         booking.setServiceProviderId(request.getCustomerId());

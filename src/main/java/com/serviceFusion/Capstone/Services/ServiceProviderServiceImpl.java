@@ -139,4 +139,9 @@ public class ServiceProviderServiceImpl implements ServiceProviderService {
         return response;
     }
 
+    @Override
+    public ServiceProvider findById(Long serviceProviderId) {
+        return serviceProviderRepository.findById(serviceProviderId).get();
+    }
+
 }
