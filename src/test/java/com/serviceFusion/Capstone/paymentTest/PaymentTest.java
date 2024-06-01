@@ -1,5 +1,6 @@
 package com.serviceFusion.Capstone.paymentTest;
 
+import com.serviceFusion.Capstone.data.repositories.PaymentRepository;
 import com.serviceFusion.Capstone.dtos.requests.PaymentRequest;
 import com.serviceFusion.Capstone.dtos.requests.ViewCustomerPaymentRequest;
 import com.serviceFusion.Capstone.dtos.responses.PaymentResponse;
@@ -19,6 +20,8 @@ public class PaymentTest {
 
     @Autowired
     private PaymentService paymentService;
+    @Autowired
+    private PaymentRepository paymentRepository;
 
     @Test
     public void testThatABookingCanBePaidFor() throws ServiceFusionException {
@@ -30,6 +33,11 @@ public class PaymentTest {
         PaymentResponse response = paymentService.payForBooking(request);
         assertThat(response).isNotNull();
 
+    }
+
+    @Test
+    public void testThatAllPaymentHistoryCanBeFound(){
+        assertThat(paymentRepository.findAll().size()).isNotNull();
     }
 
 
