@@ -3,6 +3,7 @@ package com.serviceFusion.Capstone.services;
 import com.serviceFusion.Capstone.configs.PayStackConfig;
 import com.serviceFusion.Capstone.data.models.Customer;
 import com.serviceFusion.Capstone.data.models.Payment;
+import com.serviceFusion.Capstone.data.repositories.CustomerRepository;
 import com.serviceFusion.Capstone.data.repositories.PaymentRepository;
 import com.serviceFusion.Capstone.dtos.requests.InitializeTransactionRequest;
 import com.serviceFusion.Capstone.dtos.requests.PaymentRequest;
@@ -26,12 +27,14 @@ import java.util.List;
 @AllArgsConstructor
 public class PaymentServiceApp implements PaymentService {
     private final CustomerService customerService;
+    private final CustomerRepository customerRepository;
     private PaymentRepository paymentRepository;
     private PayStackConfig config;
 
     @Override
     public PaymentResponse payForBooking(PaymentRequest request) throws ServiceFusionException {
-        Customer existingCustomer = customerService.findById(request.getCustomerId());
+        Customer existingCustomer = customerRepository.findByEmail(request.getCustomerEmail());
+//        Customer existingCustomer = customerService.findById(request.getCustomerId());
         if (existingCustomer == null) throw new ServiceFusionException("Customer not found");
         Payment payment = new Payment();
         payment.setCustomerId(request.getCustomerId());

@@ -8,6 +8,7 @@ import java.math.BigDecimal;
 @Setter
 @Getter
 public class PaymentRequest {
+    private String customerEmail;
     private Long bookingId;
     private Long customerId;
     private BigDecimal amount;
