@@ -15,6 +15,7 @@ import org.springframework.stereotype.Service;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 
 import static com.serviceFusion.Capstone.utils.Verification.*;
 @Service
@@ -171,15 +172,14 @@ public class CustomerServiceApp implements CustomerService{
     }
 
     @Override
-    public ViewAllCustomerBookingResponse viewCustomerBooking(ViewAllCstomerBookingRequest request) {
-        Customer existingCustomer = customerRepository.findById(request.getCustomerId()).get();
-
-        List<Booking> customerBooking = existingCustomer.getBookings();
-
+    public ViewAllCustomerBookingResponse viewCustomerBooking(ViewAllCustomerBookingRequest request) throws ServiceFusionException {
+        Customer existingCustomer = customerRepository.findByEmail(request.getCustomerEmail());
+        if (existingCustomer==null) throw new ServiceFusionException("Customer with submitted request not found");
+        List<Booking> customerBookings = existingCustomer.getBookings();
 
 
         ViewAllCustomerBookingResponse response = new ViewAllCustomerBookingResponse();
-        response.setCustomerBooking(customerBooking);
+        response.setCustomerBooking(customerBookings);
 
         return response;
     }

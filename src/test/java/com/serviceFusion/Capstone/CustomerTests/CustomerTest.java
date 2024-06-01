@@ -110,9 +110,9 @@ public class CustomerTest {
     }
 
     @Test
-    public void testThatAListOfCustomerBookingCanBeFound(){
-        ViewAllCstomerBookingRequest request = new ViewAllCstomerBookingRequest();
-        request.setCustomerId(1L);
+    public void testThatAListOfCustomerBookingCanBeFound() throws ServiceFusionException {
+        ViewAllCustomerBookingRequest request = new ViewAllCustomerBookingRequest();
+        request.setCustomerEmail("tobi4tee@gmail.com");
         ViewAllCustomerBookingResponse response = customerService.viewCustomerBooking(request);
         System.out.println(response.getCustomerBooking().size());
         assertThat(response).isNotNull();
