@@ -119,4 +119,13 @@ public class CustomerTest {
 
     }
 
+        @Test
+    public void testThatACustomerPaymentCanBeFound() throws ServiceFusionException {
+        ViewCustomerPaymentRequest request = new ViewCustomerPaymentRequest();
+        request.setCustomerId(1L);
+        ViewCustomerPaymentResponse response = customerService.viewCustomerPaymentHistory(request);
+        assertThat(response).isNotNull();
+
+    }
+
 }

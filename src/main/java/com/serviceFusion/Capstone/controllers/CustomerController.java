@@ -5,9 +5,11 @@ import com.serviceFusion.Capstone.data.repositories.CustomerRepository;
 import com.serviceFusion.Capstone.dtos.requests.CustomerBookingRequest;
 import com.serviceFusion.Capstone.dtos.requests.CustomerRegistrationRequest;
 import com.serviceFusion.Capstone.dtos.requests.ViewAllCustomerBookingRequest;
+import com.serviceFusion.Capstone.dtos.requests.ViewCustomerPaymentRequest;
 import com.serviceFusion.Capstone.dtos.responses.CustomerBookingResponse;
 import com.serviceFusion.Capstone.dtos.responses.CustomerRegistrationResponse;
 import com.serviceFusion.Capstone.dtos.responses.ViewAllCustomerBookingResponse;
+import com.serviceFusion.Capstone.dtos.responses.ViewCustomerPaymentResponse;
 import com.serviceFusion.Capstone.exceptions.ServiceFusionException;
 
 import com.serviceFusion.Capstone.services.CustomerService;
@@ -44,5 +46,9 @@ public class CustomerController {
     @GetMapping("getCustomerBooking")
     public ResponseEntity<ViewAllCustomerBookingResponse> viewCustomerBooking(@RequestBody ViewAllCustomerBookingRequest request) throws ServiceFusionException {
         return new ResponseEntity<>(customerService.viewCustomerBooking(request), HttpStatus.OK);
+    }
+    @GetMapping("viewCustomerPaymentHistory")
+    public ResponseEntity <ViewCustomerPaymentResponse> viewCustomerPaymentHistory(@RequestBody ViewCustomerPaymentRequest request) throws ServiceFusionException {
+        return new ResponseEntity<>(customerService.viewCustomerPaymentHistory(request),HttpStatus.OK);
     }
 }

@@ -20,7 +20,6 @@ import org.springframework.web.client.RestTemplate;
 
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
-import java.util.ArrayList;
 import java.util.List;
 
 @Service
@@ -34,18 +33,20 @@ public class PaymentServiceApp implements PaymentService {
     @Override
     public PaymentResponse payForBooking(PaymentRequest request) throws ServiceFusionException {
         Customer existingCustomer = customerRepository.findByEmail(request.getCustomerEmail());
-//        Customer existingCustomer = customerService.findById(request.getCustomerId());
         if (existingCustomer == null) throw new ServiceFusionException("Customer not found");
+        List<Payment> customerListOfPayment = existingCustomer.getPayments();
         Payment payment = new Payment();
         payment.setCustomerId(request.getCustomerId());
         payment.setBookingId(request.getBookingId());
         payment.setAmount(request.getAmount());
         payment.setPaymentDate(LocalDateTime.now());
-        paymentRepository.save(payment);
-        List<Payment> payments = new ArrayList<>();
-        payments.add(payment);
-        existingCustomer.setPayments(payments);
+
+
+        customerListOfPayment.add(payment);
+        existingCustomer.setPayments(customerListOfPayment);
         customerService.save(existingCustomer);
+        paymentRepository.save(payment);
+
         PaymentResponse response = new PaymentResponse();
         response.setPaymentId(payment.getId());
         response.setMessage("Payment successful");

@@ -2,6 +2,7 @@ package com.serviceFusion.Capstone.services;
 
 import com.serviceFusion.Capstone.data.models.Booking;
 import com.serviceFusion.Capstone.data.models.Customer;
+import com.serviceFusion.Capstone.data.models.Payment;
 import com.serviceFusion.Capstone.data.models.ServiceProvider;
 import com.serviceFusion.Capstone.data.repositories.BookingRepository;
 import com.serviceFusion.Capstone.data.repositories.CustomerRepository;
@@ -15,7 +16,6 @@ import org.springframework.stereotype.Service;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Optional;
 
 import static com.serviceFusion.Capstone.utils.Verification.*;
 @Service
@@ -194,6 +194,18 @@ public class CustomerServiceApp implements CustomerService{
         CustomerUpdateResponse response = new CustomerUpdateResponse();
         response.setMessage("Updated Successfully");
         response.setCustomerId(existingCustomer.getId());
+        return response;
+    }
+
+    @Override
+    public ViewCustomerPaymentResponse viewCustomerPaymentHistory(ViewCustomerPaymentRequest request) throws ServiceFusionException {
+        Customer existingCustomer = customerRepository.findById(request.getCustomerId()).orElse(null);
+        if (existingCustomer == null) throw new ServiceFusionException("Customer not found");
+
+
+        List<Payment> customerPayments = existingCustomer.getPayments();
+        ViewCustomerPaymentResponse response = new ViewCustomerPaymentResponse();
+        response.setCustomerPayment(customerPayments);
         return response;
     }
 }
