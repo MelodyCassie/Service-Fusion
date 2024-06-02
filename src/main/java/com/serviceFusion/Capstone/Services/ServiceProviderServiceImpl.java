@@ -1,5 +1,6 @@
 package com.serviceFusion.Capstone.services;
 
+import com.serviceFusion.Capstone.data.models.Booking;
 import com.serviceFusion.Capstone.data.models.ServiceCategory;
 import com.serviceFusion.Capstone.data.models.ServiceProvider;
 import com.serviceFusion.Capstone.data.repositories.ServiceProviderRepository;
@@ -142,6 +143,21 @@ public class ServiceProviderServiceImpl implements ServiceProviderService {
     @Override
     public ServiceProvider findById(Long serviceProviderId) {
         return serviceProviderRepository.findById(serviceProviderId).get();
+    }
+
+    @Override
+    public ViewProviderBookingResponse getAllBooking(ViewProviderBookingRequest request) throws ServiceFusionException {
+        ServiceProvider provider = serviceProviderRepository.findById(request.getProviderId()).orElse(null);
+        if (provider == null) throw new ServiceFusionException("Service provider not found");
+        List<Booking> bookings = provider.getBookings();
+        ViewProviderBookingResponse response = new ViewProviderBookingResponse();
+        response.setProviderListOfBooking(bookings);
+        return response;
+    }
+
+    @Override
+    public void save(ServiceProvider provider) {
+        serviceProviderRepository.save(provider);
     }
 
 }

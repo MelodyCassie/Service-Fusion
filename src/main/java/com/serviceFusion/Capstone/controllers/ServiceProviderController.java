@@ -49,5 +49,8 @@ public class ServiceProviderController {
         return new ResponseEntity<>(serviceProviderRepository.findAll(), HttpStatus.OK);
     }
 
+    @GetMapping("getAllBookings")
+    
+
 
 }

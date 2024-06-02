@@ -25,4 +25,8 @@ public interface ServiceProviderService {
     UpdateServiceProviderProfileResponse updateProfile(UpdateServiceProviderProfileRequest request);
 
     ServiceProvider findById(Long serviceProviderId);
+
+    ViewProviderBookingResponse getAllBooking(ViewProviderBookingRequest request) throws ServiceFusionException;
+
+    void save(ServiceProvider serviceProviderId);
 }

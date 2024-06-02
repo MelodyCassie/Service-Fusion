@@ -30,9 +30,6 @@ public class ServiceProvider {
     private LocalDateTime createdAt;
     private LocalDateTime updatedAt;
     private boolean isLogin;
-
     @OneToMany(fetch = FetchType.EAGER,cascade = CascadeType.ALL)
-    private List<ServiceProvided> serviceProvided;
-//    @OneToMany(fetch = FetchType.EAGER,cascade = CascadeType.ALL)
-//    private List<Booking> bookings;
+    private List<Booking> bookings;
 }

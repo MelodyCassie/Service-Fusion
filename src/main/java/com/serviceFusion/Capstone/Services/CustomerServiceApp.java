@@ -123,10 +123,15 @@ public class CustomerServiceApp implements CustomerService{
         bookingRepository.save(booking);
 
         existingCustomer.getBookings().add(booking);
-
         customerRepository.save(existingCustomer);
-        System.out.println(existingCustomer.getBookings().size());
 
+
+        ServiceProvider existingProvider = providerService.findById(request.getServiceProviderId());
+        List<Booking> serviceProviderBookings = existingProvider.getBookings();
+        serviceProviderBookings.add(booking);
+        existingProvider.setBookings(serviceProviderBookings);
+
+        providerService.save(existingProvider);
 
         CustomerBookingMessageRequest messageRequest = new CustomerBookingMessageRequest();
         messageRequest.setEmail(existingCustomer.getEmail());

@@ -1,4 +1,4 @@
-package com.serviceFusion.Capstone;
+package com.serviceFusion.Capstone.ServiceProviderTest;
 
 import com.serviceFusion.Capstone.data.models.Location;
 import com.serviceFusion.Capstone.data.models.ServiceCategory;
@@ -112,6 +112,16 @@ public class ProviderTest {
     @Test
     public void testThatAllRegisteredServiceProvidersCanBeFound(){
         serviceProviderRepository.findAll().forEach(System.out::println);
+    }
+
+    @Test
+    public void testThatAServiceProviderListOfBookingsCanBeFound() throws ServiceFusionException {
+        ViewProviderBookingRequest request = new ViewProviderBookingRequest();
+        request.setProviderId(1L);
+
+        ViewProviderBookingResponse response = serviceProviderService.getAllBooking(request);
+        System.out.println(response.getProviderListOfBooking().size());
+        assertThat(response).isNotNull();
     }
 
 }
