@@ -23,4 +23,10 @@ public interface ServiceProviderService {
     void logout(ServiceProviderLogoutRequest request);
 
     UpdateServiceProviderProfileResponse updateProfile(UpdateServiceProviderProfileRequest request);
+
+    ServiceProvider findById(Long serviceProviderId);
+
+    ViewProviderBookingResponse getAllBooking(ViewProviderBookingRequest request) throws ServiceFusionException;
+
+    void save(ServiceProvider serviceProviderId);
 }

@@ -8,6 +8,7 @@ import lombok.Setter;
 @Getter
 public class CustomerBookingRequest {
     private Long customerId;
+    private Long serviceProviderId;
     private String customerName;
     private String customerAddress;
     private String preferredDate;
