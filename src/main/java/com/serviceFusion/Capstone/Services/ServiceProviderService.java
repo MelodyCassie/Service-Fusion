@@ -31,5 +31,5 @@ public interface ServiceProviderService {
 
     void save(ServiceProvider serviceProviderId);
 
-    UploadImageResponse uploadImage(ServiceProviderUploadImageRequest request) throws ServiceFusionException, IOException;
+    UploadImageResponse uploadProfilePicture(ServiceProviderUploadImageRequest request) throws ServiceFusionException, IOException;
 }

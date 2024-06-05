@@ -143,7 +143,7 @@ public class ProviderTest {
         request1.setImage(multipartFile);
         request.setImageRequest(request1);
 
-        UploadImageResponse response = serviceProviderService.uploadImage(request);
+        UploadImageResponse response = serviceProviderService.uploadProfilePicture(request);
         assertThat(response).isNotNull();
     }
 

@@ -165,7 +165,7 @@ public class ServiceProviderServiceImpl implements ServiceProviderService {
     }
 
     @Override
-    public UploadImageResponse uploadImage(ServiceProviderUploadImageRequest request) throws ServiceFusionException, IOException {
+    public UploadImageResponse uploadProfilePicture(ServiceProviderUploadImageRequest request) throws ServiceFusionException, IOException {
         ServiceProvider provider = serviceProviderRepository.findById(request.getServiceProviderId()).orElse(null);
         if (provider==null) throw new ServiceFusionException("Service provider not found");
         UploadImageResponse response = cloudinaryImageService.uploadImage(request.getImageRequest());
