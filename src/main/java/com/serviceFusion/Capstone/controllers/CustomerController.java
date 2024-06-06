@@ -50,4 +50,5 @@ public class CustomerController {
     public ResponseEntity<SearchServiceProviderResponse> searchForServiceProvider(@RequestBody SearchServiceProviderRequest request){
         return new ResponseEntity<>(customerService.searchForServiceProvider(request),HttpStatus.OK);
     }
+
 }
