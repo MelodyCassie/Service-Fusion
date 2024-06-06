@@ -21,6 +21,7 @@ import java.util.List;
 @AllArgsConstructor
 public class AdminController {
     private final AdminService adminService;
+
     @PostMapping("register")
     public ResponseEntity<AdminRegistrationResponse> addAdmin(@Valid @RequestBody AdminRegistrationRequest request) throws ServiceFusionException {
         return new ResponseEntity<>(adminService.registerAdmin(request), HttpStatus.CREATED);

@@ -144,6 +144,7 @@ public class ProviderTest {
         request.setImageRequest(request1);
 
         UploadImageResponse response = serviceProviderService.uploadProfilePicture(request);
+        System.out.println(response.getUrl());
         assertThat(response).isNotNull();
     }
 
