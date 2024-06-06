@@ -12,6 +12,12 @@ import com.serviceFusion.Capstone.services.ServiceProviderService;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.mock.web.MockMultipartFile;
+import org.springframework.web.multipart.MultipartFile;
+
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.IOException;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.junit.jupiter.api.Assertions.assertFalse;
@@ -121,6 +127,24 @@ public class ProviderTest {
 
         ViewProviderBookingResponse response = serviceProviderService.getAllBooking(request);
         System.out.println(response.getProviderListOfBooking().size());
+        assertThat(response).isNotNull();
+    }
+
+    @Test
+    public void testThatServiceProviderCanUploadImage() throws ServiceFusionException, IOException {
+        ServiceProviderUploadImageRequest request = new ServiceProviderUploadImageRequest();
+
+        request.setServiceProviderId(1L);
+        UploadImageRequest request1 = new UploadImageRequest();
+        File file1 = new File("C:\\Users\\Dell\\Pictures\\Camera Roll\\WIN_20240314_15_15_40_Pro.jpg");
+        FileInputStream inputStream = new FileInputStream(file1);
+        MultipartFile multipartFile = new MockMultipartFile(
+                "file", inputStream);
+        request1.setImage(multipartFile);
+        request.setImageRequest(request1);
+
+        UploadImageResponse response = serviceProviderService.uploadProfilePicture(request);
+        System.out.println(response.getUrl());
         assertThat(response).isNotNull();
     }
 
