@@ -35,6 +35,7 @@ public class ServiceProviderServiceImpl implements ServiceProviderService {
 
 
         ServiceProvider serviceProvider = getServiceProvider(request);
+
         RegistrationMessageRequest welcomeRequest = new RegistrationMessageRequest();
             welcomeRequest.setEmail(serviceProvider.getEmail());
             welcomeRequest.setFullName(serviceProvider.getFullName());

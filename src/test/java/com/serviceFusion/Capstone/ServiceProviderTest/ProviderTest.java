@@ -51,8 +51,8 @@ public class ProviderTest {
     public void testThatMultipleServiceProvidersCanRegister() throws ServiceFusionException {
         ServiceProviderRegistrationRequest request = new ServiceProviderRegistrationRequest();
         request.setFullName("Adeniyi Daniel");
-        request.setCategory(ServiceCategory.BARBERS);
-        request.setEmail("adeniyidaniel@gmail.com");
+        request.setCategory(ServiceCategory.CLEANERS);
+        request.setEmail("adeniyidaniel01@gmail.com");
         request.setDescription("Male and Female hair styling");
         request.setYearsOfExperience("2 years");
         request.setLocation(Location.ISOLO);
@@ -142,6 +142,8 @@ public class ProviderTest {
                 "file", inputStream);
         request1.setImage(multipartFile);
         request.setImageRequest(request1);
+
+
 
         UploadImageResponse response = serviceProviderService.uploadProfilePicture(request);
         System.out.println(response.getUrl());
