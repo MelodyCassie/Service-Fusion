@@ -1,6 +1,7 @@
 package com.serviceFusion.Capstone.services;
 
 import com.serviceFusion.Capstone.data.models.Booking;
+import com.serviceFusion.Capstone.data.models.Image;
 import com.serviceFusion.Capstone.data.models.ServiceCategory;
 import com.serviceFusion.Capstone.data.models.ServiceProvider;
 import com.serviceFusion.Capstone.data.repositories.ServiceProviderRepository;
@@ -11,6 +12,7 @@ import lombok.AllArgsConstructor;
 import org.modelmapper.ModelMapper;
 import org.springframework.stereotype.Service;
 
+import java.io.IOException;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
@@ -21,6 +23,8 @@ import java.util.List;
 public class ServiceProviderServiceImpl implements ServiceProviderService {
     private final ServiceProviderRepository serviceProviderRepository;
     private final ModelMapper modelMapper;
+    private final ImageService imageService;
+    private final CloudinaryImageService cloudinaryImageService;
     private final ServiceFusionNotificationService fusionNotificationService;
 
 
@@ -31,6 +35,7 @@ public class ServiceProviderServiceImpl implements ServiceProviderService {
 
 
         ServiceProvider serviceProvider = getServiceProvider(request);
+
         RegistrationMessageRequest welcomeRequest = new RegistrationMessageRequest();
             welcomeRequest.setEmail(serviceProvider.getEmail());
             welcomeRequest.setFullName(serviceProvider.getFullName());
@@ -158,6 +163,20 @@ public class ServiceProviderServiceImpl implements ServiceProviderService {
     @Override
     public void save(ServiceProvider provider) {
         serviceProviderRepository.save(provider);
+    }
+
+    @Override
+    public UploadImageResponse uploadProfilePicture(ServiceProviderUploadImageRequest request) throws ServiceFusionException, IOException {
+        ServiceProvider provider = serviceProviderRepository.findById(request.getServiceProviderId()).orElse(null);
+        if (provider==null) throw new ServiceFusionException("Service provider not found");
+        UploadImageResponse response = cloudinaryImageService.uploadImage(request.getImageRequest());
+
+        Image image = imageService.saveImage(response);
+        provider.setImage(image);
+        serviceProviderRepository.save(provider);
+        response.setUrl(response.getUrl());
+
+        return response;
     }
 
 }

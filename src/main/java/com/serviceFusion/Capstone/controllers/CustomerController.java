@@ -2,14 +2,8 @@ package com.serviceFusion.Capstone.controllers;
 
 import com.serviceFusion.Capstone.data.models.Customer;
 import com.serviceFusion.Capstone.data.repositories.CustomerRepository;
-import com.serviceFusion.Capstone.dtos.requests.CustomerBookingRequest;
-import com.serviceFusion.Capstone.dtos.requests.CustomerRegistrationRequest;
-import com.serviceFusion.Capstone.dtos.requests.ViewAllCustomerBookingRequest;
-import com.serviceFusion.Capstone.dtos.requests.ViewCustomerPaymentRequest;
-import com.serviceFusion.Capstone.dtos.responses.CustomerBookingResponse;
-import com.serviceFusion.Capstone.dtos.responses.CustomerRegistrationResponse;
-import com.serviceFusion.Capstone.dtos.responses.ViewAllCustomerBookingResponse;
-import com.serviceFusion.Capstone.dtos.responses.ViewCustomerPaymentResponse;
+import com.serviceFusion.Capstone.dtos.requests.*;
+import com.serviceFusion.Capstone.dtos.responses.*;
 import com.serviceFusion.Capstone.exceptions.ServiceFusionException;
 
 import com.serviceFusion.Capstone.services.CustomerService;
@@ -51,4 +45,10 @@ public class CustomerController {
     public ResponseEntity <ViewCustomerPaymentResponse> viewCustomerPaymentHistory(@RequestBody ViewCustomerPaymentRequest request) throws ServiceFusionException {
         return new ResponseEntity<>(customerService.viewCustomerPaymentHistory(request),HttpStatus.OK);
     }
+
+    @GetMapping("searchForServiceProvider")
+    public ResponseEntity<SearchServiceProviderResponse> searchForServiceProvider(@RequestBody SearchServiceProviderRequest request){
+        return new ResponseEntity<>(customerService.searchForServiceProvider(request),HttpStatus.OK);
+    }
+
 }

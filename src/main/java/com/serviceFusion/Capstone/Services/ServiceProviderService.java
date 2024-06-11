@@ -6,6 +6,7 @@ import com.serviceFusion.Capstone.dtos.requests.*;
 import com.serviceFusion.Capstone.dtos.responses.*;
 import com.serviceFusion.Capstone.exceptions.*;
 
+import java.io.IOException;
 import java.util.List;
 
 public interface ServiceProviderService {
@@ -29,4 +30,6 @@ public interface ServiceProviderService {
     ViewProviderBookingResponse getAllBooking(ViewProviderBookingRequest request) throws ServiceFusionException;
 
     void save(ServiceProvider serviceProviderId);
+
+    UploadImageResponse uploadProfilePicture(ServiceProviderUploadImageRequest request) throws ServiceFusionException, IOException;
 }

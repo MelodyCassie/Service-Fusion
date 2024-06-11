@@ -2,9 +2,7 @@ package com.serviceFusion.Capstone.services;
 
 
 import com.serviceFusion.Capstone.dtos.requests.PaymentRequest;
-import com.serviceFusion.Capstone.dtos.requests.ViewCustomerPaymentRequest;
 import com.serviceFusion.Capstone.dtos.responses.PaymentResponse;
-import com.serviceFusion.Capstone.dtos.responses.ViewCustomerPaymentResponse;
 import com.serviceFusion.Capstone.exceptions.ServiceFusionException;
 
 public interface PaymentService {
