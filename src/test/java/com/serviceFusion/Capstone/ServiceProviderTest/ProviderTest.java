@@ -1,4 +1,4 @@
-package com.serviceFusion.Capstone;
+package com.serviceFusion.Capstone.ServiceProviderTest;
 
 import com.serviceFusion.Capstone.data.models.Location;
 import com.serviceFusion.Capstone.data.models.ServiceCategory;
@@ -13,6 +13,12 @@ import com.serviceFusion.Capstone.services.ServiceProviderService;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.mock.web.MockMultipartFile;
+import org.springframework.web.multipart.MultipartFile;
+
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.IOException;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.junit.jupiter.api.Assertions.assertFalse;
@@ -29,11 +35,11 @@ public class ProviderTest {
     @Test
     public void testThatServiceProviderCanRegister() throws ServiceFusionException {
         ServiceProviderRegistrationRequest request = new ServiceProviderRegistrationRequest();
-        request.setFullName("Boluwatife Agboola");
-        request.setCategory(ServiceCategory.HAIRSTYLISTS);
-        request.setEmail("lanlehin3@gmail.com");
+        request.setFullName("Sola Agboola");
+        request.setServiceCategory(ServiceCategory.BARBERS);
+        request.setEmail("sola33@gmail.com");
         request.setDescription("Does both male and female hair styling");
-        request.setExperienceInYears("2 years");
+        request.setYearsOfExperience("5 years");
         request.setPhoneNumber("08068952954");
         request.setLocation(Location.EJIGBO);
         request.setPassword("lanlehinTifeh13@");
@@ -46,11 +52,11 @@ public class ProviderTest {
     public void testThatMultipleServiceProvidersCanRegister() throws ServiceFusionException {
         ServiceProviderRegistrationRequest request = new ServiceProviderRegistrationRequest();
         request.setFullName("Adeniyi Daniel");
-        request.setCategory(ServiceCategory.BARBERS);
+        request.setServiceCategory(ServiceCategory.BARBERS);
         request.setEmail("adeniyidaniel@gmail.com");
         request.setDescription("Male and Female hair styling");
-        request.setExperienceInYears("2 years");
-        request.setLocation(Location.ISOLO);
+        request.setYearsOfExperience("2 years");
+        request.setLocation(Location.EJIGBO);
         request.setPassword("Daniel234@");
         request.setPhoneNumber("08168952046");
 
@@ -60,8 +66,8 @@ public class ProviderTest {
     @Test
     public void testThatServiceProviderCanLogin() throws UserNotFoundException, IncorrectPasswordException {
         ServiceProviderLoginRequest request = new ServiceProviderLoginRequest();
-        request.setEmail("adeniyidaniel@gmail.com");
-        request.setPassword("Daniel234@");
+        request.setEmail("tobi4tee@gmail.com");
+        request.setPassword("lanlehinTifeh13@");
         ServiceProviderLoginResponse response = serviceProviderService.login(request);
         assertThat(response).isNotNull();
 
@@ -107,6 +113,38 @@ public class ProviderTest {
         request.setLocation(Location.EJIGBO);
         FIndServiceProviderByLocationResponse response = serviceProviderService.findByLocation(request);
         System.out.println(response);
+        assertThat(response).isNotNull();
+    }
+
+    @Test
+    public void testThatAllRegisteredServiceProvidersCanBeFound(){
+        serviceProviderRepository.findAll().forEach(System.out::println);
+    }
+
+    @Test
+    public void testThatAServiceProviderListOfBookingsCanBeFound() throws ServiceFusionException {
+        ViewProviderBookingRequest request = new ViewProviderBookingRequest();
+        request.setProviderId(1L);
+
+        ViewProviderBookingResponse response = serviceProviderService.getAllBooking(request);
+        System.out.println(response.getProviderListOfBooking().size());
+        assertThat(response).isNotNull();
+    }
+
+    @Test
+    public void testThatServiceProviderCanUploadImage() throws ServiceFusionException, IOException {
+        ServiceProviderUploadImageRequest request = new ServiceProviderUploadImageRequest();
+
+        request.setServiceProviderId(1L);
+        UploadImageRequest request1 = new UploadImageRequest();
+        File file1 = new File("C:\\Users\\Dell\\Pictures\\Camera Roll\\WIN_20240314_15_15_40_Pro.jpg");
+        FileInputStream inputStream = new FileInputStream(file1);
+        MultipartFile multipartFile = new MockMultipartFile(
+                "file", inputStream);
+        request1.setImage(multipartFile);
+        request.setImageRequest(request1);
+
+        UploadImageResponse response = serviceProviderService.uploadProfilePicture(request);
         assertThat(response).isNotNull();
     }
 

@@ -22,17 +22,17 @@ import java.util.List;
 public class AdminController {
     private final AdminService adminService;
     @PostMapping("register")
-    public ResponseEntity<AdminRegistrationResponse> addAdmin(@Valid @RequestBody AdminRegistrationRequest request) throws ServiceFusionException {
+    public ResponseEntity<AdminRegistrationResponse> addAdmin(@RequestBody AdminRegistrationRequest request) throws ServiceFusionException {
         return new ResponseEntity<>(adminService.registerAdmin(request), HttpStatus.CREATED);
     }
 
     @PostMapping("update")
-    public ResponseEntity<AdminUpdateProfileResponse> updateAdmin(@Valid @RequestBody AdminUpdateProfileRequest request) throws ServiceFusionException {
+    public ResponseEntity<AdminUpdateProfileResponse> updateAdmin(@RequestBody AdminUpdateProfileRequest request) throws ServiceFusionException {
         return new ResponseEntity<>(adminService.updateProfile(request),HttpStatus.OK);
     }
 
     @PostMapping("login")
-    public ResponseEntity<AdminLoginResponse> loginAdmin(@Valid @RequestBody AdminLoginRequest request) throws ServiceFusionException {
+    public ResponseEntity<AdminLoginResponse> loginAdmin(@RequestBody AdminLoginRequest request) throws ServiceFusionException {
         return new ResponseEntity<>(adminService.login(request),HttpStatus.OK);
     }
 

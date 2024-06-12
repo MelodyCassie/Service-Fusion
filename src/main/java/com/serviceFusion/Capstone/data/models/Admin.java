@@ -15,13 +15,9 @@ public class Admin {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
-    @NotBlank(message = "Username is a mandatory field")
     private String username;
-    @NotBlank(message = "Email is a mandatory field")
     private String email;
-    @NotBlank(message = "Password is a mandatory field")
     private String password;
-    @NotBlank(message = "FullName is a mandatory field")
     private String fullName;
     @Enumerated(EnumType.STRING)
     private Role role;

@@ -19,6 +19,6 @@ public class ServiceProvided {
     private BigDecimal price;
     private String duration;
     @Enumerated(EnumType.STRING)
-    private ServiceCategory serviceCategory;
+    private ServiceCategory category;
 
 }

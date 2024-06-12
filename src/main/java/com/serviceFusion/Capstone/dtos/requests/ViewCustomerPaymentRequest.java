@@ -5,6 +5,6 @@ import lombok.Setter;
 
 @Setter
 @Getter
-public class ViewAllCstomerBookingRequest {
+public class ViewCustomerPaymentRequest {
     private Long customerId;
 }

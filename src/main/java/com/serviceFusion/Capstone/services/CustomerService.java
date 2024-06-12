@@ -20,5 +20,8 @@ public interface CustomerService {
 
     void save(Customer existingCustomer);
 
-    ViewAllCustomerBookingResponse viewCustomerBooking(ViewAllCstomerBookingRequest request);
+    ViewCustomerPaymentResponse viewCustomerPaymentHistory(ViewCustomerPaymentRequest request) throws ServiceFusionException;
+
+
+    ViewAllCustomerBookingResponse viewCustomerBooking(ViewAllCustomerBookingRequest request) throws ServiceFusionException;
 }

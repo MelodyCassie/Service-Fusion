@@ -17,7 +17,6 @@ import static org.assertj.core.api.Assertions.assertThat;
 import static org.junit.jupiter.api.Assertions.*;
 @SpringBootTest
 public class CustomerTest {
-
     @Autowired
     private CustomerService customerService;
 
@@ -26,6 +25,7 @@ public class CustomerTest {
         CustomerRegistrationRequest request = new CustomerRegistrationRequest();
         request.setFullName("Jack Smith");
         request.setEmail("tobi4tee@gmail.com");
+        request.setFullName("Favour Mbata");
         request.setPassword("13071994Temmylove.");
         request.setPhoneNumber("08073736567");
         request.setAddress("Water St");
@@ -40,6 +40,7 @@ public class CustomerTest {
         CustomerRegistrationRequest request = new CustomerRegistrationRequest();
         request.setFullName("Melody Cassie2");
         request.setEmail("melodyoluchi848@gmail.com");
+        request.setFullName("Favour Mbata");
         request.setPassword("13071994Melody.");
         request.setPhoneNumber("08058098539");
         request.setAddress("London");
@@ -54,6 +55,7 @@ public class CustomerTest {
         CustomerRegistrationRequest request = new CustomerRegistrationRequest();
         request.setFullName("Melody Cassie2");
         request.setEmail("melodycassie@gmail.com");
+        request.setFullName("Favour Mbata");
         request.setPassword("melody1234");
         request.setPhoneNumber("08134546780");
         request.setAddress("London");
@@ -64,8 +66,8 @@ public class CustomerTest {
     @Test
     public void testThatCustomerCanLogin() throws ServiceFusionException {
         CustomerLoginRequest request = new CustomerLoginRequest();
-        request.setEmail("melodyoluchi848@gmail.com");
-        request.setPassword("13071994Melody.");
+        request.setEmail("tobi4tee@gmail.com");
+        request.setPassword("13071994Temmylove.");
         CustomerLoginResponse response = customerService.login(request);
         assertThat(response).isNotNull();
     }
@@ -97,7 +99,7 @@ public class CustomerTest {
     @Test
     public void testThatACustomerCanBookASpecificServiceProvider() throws ServiceFusionException {
         CustomerBookingRequest request = new CustomerBookingRequest();
-        request.setCustomerId(2L);
+        request.setCustomerId(1L);
         request.setServiceProviderId(1L);
         request.setCustomerName("Jack Smith");
         request.setCustomerAddress("312, Sabo Yaba");
@@ -108,11 +110,20 @@ public class CustomerTest {
     }
 
     @Test
-    public void testThatAListOfCustomerBookingCanBeFound(){
-        ViewAllCstomerBookingRequest request = new ViewAllCstomerBookingRequest();
-        request.setCustomerId(2L);
+    public void testThatAListOfCustomerBookingCanBeFound() throws ServiceFusionException {
+        ViewAllCustomerBookingRequest request = new ViewAllCustomerBookingRequest();
+        request.setCustomerEmail("tobi4tee@gmail.com");
         ViewAllCustomerBookingResponse response = customerService.viewCustomerBooking(request);
         System.out.println(response.getCustomerBooking().size());
+        assertThat(response).isNotNull();
+
+    }
+
+        @Test
+    public void testThatACustomerPaymentCanBeFound() throws ServiceFusionException {
+        ViewCustomerPaymentRequest request = new ViewCustomerPaymentRequest();
+        request.setCustomerId(1L);
+        ViewCustomerPaymentResponse response = customerService.viewCustomerPaymentHistory(request);
         assertThat(response).isNotNull();
 
     }

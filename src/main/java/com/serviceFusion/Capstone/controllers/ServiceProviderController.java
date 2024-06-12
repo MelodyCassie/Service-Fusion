@@ -1,42 +1,54 @@
 package com.serviceFusion.Capstone.controllers;
 
-import com.serviceFusion.Capstone.dtos.requests.AdminLoginRequest;
-import com.serviceFusion.Capstone.dtos.requests.ServiceProviderLoginRequest;
-import com.serviceFusion.Capstone.dtos.requests.ServiceProviderRegistrationRequest;
-import com.serviceFusion.Capstone.dtos.responses.AdminLoginResponse;
-import com.serviceFusion.Capstone.dtos.responses.ServiceProviderLoginResponse;
-import com.serviceFusion.Capstone.dtos.responses.ServiceProviderRegistrationResponse;
+import com.serviceFusion.Capstone.data.models.ServiceProvider;
+import com.serviceFusion.Capstone.data.repositories.ServiceProviderRepository;
+import com.serviceFusion.Capstone.dtos.requests.*;
+import com.serviceFusion.Capstone.dtos.responses.*;
 import com.serviceFusion.Capstone.exceptions.ServiceFusionException;
 
 import com.serviceFusion.Capstone.services.ServiceProviderService;
+
 import jakarta.validation.Valid;
-import lombok.RequiredArgsConstructor;
-import org.springframework.beans.factory.annotation.Autowired;
+import lombok.AllArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
+
+import java.io.IOException;
+import java.util.List;
 
 @RestController
-@RequiredArgsConstructor
-@RequestMapping("api/v1/ServiceFusion/")
+@RequestMapping("api/v1/serviceProvider/")
+@AllArgsConstructor
 public class ServiceProviderController {
 
-    @Autowired
+
     private final ServiceProviderService serviceProviderService;
+    private final ServiceProviderRepository serviceProviderRepository;
 
-
-
-    @PostMapping("registerServiceProvider")
-    public ResponseEntity<ServiceProviderRegistrationResponse> register(@RequestBody ServiceProviderRegistrationRequest request) throws ServiceFusionException {
+    @PostMapping("register")
+    public ResponseEntity<ServiceProviderRegistrationResponse> register( @RequestBody ServiceProviderRegistrationRequest request) throws ServiceFusionException {
         return new ResponseEntity<>(serviceProviderService.registerServiceProvider(request), HttpStatus.CREATED);
 
     }
-    @PostMapping("loginServiceProvider")
-    public ResponseEntity<ServiceProviderLoginResponse> loginProvider( @RequestBody ServiceProviderLoginRequest request) throws ServiceFusionException {
-        return new ResponseEntity<>(serviceProviderService.login(request),HttpStatus.OK);
+    @GetMapping("searchByCategory")
+    public ResponseEntity<FindServiceProviderByCategoryResponse> searchForServiceProviderByCategory(@RequestBody FindServiceProviderByCategoryRequest request) throws ServiceFusionException {
+        return new ResponseEntity<>(serviceProviderService.findByServiceCategory(request), HttpStatus.OK);
     }
+    @GetMapping("searchByLocation")
+    public ResponseEntity<FIndServiceProviderByLocationResponse> searchForServiceProviderByLocation(@RequestBody FindServiceProviderByLocationRequest request) throws ServiceFusionException {
+        return new ResponseEntity<>(serviceProviderService.findByLocation(request), HttpStatus.OK);
+    }
+
+    @GetMapping("getAllServiceProvider")
+    public ResponseEntity<List<ServiceProvider>> getAllServiceProvider(){
+        return new ResponseEntity<>(serviceProviderRepository.findAll(), HttpStatus.OK);
+    }
+
+    @PostMapping("uploadProfilePicture")
+    public ResponseEntity<UploadImageResponse> uploadProfilePicture( @RequestBody ServiceProviderUploadImageRequest request) throws ServiceFusionException, IOException {
+        return new ResponseEntity<>(serviceProviderService.uploadProfilePicture(request),HttpStatus.CREATED);
+    }
+
 
 }

@@ -1,7 +1,6 @@
 package com.serviceFusion.Capstone.data.models;
 
 import jakarta.persistence.*;
-import jakarta.validation.constraints.NotBlank;
 import lombok.Getter;
 import lombok.Setter;
 import lombok.ToString;
@@ -12,7 +11,7 @@ import java.util.List;
 @Setter
 @Entity
 @Getter
-
+@ToString
 public class ServiceProvider {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
@@ -30,12 +29,8 @@ public class ServiceProvider {
     private LocalDateTime createdAt;
     private LocalDateTime updatedAt;
     private boolean isLogin;
-
-    @OneToMany(fetch = FetchType.EAGER,cascade = CascadeType.ALL)
-    private List<ServiceProvided> serviceProvided;
+    @OneToOne(fetch = FetchType.EAGER, cascade = CascadeType.DETACH)
+    private Image image;
     @OneToMany(fetch = FetchType.EAGER,cascade = CascadeType.ALL)
     private List<Booking> bookings;
-    @OneToMany(fetch = FetchType.EAGER,cascade = CascadeType.ALL)
-    private List<Customer> customers;
-
 }

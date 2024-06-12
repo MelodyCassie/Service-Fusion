@@ -7,4 +7,5 @@ import com.serviceFusion.Capstone.exceptions.ServiceFusionException;
 
 public interface PaymentService {
     PaymentResponse payForBooking(PaymentRequest request) throws ServiceFusionException;
+
 }

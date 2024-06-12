@@ -8,6 +8,7 @@ import com.serviceFusion.Capstone.exceptions.IncorrectPasswordException;
 import com.serviceFusion.Capstone.exceptions.ServiceFusionException;
 import com.serviceFusion.Capstone.exceptions.UserNotFoundException;
 
+import java.io.IOException;
 import java.util.List;
 
 public interface ServiceProviderService {
@@ -24,4 +25,12 @@ public interface ServiceProviderService {
     void logout(ServiceProviderLogoutRequest request);
 
     UpdateServiceProviderProfileResponse updateProfile(UpdateServiceProviderProfileRequest request);
+
+    ServiceProvider findById(Long serviceProviderId);
+
+    ViewProviderBookingResponse getAllBooking(ViewProviderBookingRequest request) throws ServiceFusionException;
+
+    void save(ServiceProvider serviceProviderId);
+
+    UploadImageResponse uploadProfilePicture(ServiceProviderUploadImageRequest request) throws ServiceFusionException, IOException;
 }

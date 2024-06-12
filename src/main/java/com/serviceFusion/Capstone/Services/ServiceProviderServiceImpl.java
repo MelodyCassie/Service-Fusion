@@ -1,5 +1,7 @@
 package com.serviceFusion.Capstone.services;
 
+import com.serviceFusion.Capstone.data.models.Booking;
+import com.serviceFusion.Capstone.data.models.Image;
 import com.serviceFusion.Capstone.data.models.ServiceCategory;
 import com.serviceFusion.Capstone.data.models.ServiceProvider;
 import com.serviceFusion.Capstone.data.repositories.ServiceProviderRepository;
@@ -12,6 +14,7 @@ import lombok.AllArgsConstructor;
 import org.modelmapper.ModelMapper;
 import org.springframework.stereotype.Service;
 
+import java.io.IOException;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
@@ -22,7 +25,15 @@ public class ServiceProviderServiceImpl implements ServiceProviderService{
 
     private final ServiceProviderRepository serviceProviderRepository;
     private final ModelMapper modelMapper;
+
     private final ServiceFusionNotificationService serviceFusionNotificationService;
+
+    private final ImageService imageService;
+    private final CloudinaryImageService cloudinaryImageService;
+    private final ServiceFusionNotificationService fusionNotificationService;
+
+
+
     @Override
     public ServiceProviderRegistrationResponse registerServiceProvider(ServiceProviderRegistrationRequest request) throws ServiceFusionException {
         checkIfExist(request);
@@ -137,4 +148,39 @@ public class ServiceProviderServiceImpl implements ServiceProviderService{
         serviceFusionNotificationService.updateNotification(updateMessageRequest);
         return response;
     }
+
+    @Override
+    public ServiceProvider findById(Long serviceProviderId) {
+        return serviceProviderRepository.findById(serviceProviderId).get();
+    }
+
+    @Override
+    public ViewProviderBookingResponse getAllBooking(ViewProviderBookingRequest request) throws ServiceFusionException {
+        ServiceProvider provider = serviceProviderRepository.findById(request.getProviderId()).orElse(null);
+        if (provider == null) throw new ServiceFusionException("Service provider not found");
+        List<Booking> bookings = provider.getBookings();
+        ViewProviderBookingResponse response = new ViewProviderBookingResponse();
+        response.setProviderListOfBooking(bookings);
+        return response;
+    }
+
+    @Override
+    public void save(ServiceProvider provider) {
+        serviceProviderRepository.save(provider);
+    }
+
+    @Override
+    public UploadImageResponse uploadProfilePicture(ServiceProviderUploadImageRequest request) throws ServiceFusionException, IOException {
+        ServiceProvider provider = serviceProviderRepository.findById(request.getServiceProviderId()).orElse(null);
+        if (provider==null) throw new ServiceFusionException("Service provider not found");
+        UploadImageResponse response = cloudinaryImageService.uploadImage(request.getImageRequest());
+
+        Image image = imageService.saveImage(response);
+        provider.setImage(image);
+        serviceProviderRepository.save(provider);
+        response.setUrl(response.getUrl());
+
+        return response;
+    }
+
 }

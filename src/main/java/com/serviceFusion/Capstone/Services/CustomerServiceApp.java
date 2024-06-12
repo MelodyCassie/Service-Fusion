@@ -2,6 +2,7 @@ package com.serviceFusion.Capstone.services;
 
 import com.serviceFusion.Capstone.data.models.Booking;
 import com.serviceFusion.Capstone.data.models.Customer;
+import com.serviceFusion.Capstone.data.models.Payment;
 import com.serviceFusion.Capstone.data.models.ServiceProvider;
 import com.serviceFusion.Capstone.data.repositories.BookingRepository;
 import com.serviceFusion.Capstone.data.repositories.CustomerRepository;
@@ -33,6 +34,8 @@ public class CustomerServiceApp implements  CustomerService{
         alreadyRegisteredCheck(request);
         verifyDetails(request);
         Customer customer = modelMapper.map((request), Customer.class);
+        List<Booking> bookings = new ArrayList<>();
+        customer.setBookings(bookings);
         customer.setCreatedAt(LocalDateTime.now());
         customerRepository.save(customer);
 
@@ -115,13 +118,33 @@ public class CustomerServiceApp implements  CustomerService{
     @Override
     public CustomerBookingResponse bookService(CustomerBookingRequest request) throws ServiceFusionException {
         Customer existingCustomer = getExistingCustomer(request);
-        if (existingCustomer.isLoginStatus()) throw new ServiceFusionException("Kindly login to book a service");
+        if (!existingCustomer.isLoginStatus()) throw new ServiceFusionException("Kindly login to book a service");
         Booking booking = getBooking(request);
         bookingRepository.save(booking);
-        List<Booking> customerBooking = new ArrayList<>();
-        customerBooking.add(booking);
-        existingCustomer.setBookings(customerBooking);
+
+        existingCustomer.getBookings().add(booking);
         customerRepository.save(existingCustomer);
+
+
+        ServiceProvider existingProvider = providerService.findById(request.getServiceProviderId());
+        List<Booking> serviceProviderBookings = existingProvider.getBookings();
+        serviceProviderBookings.add(booking);
+        existingProvider.setBookings(serviceProviderBookings);
+
+        providerService.save(existingProvider);
+
+        CustomerBookingMessageRequest messageRequest = new CustomerBookingMessageRequest();
+        messageRequest.setEmail(existingCustomer.getEmail());
+        messageRequest.setFullName(existingCustomer.getFullName());
+        fusionNotificationService.customerBookingNotification(messageRequest);
+
+        ServiceProvider provider = providerService.findById(request.getServiceProviderId());
+
+        ServiceProviderBookingMessageRequest providerBookingMessageRequest = new ServiceProviderBookingMessageRequest();
+        providerBookingMessageRequest.setEmail(provider.getEmail());
+        providerBookingMessageRequest.setFullName(provider.getFullName());
+        fusionNotificationService.serviceProviderBookingNotification(providerBookingMessageRequest,booking.getPreferredDate());
+
 
         return getResponse(booking, existingCustomer);
     }
@@ -154,12 +177,14 @@ public class CustomerServiceApp implements  CustomerService{
     }
 
     @Override
-    public ViewAllCustomerBookingResponse viewCustomerBooking(ViewAllCstomerBookingRequest request) {
-        Customer existingCustomer = customerRepository.findById(request.getCustomerId()).get();
-        List<Booking> allBooking = existingCustomer.getBookings();
+    public ViewAllCustomerBookingResponse viewCustomerBooking(ViewAllCustomerBookingRequest request) throws ServiceFusionException {
+        Customer existingCustomer = customerRepository.findByEmail(request.getCustomerEmail());
+        if (existingCustomer==null) throw new ServiceFusionException("Customer with submitted request not found");
+        List<Booking> customerBookings = existingCustomer.getBookings();
+
 
         ViewAllCustomerBookingResponse response = new ViewAllCustomerBookingResponse();
-        response.setCustomerBooking(allBooking);
+        response.setCustomerBooking(customerBookings);
 
         return response;
     }
@@ -174,6 +199,18 @@ public class CustomerServiceApp implements  CustomerService{
         CustomerUpdateResponse response = new CustomerUpdateResponse();
         response.setMessage("Updated Successfully");
         response.setCustomerId(existingCustomer.getId());
+        return response;
+    }
+
+    @Override
+    public ViewCustomerPaymentResponse viewCustomerPaymentHistory(ViewCustomerPaymentRequest request) throws ServiceFusionException {
+        Customer existingCustomer = customerRepository.findById(request.getCustomerId()).orElse(null);
+        if (existingCustomer == null) throw new ServiceFusionException("Customer not found");
+
+
+        List<Payment> customerPayments = existingCustomer.getPayments();
+        ViewCustomerPaymentResponse response = new ViewCustomerPaymentResponse();
+        response.setCustomerPayment(customerPayments);
         return response;
     }
 }
